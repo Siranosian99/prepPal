@@ -1,0 +1,276 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Breakfast",
+      "image": "assets/images/categories/breakfast.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Healthy Lunch",
+      "image": "assets/images/categories/healthy_lunch.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Dinner",
+      "image": "assets/images/categories/dinner.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Healthy Salad",
+      "image": "assets/images/categories/healthy_salad.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Vegan",
+      "image": "assets/images/categories/vegan.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Drink",
+      "image": "assets/images/categories/drink.jpg"
+    }
+  ],
+  "foods": [
+    {
+      "id": 103,
+      "name": "Banana Pancakes",
+      "categoryId": 1,
+      "ingredients": [
+        "Banana",
+        "Egg",
+        "Oats",
+        "Honey",
+        "Coconut Oil"
+      ],
+      "about": "Fluffy, healthy banana pancakes that are gluten-free and naturally sweetened.",
+      "nutrition": {
+        "calories": 280,
+        "protein": "9g",
+        "fat": "8g",
+        "carbs": "45g"
+      },
+      "image": "assets/images/banana_pancakes.jpg"
+    },
+    {
+      "id": 104,
+      "name": "Scrambled Eggs with Spinach",
+      "categoryId": 1,
+      "ingredients": [
+        "Eggs",
+        "Spinach",
+        "Salt",
+        "Black Pepper",
+        "Olive Oil"
+      ],
+      "about": "Protein-packed scrambled eggs combined with fresh spinach.",
+      "nutrition": {
+        "calories": 220,
+        "protein": "12g",
+        "fat": "15g",
+        "carbs": "5g"
+      },
+      "image": "assets/images/scrambled_eggs_spinach.jpg"
+    },
+    {
+      "id": 203,
+      "name": "Turkey Wrap",
+      "categoryId": 2,
+      "ingredients": [
+        "Turkey",
+        "Whole Wheat Tortilla",
+        "Lettuce",
+        "Tomato",
+        "Mustard"
+      ],
+      "about": "A healthy and filling turkey wrap perfect for a light lunch.",
+      "nutrition": {
+        "calories": 310,
+        "protein": "25g",
+        "fat": "10g",
+        "carbs": "32g"
+      },
+      "image": "assets/images/turkey_wrap.jpg"
+    },
+    {
+      "id": 204,
+      "name": "Avocado Chicken Bowl",
+      "categoryId": 2,
+      "ingredients": [
+        "Chicken Breast",
+        "Avocado",
+        "Brown Rice",
+        "Lettuce",
+        "Tomato"
+      ],
+      "about": "A nutritious bowl loaded with protein, fiber, and healthy fats.",
+      "nutrition": {
+        "calories": 450,
+        "protein": "30g",
+        "fat": "18g",
+        "carbs": "38g"
+      },
+      "image": "assets/images/avocado_chicken_bowl.jpg"
+    },
+    {
+      "id": 303,
+      "name": "Stuffed Peppers",
+      "categoryId": 3,
+      "ingredients": [
+        "Bell Peppers",
+        "Ground Beef",
+        "Rice",
+        "Tomato Sauce",
+        "Onion"
+      ],
+      "about": "Colorful bell peppers stuffed with a savory beef and rice mix.",
+      "nutrition": {
+        "calories": 390,
+        "protein": "20g",
+        "fat": "16g",
+        "carbs": "42g"
+      },
+      "image": "assets/images/stuffed_peppers.jpg"
+    },
+    {
+      "id": 304,
+      "name": "Garlic Butter Shrimp",
+      "categoryId": 3,
+      "ingredients": [
+        "Shrimp",
+        "Garlic",
+        "Butter",
+        "Lemon Juice",
+        "Parsley"
+      ],
+      "about": "Tender shrimp sautéed in garlic butter sauce.",
+      "nutrition": {
+        "calories": 270,
+        "protein": "22g",
+        "fat": "17g",
+        "carbs": "5g"
+      },
+      "image": "assets/images/garlic_butter_shrimp.jpg"
+    },
+    {
+      "id": 403,
+      "name": "Kale Caesar Salad",
+      "categoryId": 4,
+      "ingredients": [
+        "Kale",
+        "Parmesan",
+        "Croutons",
+        "Caesar Dressing",
+        "Lemon Juice"
+      ],
+      "about": "A twist on the classic Caesar, using nutrient-rich kale.",
+      "nutrition": {
+        "calories": 220,
+        "protein": "6g",
+        "fat": "14g",
+        "carbs": "16g"
+      },
+      "image": "assets/images/kale_caesar_salad.jpg"
+    },
+    {
+      "id": 404,
+      "name": "Watermelon Feta Salad",
+      "categoryId": 4,
+      "ingredients": [
+        "Watermelon",
+        "Feta",
+        "Mint",
+        "Cucumber",
+        "Olive Oil"
+      ],
+      "about": "Refreshing summer salad with sweet and savory contrast.",
+      "nutrition": {
+        "calories": 180,
+        "protein": "5g",
+        "fat": "10g",
+        "carbs": "18g"
+      },
+      "image": "assets/images/watermelon_feta_salad.jpg"
+    },
+    {
+      "id": 503,
+      "name": "Tofu Stir Fry",
+      "categoryId": 5,
+      "ingredients": [
+        "Tofu",
+        "Bell Pepper",
+        "Broccoli",
+        "Soy Sauce",
+        "Garlic"
+      ],
+      "about": "Quick and easy tofu stir fry, packed with plant protein.",
+      "nutrition": {
+        "calories": 320,
+        "protein": "18g",
+        "fat": "14g",
+        "carbs": "24g"
+      },
+      "image": "assets/images/tofu_stir_fry.jpg"
+    },
+    {
+      "id": 504,
+      "name": "Sweet Potato Curry",
+      "categoryId": 5,
+      "ingredients": [
+        "Sweet Potato",
+        "Coconut Milk",
+        "Onion",
+        "Spinach",
+        "Chickpeas"
+      ],
+      "about": "Rich and creamy vegan curry with sweet potato and chickpeas.",
+      "nutrition": {
+        "calories": 400,
+        "protein": "10g",
+        "fat": "18g",
+        "carbs": "48g"
+      },
+      "image": "assets/images/sweet_potato_curry.jpg"
+    },
+    {
+      "id": 603,
+      "name": "Berry Smoothie",
+      "categoryId": 6,
+      "ingredients": [
+        "Strawberry",
+        "Blueberry",
+        "Yogurt",
+        "Honey",
+        "Ice"
+      ],
+      "about": "Cool and fruity smoothie full of antioxidants.",
+      "nutrition": {
+        "calories": 200,
+        "protein": "6g",
+        "fat": "2g",
+        "carbs": "36g"
+      },
+      "image": "assets/images/berry_smoothie.jpg"
+    },
+    {
+      "id": 604,
+      "name": "Golden Milk",
+      "categoryId": 6,
+      "ingredients": [
+        "Almond Milk",
+        "Turmeric",
+        "Ginger",
+        "Honey",
+        "Cinnamon"
+      ],
+      "about": "A warm, anti-inflammatory drink known for its health benefits.",
+      "nutrition": {
+        "calories": 160,
+        "protein": "3g",
+        "fat": "6g",
+        "carbs": "22g"
+      },
+      "image": "assets/images/golden_milk.jpg"
+    }
+  ]
+}
