@@ -15,12 +15,48 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
   }
+  final List<Widget> _pages = [
+    Center(child: Text('Home')),
+    Center(child: Text('Guide')),
+    Center(child: Text('Favourites')),
+    Center(child: Text('Profile')),
+  ];
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar:BottomNavigationBar(
+          currentIndex: _selectedIndex, // current selected index
+          onTap: _onItemTapped,         // change index on tap
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu),
+              label: 'Guides',
+            ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.heart_broken_rounded),
+          label: 'Favourites',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
+        ),
+      ]),
       appBar: AppBar(
         title: Text(AppTexts.prepPal),
         actions: [IconButton(onPressed: () {}, icon: (Icon(Icons.search)))],
@@ -28,31 +64,39 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // PageView.builder(
-            //   controller: _pageController,
-            //     itemCount: 3,
-            //     itemBuilder: (context, index) =>
-            //    Image)
-            SizedBox(height: 200),
-            Text(AppTexts.explorer,textAlign: TextAlign.center,),
+            SizedBox(
+              height: 200,
+              child: PageView.builder(
+                controller: _pageController,
+                  itemCount: 3,
+                  itemBuilder: (context, index) =>
+                 Image.network('https://picsum.photos/200',scale: 1,)),
+            ),
+            SizedBox(height: 25),
+            Text(AppTexts.explorer,textAlign: TextAlign.center,style:TextStyle(
+              fontWeight: FontWeight.bold
+            ),),
             SizedBox(height: 15),
             SizedBox(
                 height: 110,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => CategoryIcon(),
+                itemBuilder: (context, index) => CategoryIcon(scale: 22,),
                 separatorBuilder: (context, index) => SizedBox(width: 20),
                 itemCount: 5,
               ),
             ),
-            Text(AppTexts.trending,textAlign: TextAlign.center,),
+            Text(AppTexts.trending,textAlign: TextAlign.center,style:TextStyle(
+              fontWeight: FontWeight.bold
+            ),),
             SizedBox(height: 15),
             SizedBox(
               height: 160,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => CategoryIcon(),
+                itemBuilder: (context, index) => CategoryIcon(scale: 12,),
                 separatorBuilder: (context, index) => SizedBox(width: 20),
                 itemCount: 5,
               ),

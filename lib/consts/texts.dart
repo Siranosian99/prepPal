@@ -8,4 +8,7 @@ class AppTexts{
   static String hsalad="Healthy Salad";
   static String vegan="Vegan";
   static String drink="Drink";
+  static String guide="Guide";
+  static String christmas="Christmas gift inspiration";
+  static String health="Health & nutrition";
 }
