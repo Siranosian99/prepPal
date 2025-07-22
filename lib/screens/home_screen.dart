@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:preppal/consts/texts.dart';
+import 'package:preppal/navigation/navigation_mixin.dart';
 
 import '../widgets/category_icon.dart';
 
@@ -10,53 +11,12 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-  final List<Widget> _pages = [
-    Center(child: Text('Home')),
-    Center(child: Text('Guide')),
-    Center(child: Text('Favourites')),
-    Center(child: Text('Profile')),
-  ];
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
+class _HomeScreenState extends State<HomeScreen> with NavigatorMixin{
   PageController _pageController = PageController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:BottomNavigationBar(
-          currentIndex: _selectedIndex, // current selected index
-          onTap: _onItemTapped,         // change index on tap
-          selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.grey,
-          items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu),
-              label: 'Guides',
-            ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.heart_broken_rounded),
-          label: 'Favourites',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ]),
+
       appBar: AppBar(
         title: Text(AppTexts.prepPal),
         actions: [IconButton(onPressed: () {}, icon: (Icon(Icons.search)))],
