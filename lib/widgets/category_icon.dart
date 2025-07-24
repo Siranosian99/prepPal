@@ -3,15 +3,16 @@ import 'package:preppal/consts/texts.dart';
 
 class CategoryIcon extends StatelessWidget {
   double scale;
+  String imgLink;
   String txt;
-   CategoryIcon({super.key,required this.scale,required this.txt});
+   CategoryIcon({super.key,required this.scale,required this.txt,required this.imgLink});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset('assets/images/foods/banana_pancakes.jpg',scale: scale,),
-        Text(txt)
+        Image.network(imgLink,scale: scale,),
+        Text(txt,maxLines: 1,overflow:TextOverflow.ellipsis ,)
       ],
     );
   }

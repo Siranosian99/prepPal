@@ -2,7 +2,7 @@ class MealsModel {
   String? idIngredient;
   String? strIngredient;
   String? strDescription;
-  Null strType;
+  String? strType;
 
   MealsModel(
       {this.idIngredient,
@@ -18,11 +18,17 @@ class MealsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['idIngredient'] = this.idIngredient;
-    data['strIngredient'] = this.strIngredient;
-    data['strDescription'] = this.strDescription;
-    data['strType'] = this.strType;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['idIngredient'] = idIngredient;
+    data['strIngredient'] = strIngredient;
+    data['strDescription'] = strDescription;
+    data['strType'] = strType;
     return data;
   }
-}
+
+
+  @override
+  String toString(){
+    return '$idIngredient , $strIngredient,$strDescription,strType';
+  }
+  }
