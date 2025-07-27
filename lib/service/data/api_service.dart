@@ -5,6 +5,8 @@ import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meal_items_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 
+import '../../screens/inside_cat.dart';
+
 class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.url));
 
@@ -84,5 +86,22 @@ class ApiService {
 
     return meals;
   }
+  Future<List<MealsbyCat>?> CallByCatInsdie(String category) async {
+    List<MealsbyCat> meals = [];
+    final result = await _dio.get('filter.php?c=$category');
+    try {
+      if (result.statusCode == 200) {
+        List<dynamic> m=result.data['meals'];
+        meals=m.map((e)=>MealsbyCat.fromJson(e)).toList();
+      }
+    }
+    on DioException catch (e) {
+      print(e.error);
+    }
+    catch (e) {
+      print(e);
+    }
 
+    return meals;
+  }
 }
