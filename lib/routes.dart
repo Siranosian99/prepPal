@@ -15,12 +15,20 @@ final GoRouter router = GoRouter(
         return BottomNavBar(child: child); // Contains bottom nav
       },
       routes:[
-    GoRoute(path: '/', name: '/', builder: (context, state) => InsideCat()),
+    GoRoute(path: '/', name: '/', builder: (context, state) => HomeScreen()),
     GoRoute(
       path: '/guide',
       name: 'guide',
       builder: (context, state) => GuideScreen(),
     ),
+        GoRoute(
+          path: '/inside',
+          name: 'inside',
+          builder: (context, state){
+            final extra = state.extra as Map<String, dynamic>?;
+            return InsideCat(category: extra?['category']);
+          } ,
+        ),
     GoRoute(
       path: '/fav',
       name: 'fav',

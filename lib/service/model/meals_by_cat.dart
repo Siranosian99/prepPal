@@ -20,6 +20,6 @@ class MealsbyCat {
   }
   @override
   String toString(){
-    return '$strMeal,$strMealThumb ,$idMeal';
+    return '$strMeal,$strMealThumb,$idMeal';
   }
 }

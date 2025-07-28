@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:preppal/consts/texts.dart';
 import 'package:preppal/navigation/navigation_mixin.dart';
 import 'package:preppal/service/data/api_service.dart';
@@ -35,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> with NavigatorMixin {
     mlsByCt = await _apiService.CallByCat() ?? [];
     mlsCat = await _apiService.CatCall() ?? [];
     // mlsAr=await _apiService.ArCall()??[];
-
     setState(() {
       meals;
     });
@@ -76,10 +76,17 @@ class _HomeScreenState extends State<HomeScreen> with NavigatorMixin {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder:
-                    (context, index) => CategoryIcon(
-                      imgLink: mlsCat[index].strCategoryThumb.toString(),
-                      txt: mlsCat[index].strCategory.toString(),
-                      scale: 3.4,
+                    (context, index) => GestureDetector(
+                      onTap: (){
+                        context.pushNamed('inside',extra:{
+                          'category':mlsCat[index].strCategory
+                        });
+                      },
+                      child: CategoryIcon(
+                        imgLink: mlsCat[index].strCategoryThumb.toString(),
+                        txt: mlsCat[index].strCategory.toString(),
+                        scale: 3.4,
+                      ),
                     ),
                 separatorBuilder: (context, index) => SizedBox(width: 20),
                 itemCount: mlsCat.length,

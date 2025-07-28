@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InsideCatIcon extends StatelessWidget {
   final String imgLink;
@@ -10,24 +11,66 @@ class InsideCatIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Image.network(imgLink),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              imgLink,
+              filterQuality: FilterQuality.high,
+              width: double.infinity,
+              height: 200,
+              fit: BoxFit.cover,
+              errorBuilder:
+                  (_, __, ___) => Container(
+                    height: 200,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.image_not_supported, size: 48),
+                  ),
+            ),
+          ),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(12),
                 bottomRight: Radius.circular(12),
               ),
-              color: Colors.red,
+              color: Colors.grey,
             ),
             height: 50,
             width: double.infinity,
-            child:Column(children: [
-              Text(txt),
-            ],),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      txt,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 2,
+                            color: Colors.grey.shade50,
+                            offset: Offset(1, 1),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(onPressed: (){}, icon: FaIcon(FontAwesomeIcons.heart), )
+              ],
+            ),
           ),
         ],
       ),
