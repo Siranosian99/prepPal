@@ -100,40 +100,61 @@ class ApiService {
     return meals;
   }
 
-  Future<List<MealsById>?> GetMeasById(String mealId) async {
+  Future<List<MealsById>?> GetMeasById(int id,String mealId) async {
     List<MealsById> meals = [];
-    List<String> Ingredient = [];
-    List<String> Measure = [];
-
+    final result = await _dio.get('filter.php?c=$mealId');
     try {
-      final result = await _dio.get('search.php?s=$mealId');
-
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
         meals = m.map((e) => MealsById.fromJson(e)).toList();
-
-        final meal = result.data['meals'];
-
-        for (int i = 1; i <= 20; i++) {
-          final ingredient = meal["strIngredient$i"];
-          if (ingredient != null && ingredient.toString().trim().isNotEmpty) {
-            Ingredient.add(ingredient.toString());
-          }
-          final measure = meal["strMeasure$i"];
-          if (measure != null && measure.toString().trim().isNotEmpty) {
-            Measure.add(measure.toString());
+        for(int i=1;i<=20;i++){
+          if(result.data['meals']["strIngredient$i"] != null){
+            meals[id].strIngredient?.add(result.data['meals']["strIngredient$i"]);
+            print(meals[id].strIngredient);
           }
         }
-        print("Ingredients: $Ingredient");
-        print("Measures: $Measure");
       }
     } on DioException catch (e) {
       print(e.error);
     } catch (e) {
-      print("printing the Error:$e");
+      print(e);
     }
 
     return meals;
   }
-
 }
+// Future<List<MealsById>?> GetMeasById(String mealId) async {
+//     List<MealsById> meals = [];
+//     List<String> Ingredient = [];
+//     List<String> Measure = [];
+//
+//     try {
+//       final result = await _dio.get('search.php?s=$mealId');
+//
+//       if (result.statusCode == 200) {
+//         List<dynamic> m = result.data['meals'];
+//         meals = m.map((e) => MealsById.fromJson(e)).toList();
+//
+//         final meal = result.data['meals'];
+//
+//         for (int i = 1; i <= 20; i++) {
+//           final ingredient = meal["strIngredient$i"];
+//           if (ingredient != null && ingredient.toString().trim().isNotEmpty) {
+//             Ingredient.add(ingredient.toString());
+//           }
+//           final measure = meal["strMeasure$i"];
+//           if (measure != null && measure.toString().trim().isNotEmpty) {
+//             Measure.add(measure.toString());
+//           }
+//         }
+//         print("Ingredients: $Ingredient");
+//         print("Measures: $Measure");
+//       }
+//     } on DioException catch (e) {
+//       print(e.error);
+//     } catch (e) {
+//       print("printing the Error:$e");
+//     }
+//
+//     return meals;
+//   }
