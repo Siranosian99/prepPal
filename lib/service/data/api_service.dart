@@ -5,7 +5,8 @@ import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meal_items_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 
-import '../../screens/inside_cat.dart';
+
+import '../model/meals_by_id.dart';
 
 class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.url));
@@ -99,20 +100,40 @@ class ApiService {
     return meals;
   }
 
-  Future<List<MealsById>?> MealsById(String mealId) async {
+  Future<List<MealsById>?> GetMeasById(String mealId) async {
     List<MealsById> meals = [];
-    final result = await _dio.get('filter.php?c=$category');
+    List<String> Ingredient = [];
+    List<String> Measure = [];
+
     try {
+      final result = await _dio.get('search.php?s=$mealId');
+
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
-        meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
+        meals = m.map((e) => MealsById.fromJson(e)).toList();
+
+        final meal = result.data['meals'];
+
+        for (int i = 1; i <= 20; i++) {
+          final ingredient = meal["strIngredient$i"];
+          if (ingredient != null && ingredient.toString().trim().isNotEmpty) {
+            Ingredient.add(ingredient.toString());
+          }
+          final measure = meal["strMeasure$i"];
+          if (measure != null && measure.toString().trim().isNotEmpty) {
+            Measure.add(measure.toString());
+          }
+        }
+        print("Ingredients: $Ingredient");
+        print("Measures: $Measure");
       }
     } on DioException catch (e) {
       print(e.error);
     } catch (e) {
-      print(e);
+      print("printing the Error:$e");
     }
 
     return meals;
   }
+
 }

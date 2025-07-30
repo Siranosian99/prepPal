@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meal_areas_model.dart';
@@ -28,9 +29,8 @@ class _InsideCatState extends State<InsideCat> {
   Future<void> callData() async {
     _apiService = ApiService();
     meals = await _apiService.CallByCatInsdie(widget.category) ?? [];
-    print("Thisss is Meals Maan:$meals");
     setState(() {
-
+      meals;
     });
   }
 
@@ -42,9 +42,17 @@ class _InsideCatState extends State<InsideCat> {
       body: meals.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.separated(
-        itemBuilder: (context, index) => InsideCatIcon(
-          imgLink: meals[index].strMealThumb.toString(),
-          txt: meals[index].strMeal.toString()
+        itemBuilder: (context, index) => GestureDetector(
+          onTap:(){
+            context.pushNamed("detailed",extra:{
+              'mealId':meals[index].strMeal
+            });
+            print("----------------- printing data:${meals[index].strMeal}-----------------");
+          },
+          child: InsideCatIcon(
+            imgLink: meals[index].strMealThumb.toString(),
+            txt: meals[index].strMeal.toString()
+          ),
         ),
         separatorBuilder: (context, index) => SizedBox(height: 12),
         itemCount: meals.length,

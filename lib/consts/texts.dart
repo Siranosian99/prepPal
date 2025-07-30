@@ -19,4 +19,9 @@ class AppTexts {
   static String themes="Switch Themes";
   static String empty="Empty";
   static String noFood="No favorite recipes added yet";
+  static String detail="Detail";
+  static String about="About";
+  static String ingredients="Ingredient & Measure";
+  static String shopping="Add to Shopping List";
+
 }
