@@ -99,20 +99,29 @@ class ApiService {
     return meals;
   }
 
-  Future<List<MealsById>?> GetMealsById(String mealId)async{
+  Future<List<MealsById>?> GetMealsById(String mealId) async {
     List<MealsById> meals = [];
-    List<String> ingredient=[];
+    List<String> ingredient = [];
+    List<String> measures = [];
+    List<String>all=[];
+
     final result = await _dio.get('lookup.php?i=$mealId');
+
     try {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
         meals = m.map((e) => MealsById.fromJson(e)).toList();
-        final meal=meals[0].strIngredient;
-        for(int i=1;i<=20;i++){
-          ingredient.add(meal.toString());
-        }
 
-        print("---------M IS :$meal");
+        for (int i = 1; i <= 20; i++) {
+          final ing = result.data['meals'][0]['strIngredient$i'];
+          final mes = result.data['meals'][0]['strMeasure$i'];
+          if (ing != null && ing.toString().trim().isNotEmpty) {
+            ingredient.add(ing.toString().trim());
+            measures.add(mes.toString().trim());
+          }
+        }
+        meals[0].strIngredient = ingredient;
+        meals[0].strMeasure = measures;
       }
     } on DioException catch (e) {
       print(e.error);
@@ -122,6 +131,7 @@ class ApiService {
 
     return meals;
   }
+
 
 
 }

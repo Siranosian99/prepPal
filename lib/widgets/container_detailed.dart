@@ -5,11 +5,15 @@ class ContainerDetailed extends StatelessWidget {
   String about;
   String tags;
   String country;
+  String ingredinet;
+  String measure;
    ContainerDetailed({
     super.key,
     required this.about,
      required this.tags,
      required this.country,
+     required this.ingredinet,
+     required this.measure,
   });
 
 
@@ -32,10 +36,20 @@ class ContainerDetailed extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Country:$country",style:TextStyle(
-                backgroundColor:Colors.red
+              Text("Area:$country",style:TextStyle(
+                decoration:TextDecoration.overline,
+                backgroundColor:Colors.white,
+                shadows: [
+                  Shadow(color:Colors.grey,blurRadius: 3,offset:Offset(1,1))
+                ]
               ),),
-              Text(tags),
+              Text(tags,style:TextStyle(
+                  decoration:TextDecoration.overline,
+                  backgroundColor:Colors.white,
+                  shadows: [
+                    Shadow(color:Colors.grey,blurRadius: 3,offset:Offset(1,1))
+                  ]
+              )),
               Divider(color:Colors.black,),
              Text(textAlign: TextAlign.start,
                AppTexts.about,style:TextStyle(
@@ -56,7 +70,7 @@ class ContainerDetailed extends StatelessWidget {
                 ),),
               SizedBox(height: 10,),
               Text(textAlign: TextAlign.start,
-                about,style:TextStyle(
+                ingredinet+measure,style:TextStyle(
                     fontSize:15,
                     fontWeight: FontWeight.w400
                 ),),

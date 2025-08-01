@@ -9,7 +9,6 @@ import '../widgets/inside_cat_icon.dart';
 
 class InsideCat extends StatefulWidget {
   final String category;
-
   const InsideCat({super.key, required this.category});
 
   @override
@@ -37,7 +36,7 @@ class _InsideCatState extends State<InsideCat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(title:Text(AppTexts.breakf),
+      appBar:AppBar(title:Text(widget.category),
       centerTitle: true,),
       body: meals.isEmpty
           ? Center(child: CircularProgressIndicator())
@@ -45,7 +44,6 @@ class _InsideCatState extends State<InsideCat> {
         itemBuilder: (context, index) => GestureDetector(
           onTap:(){
             context.pushNamed("detailed",extra:{
-              'index':index,
               'imgLink':meals[index].strMealThumb,
               'mealId':meals[index].idMeal,
               'mealName':meals[index].strMeal

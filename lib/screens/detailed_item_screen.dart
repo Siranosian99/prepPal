@@ -39,13 +39,13 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: meals.isEmpty ?Center(child: CircularProgressIndicator()):Column(
         children: [
           // Image with food name and heart icon
           Stack(
             children: [
               Image.network(
-              widget.imgLink,
+                widget.imgLink,
                 width: double.infinity,
                 height: 250,
                 fit: BoxFit.cover,
@@ -59,7 +59,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
                   children: [
                     Expanded(
                       child: Text(
-                       widget.mealName,
+                        widget.mealName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,
@@ -76,8 +76,6 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        print(meals[0].strMeasure.toString()?? '');
-                        // print(meals[].strInstructions?? '');
                       },
                       icon: Icon(Icons.favorite_border),
                       color: Colors.blueAccent,
@@ -89,9 +87,9 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
           ),
 
           // Main container below image
-          ContainerDetailed(tags:meals[0].strTags ?? "OOPS there is No Tags",country:meals[0].strArea?? "OOPS",about:meals[0].strInstructions.toString(),)
+          ContainerDetailed(measure: meals[0].strMeasure.toString(),ingredinet:meals[0].strIngredient.toString(),tags:meals[0].strTags ?? "OOPS there is No Tags",country:meals[0].strArea?? "OOPS",about:meals[0].strInstructions.toString(),)
         ],
-      ),
+      )
     );
   }
 }
