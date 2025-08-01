@@ -103,10 +103,19 @@ class _HomeScreenState extends State<HomeScreen> with NavigatorMixin {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder:
-                    (context, index) => CategoryIcon(
-                      imgLink: mlsByCt[index].strMealThumb.toString(),
-                      txt: mlsByCt[index].strMeal.toString(),
-                      scale: 4,
+                    (context, index) => GestureDetector(
+                      onTap: (){
+                        context.pushNamed("detailed",extra:{
+                          'imgLink':mlsByCt[index].strMealThumb,
+                          'mealId':mlsByCt[index].idMeal,
+                          'mealName':mlsByCt[index].strMeal
+                        });
+                      },
+                      child: CategoryIcon(
+                        imgLink: mlsByCt[index].strMealThumb.toString(),
+                        txt: mlsByCt[index].strMeal.toString(),
+                        scale: 4,
+                      ),
                     ),
                 separatorBuilder: (context, index) => SizedBox(width: 20),
                 itemCount: mlsByCt.length,

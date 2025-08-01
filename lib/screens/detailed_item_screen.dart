@@ -87,7 +87,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
           ),
 
           // Main container below image
-          ContainerDetailed(measure: meals[0].strMeasure.toString(),ingredinet:meals[0].strIngredient.toString(),tags:meals[0].strTags ?? "OOPS there is No Tags",country:meals[0].strArea?? "OOPS",about:meals[0].strInstructions.toString(),)
+          ContainerDetailed(ingredinet:meals[0].strIngredient?.join('')?? "No ingredients available",tags:meals[0].strTags ?? "OOPS there is No Tags",country:meals[0].strArea?? "OOPS",about:meals[0].strInstructions.toString(),)
         ],
       )
     );

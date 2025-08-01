@@ -6,14 +6,12 @@ class ContainerDetailed extends StatelessWidget {
   String tags;
   String country;
   String ingredinet;
-  String measure;
    ContainerDetailed({
     super.key,
     required this.about,
      required this.tags,
      required this.country,
      required this.ingredinet,
-     required this.measure,
   });
 
 
@@ -70,7 +68,7 @@ class ContainerDetailed extends StatelessWidget {
                 ),),
               SizedBox(height: 10,),
               Text(textAlign: TextAlign.start,
-                ingredinet+measure,style:TextStyle(
+                ingredinet,style:TextStyle(
                     fontSize:15,
                     fontWeight: FontWeight.w400
                 ),),
