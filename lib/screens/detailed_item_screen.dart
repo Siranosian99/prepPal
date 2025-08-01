@@ -6,11 +6,10 @@ import 'package:preppal/service/model/meals_by_id.dart';
 import '../widgets/container_detailed.dart'; // Assume this defines AppTexts.about
 
 class DetailedItemScreen extends StatefulWidget {
-  int index;
   String mealId;
   String imgLink;
   String mealName;
-  DetailedItemScreen({super.key,required this.mealId,required this.imgLink,required this.mealName,required this.index});
+  DetailedItemScreen({super.key,required this.mealId,required this.imgLink,required this.mealName});
 
   @override
   State<DetailedItemScreen> createState() => _DetailedItemScreenState();
@@ -33,7 +32,6 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
     setState(() {
       meals;
     });
-    print(meals);
     return null;
   }
 
@@ -59,28 +57,30 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                     widget.mealName,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black54,
-                            offset: Offset(1, 1),
-                            blurRadius: 2,
-                          ),
-                        ],
+                    Expanded(
+                      child: Text(
+                       widget.mealName,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black54,
+                              offset: Offset(1, 1),
+                              blurRadius: 2,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     IconButton(
                       onPressed: () {
-                        print(meals[0].strInstructions.toString()?? '');
+                        print(meals[0].strMeasure.toString()?? '');
                         // print(meals[].strInstructions?? '');
                       },
                       icon: Icon(Icons.favorite_border),
-                      color: Colors.red,
+                      color: Colors.blueAccent,
                     ),
                   ],
                 ),
@@ -89,7 +89,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
           ),
 
           // Main container below image
-
+          ContainerDetailed(tags:meals[0].strTags ?? "OOPS there is No Tags",country:meals[0].strArea?? "OOPS",about:meals[0].strInstructions.toString(),)
         ],
       ),
     );

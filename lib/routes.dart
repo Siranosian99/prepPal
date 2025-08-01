@@ -51,7 +51,6 @@ final GoRouter router = GoRouter(
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>?;
             return DetailedItemScreen(
-                index:extra?['index'],
                 mealName: extra?['mealName'],
                 imgLink:extra?['imgLink'],
                 mealId: extra?['mealId']);

@@ -101,11 +101,18 @@ class ApiService {
 
   Future<List<MealsById>?> GetMealsById(String mealId)async{
     List<MealsById> meals = [];
+    List<String> ingredient=[];
     final result = await _dio.get('lookup.php?i=$mealId');
     try {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
         meals = m.map((e) => MealsById.fromJson(e)).toList();
+        final meal=meals[0].strIngredient;
+        for(int i=1;i<=20;i++){
+          ingredient.add(meal.toString());
+        }
+
+        print("---------M IS :$meal");
       }
     } on DioException catch (e) {
       print(e.error);

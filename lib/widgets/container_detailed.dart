@@ -3,9 +3,13 @@ import '../consts/texts.dart';
 
 class ContainerDetailed extends StatelessWidget {
   String about;
+  String tags;
+  String country;
    ContainerDetailed({
     super.key,
-    required this.about
+    required this.about,
+     required this.tags,
+     required this.country,
   });
 
 
@@ -24,51 +28,58 @@ class ContainerDetailed extends StatelessWidget {
         ),
         width: double.infinity,
         height:665,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-           Text(textAlign: TextAlign.start,
-             AppTexts.about,style:TextStyle(
-               fontSize:20,
-               fontWeight: FontWeight.bold
-           ),),
-            SizedBox(height: 10,),
-            Text(textAlign: TextAlign.start,
-              about,style:TextStyle(
-                  fontSize:15,
-                  fontWeight: FontWeight.w400
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Country:$country",style:TextStyle(
+                backgroundColor:Colors.red
               ),),
-            Divider(color:Colors.black,),
-            Text(textAlign: TextAlign.start,
-              AppTexts.ingredients,style:TextStyle(
-                  fontSize:20,
-                  fontWeight: FontWeight.bold
-              ),),
-            SizedBox(height: 10,),
-            Text(textAlign: TextAlign.start,
-              about,style:TextStyle(
-                  fontSize:15,
-                  fontWeight: FontWeight.w400
-              ),),
-            Divider(color:Colors.black,),
-            ElevatedButton(
-              onPressed: () {
-                // Add your logic here
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // background color
-                foregroundColor: Colors.white, // text color
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+              Text(tags),
+              Divider(color:Colors.black,),
+             Text(textAlign: TextAlign.start,
+               AppTexts.about,style:TextStyle(
+                 fontSize:20,
+                 fontWeight: FontWeight.bold
+             ),),
+              SizedBox(height: 10,),
+              Text(textAlign: TextAlign.start,
+                about,style:TextStyle(
+                    fontSize:15,
+                    fontWeight: FontWeight.w400
+                ),),
+              Divider(color:Colors.black,),
+              Text(textAlign: TextAlign.start,
+                AppTexts.ingredients,style:TextStyle(
+                    fontSize:20,
+                    fontWeight: FontWeight.bold
+                ),),
+              SizedBox(height: 10,),
+              Text(textAlign: TextAlign.start,
+                about,style:TextStyle(
+                    fontSize:15,
+                    fontWeight: FontWeight.w400
+                ),),
+              Divider(color:Colors.black,),
+              ElevatedButton(
+                onPressed: () {
+                  // Add your logic here
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green, // background color
+                  foregroundColor: Colors.white, // text color
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  'Add to Shopping List',
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
-              child: const Text(
-                'Add to Shopping List',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
+            ],
+          ),
         )
       ),
     );
