@@ -100,17 +100,21 @@ class ApiService {
     return meals;
   }
 
-  Future<List<MealsById>?> GetMeasById(int id,String mealId) async {
+  Future<List<MealsById>?> GetMeasById(String mealId) async {
     List<MealsById> meals = [];
-    final result = await _dio.get('filter.php?c=$mealId');
+    List<String>ingredient=[];
+    List<String>measure=[];
+    final result = await _dio.get('search.php?s=$mealId');
     try {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
-        meals = m.map((e) => MealsById.fromJson(e)).toList();
+        meals = m.map((e) => MealsById.fromJson(e as Map<String,dynamic>)).toList();
         for(int i=1;i<=20;i++){
-          if(result.data['meals']["strIngredient$i"] != null){
-            meals[id].strIngredient?.add(result.data['meals']["strIngredient$i"]);
-            print(meals[id].strIngredient);
+          final meal=result.data['meals'];
+          final data= meal["strIngredient$i"];
+          if(data != null && data != ''){
+            ingredient.add(data.toString());
+            print(ingredient);
           }
         }
       }

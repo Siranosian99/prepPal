@@ -17,7 +17,7 @@ final GoRouter router = GoRouter(
         return BottomNavBar(child: child); // Contains bottom nav
       },
       routes:[
-    GoRoute(path: '/', name: '/', builder: (context, state) => DetailedItemScreen()),
+    GoRoute(path: '/', name: '/', builder: (context, state) => HomeScreen()),
     GoRoute(
       path: '/guide',
       name: 'guide',

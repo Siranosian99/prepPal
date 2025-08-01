@@ -6,9 +6,8 @@ import 'package:preppal/service/model/meals_by_id.dart';
 import '../widgets/container_detailed.dart'; // Assume this defines AppTexts.about
 
 class DetailedItemScreen extends StatefulWidget {
-  String? mealId;
-
-  DetailedItemScreen({super.key,this.mealId});
+  String mealId;
+  DetailedItemScreen({super.key,required this.mealId});
 
   @override
   State<DetailedItemScreen> createState() => _DetailedItemScreenState();
@@ -27,7 +26,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
 
   Future<List<MealsById>?> fetchData() async {
     _apiService = ApiService();
-    meals = await _apiService.GetMeasById(widget.mealId?? '') ?? [];
+    meals = await _apiService.GetMeasById(widget.mealId) ?? [];
     setState(() {
       meals;
     });
@@ -83,7 +82,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
               ),
             ],
           ),
-          ContainerDetailed(about:meals[0].strInstructions??'NO Data',),
+
           // Main container below image
 
         ],

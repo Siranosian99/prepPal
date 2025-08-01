@@ -28,7 +28,7 @@ class _InsideCatState extends State<InsideCat> {
 
   Future<void> callData() async {
     _apiService = ApiService();
-    meals = await _apiService.CallByCatInsdie(widget.category) ?? [];
+    meals = await _apiService.CallByCatInsdie(widget.category) ??[];
     setState(() {
       meals;
     });
@@ -45,6 +45,7 @@ class _InsideCatState extends State<InsideCat> {
         itemBuilder: (context, index) => GestureDetector(
           onTap:(){
             context.pushNamed("detailed",extra:{
+              index:index,
               'mealId':meals[index].strMeal
             });
             print("----------------- printing data:${meals[index].strMeal}-----------------");
