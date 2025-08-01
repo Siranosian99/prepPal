@@ -16,41 +16,48 @@ final GoRouter router = GoRouter(
       builder: (context, state, child) {
         return BottomNavBar(child: child); // Contains bottom nav
       },
-      routes:[
-    GoRoute(path: '/', name: '/', builder: (context, state) => HomeScreen()),
-    GoRoute(
-      path: '/guide',
-      name: 'guide',
-      builder: (context, state) => GuideScreen(),
-    ),
+      routes: [
+        GoRoute(
+          path: '/',
+          name: '/',
+          builder: (context, state) => HomeScreen(),
+        ),
+        GoRoute(
+          path: '/guide',
+          name: 'guide',
+          builder: (context, state) => GuideScreen(),
+        ),
         GoRoute(
           path: '/inside',
           name: 'inside',
-          builder: (context, state){
+          builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>?;
             return InsideCat(category: extra?['category']);
-          } ,
+          },
         ),
-    GoRoute(
-      path: '/fav',
-      name: 'fav',
-      builder: (context, state) => FavouriteScreen(),
-    ),
-    GoRoute(
-      path: '/settings',
-      name: 'settings',
-      builder: (context, state) => PersonelScreen(),
-    ),
+        GoRoute(
+          path: '/fav',
+          name: 'fav',
+          builder: (context, state) => FavouriteScreen(),
+        ),
+        GoRoute(
+          path: '/settings',
+          name: 'settings',
+          builder: (context, state) => PersonelScreen(),
+        ),
         GoRoute(
           path: '/detailed',
           name: 'detailed',
-          builder: (context, state){
+          builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>?;
-            return DetailedItemScreen(mealId:extra?['mealId'],);
-          } ,
+            return DetailedItemScreen(
+                index:extra?['index'],
+                mealName: extra?['mealName'],
+                imgLink:extra?['imgLink'],
+                mealId: extra?['mealId']);
+          },
         ),
+      ],
+    ),
   ],
-    )
-
-  ]
 );

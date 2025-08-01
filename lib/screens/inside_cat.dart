@@ -45,10 +45,12 @@ class _InsideCatState extends State<InsideCat> {
         itemBuilder: (context, index) => GestureDetector(
           onTap:(){
             context.pushNamed("detailed",extra:{
-              index:index,
-              'mealId':meals[index].strMeal
+              'index':index,
+              'imgLink':meals[index].strMealThumb,
+              'mealId':meals[index].idMeal,
+              'mealName':meals[index].strMeal
             });
-            print("----------------- printing data:${meals[index].strMeal}-----------------");
+            // print("----------------- printing data:${meals[index].strMeal}-----------------");
           },
           child: InsideCatIcon(
             imgLink: meals[index].strMealThumb.toString(),

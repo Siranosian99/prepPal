@@ -12,19 +12,20 @@ class MealsById {
   List<String>? strMeasure;
   String? strSource;
 
-  MealsById(
-      {this.idMeal,
-        this.strMeal,
-        this.strMealAlternate,
-        this.strCategory,
-        this.strArea,
-        this.strInstructions,
-        this.strMealThumb,
-        this.strTags,
-        this.strYoutube,
-        this.strIngredient,
-        this.strMeasure,
-        this.strSource});
+  MealsById({
+    this.idMeal,
+    this.strMeal,
+    this.strMealAlternate,
+    this.strCategory,
+    this.strArea,
+    this.strInstructions,
+    this.strMealThumb,
+    this.strTags,
+    this.strYoutube,
+    this.strIngredient,
+    this.strMeasure,
+    this.strSource,
+  });
 
   MealsById.fromJson(Map<String, dynamic> json) {
     idMeal = json['idMeal'];
@@ -56,5 +57,10 @@ class MealsById {
     data['strMeasure'] = this.strMeasure;
     data['strSource'] = this.strSource;
     return data;
+  }
+
+  @override
+  String toString() {
+    return '$idMeal,$strMeal,$strMealAlternate,$strCategory,$strArea,$strInstructions,$strMealThumb,$strTags,$strYoutube,$strIngredient,$strMeasure,$strSource';
   }
 }

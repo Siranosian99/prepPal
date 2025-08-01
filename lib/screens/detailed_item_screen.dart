@@ -6,8 +6,11 @@ import 'package:preppal/service/model/meals_by_id.dart';
 import '../widgets/container_detailed.dart'; // Assume this defines AppTexts.about
 
 class DetailedItemScreen extends StatefulWidget {
+  int index;
   String mealId;
-  DetailedItemScreen({super.key,required this.mealId});
+  String imgLink;
+  String mealName;
+  DetailedItemScreen({super.key,required this.mealId,required this.imgLink,required this.mealName,required this.index});
 
   @override
   State<DetailedItemScreen> createState() => _DetailedItemScreenState();
@@ -26,10 +29,12 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
 
   Future<List<MealsById>?> fetchData() async {
     _apiService = ApiService();
-    meals = await _apiService.GetMeasById(widget.mealId) ?? [];
+    meals = await _apiService.GetMealsById(widget.mealId) ?? [];
     setState(() {
       meals;
     });
+    print(meals);
+    return null;
   }
 
 
@@ -42,7 +47,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
           Stack(
             children: [
               Image.network(
-             "https://picsum.photos/200/300",
+              widget.imgLink,
                 width: double.infinity,
                 height: 250,
                 fit: BoxFit.cover,
@@ -55,7 +60,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                     " meals.strMeal ?? ''",
+                     widget.mealName,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
@@ -71,7 +76,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        // print(meals[].strInstructions?? '');
+                        print(meals[0].strInstructions.toString()?? '');
                         // print(meals[].strInstructions?? '');
                       },
                       icon: Icon(Icons.favorite_border),
