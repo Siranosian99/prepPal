@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:preppal/screens/home_screen.dart';
+
 
 import '../consts/texts.dart';
 import '../navigation/navigation_mixin.dart';
-import '../widgets/category_icon.dart';
 class BottomNavBar extends StatefulWidget {
   final Widget child;
   const BottomNavBar({super.key,required this.child});

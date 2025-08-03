@@ -1,13 +1,15 @@
 import 'package:go_router/go_router.dart';
-import 'package:preppal/screens/detailed_item_screen.dart';
-import 'package:preppal/screens/favourite.dart';
-import 'package:preppal/screens/guide_screen.dart';
-import 'package:preppal/screens/home_screen.dart';
-import 'package:preppal/screens/inside_cat.dart';
-import 'package:preppal/screens/item_screen.dart';
-import 'package:preppal/screens/main_screen.dart';
-import 'package:preppal/screens/personel_screen.dart';
+import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
+import 'package:preppal/presentation/screens/detailed_item_screen.dart';
+import 'package:preppal/presentation/screens/favourite.dart';
+import 'package:preppal/presentation/screens/guide_screen.dart';
+import 'package:preppal/presentation/screens/home_screen.dart';
+import 'package:preppal/presentation/screens/inside_cat.dart';
+import 'package:preppal/presentation/screens/personel_screen.dart';
+import 'package:preppal/service/data/api_service.dart';
+import 'package:preppal/service/repository.dart';
 import 'package:preppal/utilites/bottom_nav_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -20,7 +22,14 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/',
           name: '/',
-          builder: (context, state) => HomeScreen(),
+          builder: (context, state) {
+            return BlocProvider(
+              create: (context) => PrepPalCubit(
+                PrepPalRepository(apiService:ApiService())
+              ),
+              child: HomeScreen(),
+            );
+          },
         ),
         GoRoute(
           path: '/guide',
@@ -51,9 +60,10 @@ final GoRouter router = GoRouter(
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>?;
             return DetailedItemScreen(
-                mealName: extra?['mealName'],
-                imgLink:extra?['imgLink'],
-                mealId: extra?['mealId']);
+              mealName: extra?['mealName'],
+              imgLink: extra?['imgLink'],
+              mealId: extra?['mealId'],
+            );
           },
         ),
       ],

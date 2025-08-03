@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../consts/texts.dart';
+
+import '../../consts/texts.dart';
 
 class ContainerDetailed extends StatelessWidget {
   String about;

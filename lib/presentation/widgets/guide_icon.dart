@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../consts/texts.dart';
+import '../../consts/texts.dart';
 
 class GuideIcon extends StatelessWidget {
   const GuideIcon({super.key});

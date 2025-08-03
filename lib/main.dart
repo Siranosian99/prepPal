@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:preppal/routes.dart';
-import 'package:preppal/screens/favourite.dart';
-import 'package:preppal/screens/guide_screen.dart';
-import 'package:preppal/screens/personel_screen.dart';
-import 'screens/home_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }

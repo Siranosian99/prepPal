@@ -4,7 +4,7 @@ import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meal_areas_model.dart';
 
-import '../service/model/meals_by_cat.dart';
+import '../../service/model/meals_by_cat.dart';
 import '../widgets/inside_cat_icon.dart';
 
 class InsideCat extends StatefulWidget {

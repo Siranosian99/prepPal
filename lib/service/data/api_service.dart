@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:preppal/service/data/api_consts.dart';
+import 'package:preppal/consts/api_consts.dart';
 import 'package:preppal/service/model/meal_areas_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meal_items_model.dart';

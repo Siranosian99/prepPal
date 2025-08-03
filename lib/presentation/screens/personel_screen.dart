@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:preppal/consts/texts.dart';
-import 'package:preppal/widgets/settings_items.dart';
+
+import '../widgets/settings_items.dart';
 
 class PersonelScreen extends StatefulWidget {
   const PersonelScreen({super.key});
