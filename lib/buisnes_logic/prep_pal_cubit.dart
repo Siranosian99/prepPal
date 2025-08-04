@@ -11,13 +11,12 @@ class PrepPalCubit extends Cubit<PrepPalState> {
 
   final PrepPalRepository repository;
   List<MealsCat> cat=[];
-  
-  List<MealsCat> getAllCatagories(){
-    repository.CatCall().then((cat){
-      emit(PrepPalLoaded(cat: cat?? []));
-      this.cat=cat?? [];
-    });
-    
- return cat;
+  List<MealsbyCat> insideCat=[];
+
+  Future<void>getAllCatagories(String category)async {
+    cat=await repository.CatCall() ?? [];
+    insideCat= await repository.InsideCat(category) ?? [];
+    emit(CatLoaded(cat: cat, insideCat: insideCat));
   }
+
 }

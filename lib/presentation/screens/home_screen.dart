@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 import 'package:preppal/consts/texts.dart';
 import 'package:preppal/navigation/navigation_mixin.dart';
@@ -22,30 +23,31 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with NavigatorMixin {
+class _HomeScreenState extends State<HomeScreen> with NavigatorMixin , TickerProviderStateMixin{
   final PageController _pageController = PageController();
+  late final AnimationController _animationController;
   List<MealsModel> meals = [];
   List<MealsCat> mlsCat = [];
   List<MealsbyCat> mlsByCt = [];
   late ApiService _apiService;
-  late final cubit;
+
 
   @override
   void initState() {
     callData();
-    cubit= BlocProvider.of<PrepPalCubit>(context).getAllCatagories();
+    // BlocProvider.of<PrepPalCubit>(context).getAllCatagories();
+    BlocProvider.of<PrepPalCubit>(context).getAllCatagories("SeaFood");
+    _animationController=AnimationController(duration:Duration(seconds: 3), vsync: this)..repeat();
     super.initState();
   }
 
   Future<void> callData() async {
     _apiService = ApiService();
     // meals=await _apiService.ItemsCall()?? [];
-    mlsByCt = await _apiService.CallByCat() ?? [];
+    // mlsByCt = await _apiService.CallByCat() ?? [];
     // mlsCat = await _apiService.CatCall() ?? [];
     // mlsAr=await _apiService.ArCall()??[];
-    setState(() {
-      meals;
-    });
+
     print(meals);
   }
 
@@ -57,8 +59,9 @@ class _HomeScreenState extends State<HomeScreen> with NavigatorMixin {
         actions: [IconButton(onPressed: () {}, icon: (Icon(Icons.search)))],
       ),
       body: BlocBuilder<PrepPalCubit,PrepPalState>(builder: (context,state){
-       if(state is PrepPalLoaded) {
+       if(state is CatLoaded) {
          mlsCat = state.cat;
+         mlsByCt=state.insideCat;
          return Padding(
            padding: const EdgeInsets.all(10),
            child: Column(
@@ -137,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> with NavigatorMixin {
            ),
          );
        }
-       return const Center(child: Text('Welcome! Load something...'));
+       return Lottie.asset('assets/lottie/loading_food.json',repeat: true,frameRate: FrameRate(120),controller:_animationController);
       })
     );
   }

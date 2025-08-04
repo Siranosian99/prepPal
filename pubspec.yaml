@@ -40,6 +40,7 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   flutter_bloc: ^9.1.1
   bloc: ^9.0.0
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/images/categories/
     - assets/images/guide/
     - assets/images/logo/
+    - assets/lottie/loading_food.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

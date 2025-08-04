@@ -5,9 +5,10 @@ sealed class PrepPalState {}
 
 final class PrepPalInitial extends PrepPalState {}
 
-final class PrepPalLoaded extends PrepPalState {
+final class CatLoaded extends PrepPalState {
   late List<MealsCat> cat;
-
-  PrepPalLoaded({required this.cat});
+  late List<MealsbyCat> insideCat;
+  CatLoaded({required this.cat,required this.insideCat});
 }
-final class PrepPalError extends PrepPalState {}
+final class  CatError extends PrepPalState {}
+

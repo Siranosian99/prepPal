@@ -25,7 +25,7 @@ final GoRouter router = GoRouter(
           builder: (context, state) {
             return BlocProvider(
               create: (context) => PrepPalCubit(
-                PrepPalRepository(apiService:ApiService())
+                PrepPalRepository(apiService:ApiService())..CatCall()
               ),
               child: HomeScreen(),
             );
