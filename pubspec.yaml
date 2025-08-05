@@ -71,6 +71,7 @@ flutter:
     - assets/images/guide/
     - assets/images/logo/
     - assets/lottie/loading_food.json
+    - assets/lottie/plant_loader.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -102,7 +102,6 @@ class ApiService {
     List<MealsById> meals = [];
     List<String> ingredient = [];
     List<String> measures = [];
-    List<String> all = [];
 
     final result = await _dio.get('lookup.php?i=$mealId');
 
@@ -117,7 +116,44 @@ class ApiService {
           if (ing != null && ing.toString().trim().isNotEmpty) {
             // ingredient.add(ing.toString().trim());
             // measures.add(mes.toString().trim());
-            ingredient.add('$i━ ${ing.toString().trim()} :${mes.toString().trim()}\n');
+            ingredient.add(
+              '$i━ ${ing.toString().trim()} :${mes.toString().trim()}\n',
+            );
+          }
+        }
+        meals[0].strIngredient = ingredient;
+        meals[0].strMeasure = measures;
+      }
+    } on DioException catch (e) {
+      print(e.error);
+    } catch (e) {
+      print(e);
+    }
+
+    return meals;
+  }
+
+  Future<List<MealsById>?> GetRandomMeal() async {
+    List<MealsById> meals = [];
+    List<String> ingredient = [];
+    List<String> measures = [];
+
+    final result = await _dio.get('random.php');
+
+    try {
+      if (result.statusCode == 200) {
+        List<dynamic> m = result.data['meals'];
+        meals = m.map((e) => MealsById.fromJson(e)).toList();
+
+        for (int i = 1; i <= 20; i++) {
+          final ing = result.data['meals'][0]['strIngredient$i'];
+          final mes = result.data['meals'][0]['strMeasure$i'];
+          if (ing != null && ing.toString().trim().isNotEmpty) {
+            // ingredient.add(ing.toString().trim());
+            // measures.add(mes.toString().trim());
+            ingredient.add(
+              '$i━ ${ing.toString().trim()} :${mes.toString().trim()}\n',
+            );
           }
         }
         meals[0].strIngredient = ingredient;

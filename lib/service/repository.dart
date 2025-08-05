@@ -1,5 +1,6 @@
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
+import 'package:preppal/service/model/meals_by_id.dart';
 
 import 'model/meal_cat_model.dart';
 
@@ -13,5 +14,11 @@ class PrepPalRepository {
   }
   Future<List<MealsbyCat>?> InsideCat(String category) async {
     return await apiService.CallByCatInsdie(category);
+  }
+  Future<List<MealsById>?> MealbyId(String category) async {
+    return await apiService.GetMealsById(category);
+  }
+  Future<List<MealsById>?> RandomMeal() async {
+    return await apiService.GetRandomMeal();
   }
 }

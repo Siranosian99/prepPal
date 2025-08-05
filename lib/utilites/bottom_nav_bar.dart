@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:preppal/utilites/navigation_mixin.dart';
 
 
 import '../consts/texts.dart';
-import '../navigation/navigation_mixin.dart';
 class BottomNavBar extends StatefulWidget {
   final Widget child;
   const BottomNavBar({super.key,required this.child});

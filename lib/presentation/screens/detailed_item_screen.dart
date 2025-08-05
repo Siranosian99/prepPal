@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
@@ -9,89 +12,115 @@ class DetailedItemScreen extends StatefulWidget {
   String mealId;
   String imgLink;
   String mealName;
-  DetailedItemScreen({super.key,required this.mealId,required this.imgLink,required this.mealName});
+
+  DetailedItemScreen({
+    super.key,
+    required this.mealId,
+    required this.imgLink,
+    required this.mealName,
+  });
 
   @override
   State<DetailedItemScreen> createState() => _DetailedItemScreenState();
 }
 
-class _DetailedItemScreenState extends State<DetailedItemScreen> {
+class _DetailedItemScreenState extends State<DetailedItemScreen>
+    with TickerProviderStateMixin {
   List<MealsById> meals = [];
-  late final ApiService _apiService;
+
+  late final AnimationController _animationController;
 
   // Dummy data
   @override
   void initState() {
-    fetchData();
+    BlocProvider.of<PrepPalCubit>(context).getMealById(widget.mealId);
+    _animationController = AnimationController(
+      duration: Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
     super.initState();
-  }
-
-  Future<List<MealsById>?> fetchData() async {
-    _apiService = ApiService();
-    meals = await _apiService.GetMealsById(widget.mealId) ?? [];
-    setState(() {
-      meals;
-    });
-    return null;
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: meals.isEmpty ?Center(child: CircularProgressIndicator()):Column(
-        children: [
-          // Image with food name and heart icon
-          Stack(
-            children: [
-              Image.network(
-                widget.imgLink,
-                width: double.infinity,
-                height: 250,
-                fit: BoxFit.cover,
-              ),
-              Positioned(
-                bottom: 20,
-                left: 20,
-                right: 20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: BlocBuilder<PrepPalCubit, PrepPalState>(
+        builder: (context, state) {
+          if (state is MealIdLoaded) {
+            meals = state.meal;
+            return meals.isEmpty
+                ? Center(child: CircularProgressIndicator())
+                : Column(
                   children: [
-                    Expanded(
-                      child: Text(
-                        widget.mealName,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black54,
-                              offset: Offset(1, 1),
-                              blurRadius: 2,
-                            ),
-                          ],
+                    // Image with food name and heart icon
+                    Stack(
+                      children: [
+                        Image.network(
+                          widget.imgLink,
+                          width: double.infinity,
+                          height: 250,
+                          fit: BoxFit.cover,
                         ),
-                      ),
+                        Positioned(
+                          bottom: 20,
+                          left: 20,
+                          right: 20,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  widget.mealName,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors.black54,
+                                        offset: Offset(1, 1),
+                                        blurRadius: 2,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.favorite_border),
+                                color: Colors.blueAccent,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      onPressed: () {
-                      },
-                      icon: Icon(Icons.favorite_border),
-                      color: Colors.blueAccent,
+
+                    // Main container below image
+                    ContainerDetailed(
+                      ingredinet:
+                          meals[0].strIngredient?.join('') ??
+                          "No ingredients available",
+                      tags: meals[0].strTags ?? "OOPS there is No Tags",
+                      country: meals[0].strArea ?? "OOPS",
+                      about: meals[0].strInstructions.toString(),
                     ),
                   ],
-                ),
-              ),
-            ],
-          ),
-
-          // Main container below image
-          ContainerDetailed(ingredinet:meals[0].strIngredient?.join('')?? "No ingredients available",tags:meals[0].strTags ?? "OOPS there is No Tags",country:meals[0].strArea?? "OOPS",about:meals[0].strInstructions.toString(),)
-        ],
-      )
+                );
+          }
+          return Center(
+            child: Lottie.asset(
+              'assets/lottie/plant_loader.json',
+              repeat: true,
+              frameRate: FrameRate(120),
+              controller: _animationController,
+              width: 100,
+              height: 100,
+            ),
+          );
+        },
+      ),
     );
   }
 }
-
-

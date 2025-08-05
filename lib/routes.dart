@@ -59,11 +59,12 @@ final GoRouter router = GoRouter(
           name: 'detailed',
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>?;
-            return DetailedItemScreen(
+            return BlocProvider(create: (context)=>PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+            child:  DetailedItemScreen(
               mealName: extra?['mealName'],
               imgLink: extra?['imgLink'],
               mealId: extra?['mealId'],
-            );
+            ),);
           },
         ),
       ],
