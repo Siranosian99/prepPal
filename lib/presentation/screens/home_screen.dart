@@ -23,33 +23,31 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with NavigatorMixin, TickerProviderStateMixin {
-  final PageController _pageController = PageController();
+  // late final PageController _pageController;
   late final AnimationController _animationController;
   List<MealsModel> meals = [];
   List<MealsCat> mlsCat = [];
   List<MealsbyCat> mlsByCt = [];
-  late ApiService _apiService;
+  int _pageIndex = 0;
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
-    callData();
-    // BlocProvider.of<PrepPalCubit>(context).getAllCatagories();
+    // _pageController = PageController();
     BlocProvider.of<PrepPalCubit>(context).getAllCatagories("SeaFood");
     _animationController = AnimationController(
       duration: Duration(seconds: 3),
       vsync: this,
     )..repeat();
+
     super.initState();
   }
 
-  Future<void> callData() async {
-    _apiService = ApiService();
-    // meals=await _apiService.ItemsCall()?? [];
-    // mlsByCt = await _apiService.CallByCat() ?? [];
-    // mlsCat = await _apiService.CatCall() ?? [];
-    // mlsAr=await _apiService.ArCall()??[];
 
-    print(meals);
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,7 +55,20 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(AppTexts.prepPal),
-        actions: [IconButton(onPressed: () {}, icon: (Icon(Icons.search)))],
+        actions: [
+          IconButton(
+            onPressed: () {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _pageController.animateToPage(
+                  3,
+                  duration: Duration(seconds: 1),
+                  curve: Curves.easeInOut,
+                );
+              });
+            },
+            icon: (Icon(Icons.search)),
+          ),
+        ],
       ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
@@ -71,14 +82,18 @@ class _HomeScreenState extends State<HomeScreen>
                 children: [
                   SizedBox(
                     height: 200,
-                    child: PageView.builder(
+                    child: PageView(
+                      onPageChanged:(index){
+
+                      },
+                      physics: NeverScrollableScrollPhysics(),
                       controller: _pageController,
-                      itemCount: 3,
-                      itemBuilder:
-                          (context, index) => Image.network(
-                            'https://picsum.photos/200',
-                            scale: 1,
-                          ),
+                      // default starts at index 0
+                      children: [
+                        Container(color: Colors.red), // index 0
+                        Container(color: Colors.green), // index 1
+                        Container(color: Colors.blue), // index 2
+                      ],
                     ),
                   ),
                   SizedBox(height: 25),
