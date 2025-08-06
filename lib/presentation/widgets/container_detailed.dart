@@ -1,18 +1,22 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:preppal/utilites/url_open.dart';
 
 import '../../consts/texts.dart';
 
-class ContainerDetailed extends StatelessWidget {
+class ContainerDetailed extends StatelessWidget with urlLunch {
   String about;
   String tags;
   String country;
   String ingredinet;
+  String link;
    ContainerDetailed({
     super.key,
     required this.about,
      required this.tags,
      required this.country,
      required this.ingredinet,
+     required this.link,
   });
 
 
@@ -87,10 +91,27 @@ class ContainerDetailed extends StatelessWidget {
                   ),
                 ),
                 child: const Text(
-                  'Add to Shopping List',
+                  'Add to Favourite',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
+              Divider(color:Colors.black,),
+          RichText(
+            text: TextSpan(
+              style: TextStyle(color: Colors.black),
+              children: [
+                TextSpan(text: "YouTube link: "),
+                TextSpan(
+                  text: link,
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                  recognizer: TapGestureRecognizer()..onTap = launchInBrowser(),
+                ),
+              ],
+            ),
+          ),
             ],
           ),
         )

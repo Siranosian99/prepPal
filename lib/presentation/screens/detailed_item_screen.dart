@@ -99,6 +99,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
 
                     // Main container below image
                     ContainerDetailed(
+                      link:meals[0].strYoutube ??'There is No Link',
                       ingredinet:
                           meals[0].strIngredient?.join('') ??
                           "No ingredients available",

@@ -64,6 +64,7 @@ final GoRouter router = GoRouter(
               mealName: extra?['mealName'],
               imgLink: extra?['imgLink'],
               mealId: extra?['mealId'],
+
             ),);
           },
         ),

@@ -6,9 +6,11 @@ sealed class PrepPalState {}
 final class PrepPalInitial extends PrepPalState {}
 
 final class CatLoaded extends PrepPalState {
+  late List<MealsById> meal;
+  late List<MealsById> random;
   late List<MealsCat> cat;
   late List<MealsbyCat> insideCat;
-  CatLoaded({required this.cat,required this.insideCat});
+  CatLoaded({required this.cat,required this.insideCat,required this.random});
 }
 final class  CatError extends PrepPalState {}
 final class MealIdLoaded extends PrepPalState {
@@ -16,9 +18,9 @@ final class MealIdLoaded extends PrepPalState {
   MealIdLoaded({required this.meal});
 }
 final class  MealIdError extends PrepPalState {}
-final class RandomLoad extends PrepPalState {
-  late List<MealsById> meal;
-  RandomLoad({required this.meal});
-}
+// final class RandomLoad extends PrepPalState {
+//   late List<MealsById> meal;
+//   RandomLoad({required this.meal});
+// }
 
 final class  RandomError extends PrepPalState {}

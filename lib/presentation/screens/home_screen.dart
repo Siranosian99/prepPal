@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
-import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 import 'package:preppal/consts/texts.dart';
-import 'package:preppal/service/data/api_service.dart';
-import 'package:preppal/service/model/meal_areas_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meal_items_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
+import 'package:preppal/service/model/meals_by_id.dart';
 import 'package:preppal/utilites/navigation_mixin.dart';
 
 import '../../buisnes_logic/prep_pal_cubit.dart';
@@ -23,26 +21,49 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with NavigatorMixin, TickerProviderStateMixin {
-  // late final PageController _pageController;
+  late final PageController _pageController;
   late final AnimationController _animationController;
   List<MealsModel> meals = [];
   List<MealsCat> mlsCat = [];
   List<MealsbyCat> mlsByCt = [];
-  int _pageIndex = 0;
-  final PageController _pageController = PageController();
+  List<MealsById> random = [];
+  int _pageIndex = 1;
+  int _lastIndex = 6;
+  int? result;
+  bool _isScrolling = true;
 
   @override
   void initState() {
-    // _pageController = PageController();
-    BlocProvider.of<PrepPalCubit>(context).getAllCatagories("SeaFood");
+    _pageController = PageController();
+    _callCubit();
     _animationController = AnimationController(
       duration: Duration(seconds: 3),
       vsync: this,
     )..repeat();
-
+    _startAutoScroll();
     super.initState();
   }
 
+  void _callCubit() {
+    BlocProvider.of<PrepPalCubit>(context).getAllCatagories("SeaFood");
+  }
+
+  void _startAutoScroll() async {
+    while (_isScrolling && mounted) {
+      await Future.delayed(Duration(seconds: 4));
+
+      if (!_pageController.hasClients) continue;
+
+      _pageController.animateToPage(
+        _pageIndex,
+        duration: Duration(seconds: 4),
+        curve: Curves.easeOut,
+      );
+      _callCubit();
+      if (!mounted) break;
+      _pageIndex = (_pageIndex + 1) % _lastIndex;
+    }
+  }
 
   @override
   void dispose() {
@@ -58,13 +79,7 @@ class _HomeScreenState extends State<HomeScreen>
         actions: [
           IconButton(
             onPressed: () {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                _pageController.animateToPage(
-                  3,
-                  duration: Duration(seconds: 1),
-                  curve: Curves.easeInOut,
-                );
-              });
+              print(_pageIndex);
             },
             icon: (Icon(Icons.search)),
           ),
@@ -73,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen>
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is CatLoaded) {
+            random = state.random;
             mlsCat = state.cat;
             mlsByCt = state.insideCat;
             return Padding(
@@ -83,16 +99,29 @@ class _HomeScreenState extends State<HomeScreen>
                   SizedBox(
                     height: 200,
                     child: PageView(
-                      onPageChanged:(index){
-
-                      },
                       physics: NeverScrollableScrollPhysics(),
                       controller: _pageController,
                       // default starts at index 0
                       children: [
-                        Container(color: Colors.red), // index 0
-                        Container(color: Colors.green), // index 1
-                        Container(color: Colors.blue), // index 2
+                        GestureDetector(
+                          onTap: () {
+                            context.pushNamed(
+                              "detailed",
+                              extra: {
+                                'imgLink': random[0].strMealThumb,
+                                'mealId': random[0].idMeal,
+                                'mealName': random[0].strMeal,
+                              },
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(21),
+                            child: Image.network(
+                              random[0].strMealThumb ?? '',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
