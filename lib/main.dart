@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:preppal/routes.dart';
+import 'package:preppal/theme_provider/theme_data.dart';
+import 'package:preppal/theme_provider/theme_state.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,12 +19,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Meal Planner',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      themeMode: themeProvider.themeMode,
+      theme: ThemesData.lightTheme,
+      darkTheme: ThemesData.darkTheme,
       routerConfig: router,
     );
   }

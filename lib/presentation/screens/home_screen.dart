@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void dispose() {
     _pageController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 

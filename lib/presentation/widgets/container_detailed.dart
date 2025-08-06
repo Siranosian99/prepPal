@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:preppal/utilites/url_open.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/texts.dart';
 
@@ -10,15 +11,15 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
   String country;
   String ingredinet;
   String link;
-   ContainerDetailed({
+
+  ContainerDetailed({
     super.key,
     required this.about,
-     required this.tags,
-     required this.country,
-     required this.ingredinet,
-     required this.link,
+    required this.tags,
+    required this.country,
+    required this.ingredinet,
+    required this.link,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,53 +32,64 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
             topRight: Radius.circular(20),
             topLeft: Radius.circular(20),
           ),
-          color: Colors.white,
         ),
         width: double.infinity,
-        height:665,
+        height: 665,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Area:$country",style:TextStyle(
-                decoration:TextDecoration.overline,
-                backgroundColor:Colors.white,
-                shadows: [
-                  Shadow(color:Colors.grey,blurRadius: 3,offset:Offset(1,1))
-                ]
-              ),),
-              Text(tags,style:TextStyle(
-                  decoration:TextDecoration.overline,
-                  backgroundColor:Colors.white,
+              Text(
+                "Area:$country",
+                style: TextStyle(
+                  decoration: TextDecoration.overline,
                   shadows: [
-                    Shadow(color:Colors.grey,blurRadius: 3,offset:Offset(1,1))
-                  ]
-              )),
-              Divider(color:Colors.black,),
-             Text(textAlign: TextAlign.start,
-               AppTexts.about,style:TextStyle(
-                 fontSize:20,
-                 fontWeight: FontWeight.bold
-             ),),
-              SizedBox(height: 10,),
-              Text(textAlign: TextAlign.start,
-                about,style:TextStyle(
-                    fontSize:15,
-                    fontWeight: FontWeight.w400
-                ),),
-              Divider(color:Colors.black,),
-              Text(textAlign: TextAlign.start,
-                AppTexts.ingredients,style:TextStyle(
-                    fontSize:20,
-                    fontWeight: FontWeight.bold
-                ),),
-              SizedBox(height: 10,),
-              Text(textAlign: TextAlign.start,
-                ingredinet,style:TextStyle(
-                    fontSize:15,
-                    fontWeight: FontWeight.w400
-                ),),
-              Divider(color:Colors.black,),
+                    Shadow(
+                      color: Colors.grey,
+                      blurRadius: 3,
+                      offset: Offset(1, 1),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                tags,
+                style: TextStyle(
+                  decoration: TextDecoration.overline,
+                  shadows: [
+                    Shadow(
+                      color: Colors.grey,
+                      blurRadius: 3,
+                      offset: Offset(1, 1),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(),
+              Text(
+                textAlign: TextAlign.start,
+                AppTexts.about,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                textAlign: TextAlign.start,
+                about,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+              ),
+              Divider(),
+              Text(
+                textAlign: TextAlign.start,
+                AppTexts.ingredients,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                textAlign: TextAlign.start,
+                ingredinet,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+              ),
+              Divider(color: Colors.black),
               ElevatedButton(
                 onPressed: () {
                   // Add your logic here
@@ -85,7 +97,10 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green, // background color
                   foregroundColor: Colors.white, // text color
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 12,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -95,26 +110,30 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                   style: TextStyle(fontSize: 16),
                 ),
               ),
-              Divider(color:Colors.black,),
-          RichText(
-            text: TextSpan(
-              style: TextStyle(color: Colors.black),
-              children: [
-                TextSpan(text: "YouTube link: "),
-                TextSpan(
-                  text: link,
-                  style: TextStyle(
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
+              Divider(),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text("Video:"),
+                  GestureDetector(
+                    onTap:()async{
+                      await launchInBrowser(link);
+                    },
+                    child: Text(
+                      link,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                        overflow: TextOverflow.ellipsis
+                      ),
+                    ),
                   ),
-                  recognizer: TapGestureRecognizer()..onTap = launchInBrowser(),
-                ),
-              ],
-            ),
-          ),
+                ],
+              ),
             ],
           ),
-        )
+        ),
       ),
     );
   }
