@@ -18,9 +18,8 @@ final class MealIdLoaded extends PrepPalState {
   MealIdLoaded({required this.meal});
 }
 final class  MealIdError extends PrepPalState {}
-// final class RandomLoad extends PrepPalState {
-//   late List<MealsById> meal;
-//   RandomLoad({required this.meal});
-// }
-
-final class  RandomError extends PrepPalState {}
+final class OtherRecipesLoad extends PrepPalState {
+  late List<OtherRecipes> recipes;
+  OtherRecipesLoad({required this.recipes});
+}
+final class  OtherRecipesError extends PrepPalState {}

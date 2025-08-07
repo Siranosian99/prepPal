@@ -5,6 +5,7 @@ import 'package:preppal/presentation/screens/favourite.dart';
 import 'package:preppal/presentation/screens/guide_screen.dart';
 import 'package:preppal/presentation/screens/home_screen.dart';
 import 'package:preppal/presentation/screens/inside_cat.dart';
+import 'package:preppal/presentation/screens/inside_recipe.dart';
 import 'package:preppal/presentation/screens/personel_screen.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/repository.dart';
@@ -68,6 +69,16 @@ final GoRouter router = GoRouter(
             ),);
           },
         ),
+        GoRoute(
+          path: '/recipes',
+          name: 'recipes',
+          builder: (context, state) {
+            return BlocProvider(create: (context)=>PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+                child: RecipeDetailScreen());
+
+          },
+        ),
+
       ],
     ),
   ],

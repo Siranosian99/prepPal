@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
+import 'package:preppal/service/model/other_recipes_model.dart';
 import 'package:preppal/service/repository.dart';
 
 part 'prep_pal_state.dart';
@@ -15,6 +16,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<MealsbyCat> insideCat=[];
   List<MealsById> meal=[];
   List<MealsById> random=[];
+  List<OtherRecipes> recipes=[];
   Future<void>getAllCatagories(String category)async {
     cat=await repository.CatCall() ?? [];
     insideCat= await repository.InsideCat(category) ?? [];
@@ -24,6 +26,10 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   Future<void>getMealById(String id)async {
     meal=await repository.MealbyId(id) ?? [];
     emit(MealIdLoaded(meal: meal ?? []));
+  }
+  Future<void>getOtherRecipes()async {
+    recipes=await repository.OtherRecipesCall() ?? [];
+    emit(OtherRecipesLoad(recipes: recipes ?? []));
   }
   // Future<void>getRandomMeal()async {
   //   meal=await repository.RandomMeal() ?? [];

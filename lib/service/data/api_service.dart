@@ -4,11 +4,13 @@ import 'package:preppal/service/model/meal_areas_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meal_items_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
+import 'package:preppal/service/model/other_recipes_model.dart';
 
 import '../model/meals_by_id.dart';
 
 class ApiService {
-  final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.url));
+  final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.mainUrl));
+  final Dio _dio2 = Dio(BaseOptions(baseUrl: ApiConsts.seconderyUrl));
 
   Future<List<MealsModel>?> ItemsCall() async {
     List<MealsModel> meals = [];
@@ -166,5 +168,21 @@ class ApiService {
     }
 
     return meals;
+  }
+  Future<List<OtherRecipes>?> OtherRecipesCall()async{
+    List<OtherRecipes> recipes = [];
+    final result = await _dio2.get('recipes?size=100&');
+    try {
+      if (result.statusCode == 200) {
+        List<dynamic> m = result.data['data'];
+        recipes = m.map((e) => OtherRecipes.fromJson(e)).toList();
+      }
+    } on DioException catch (e) {
+      print(e.error);
+    } catch (e) {
+      print(e);
+    }
+
+    return recipes;
   }
 }

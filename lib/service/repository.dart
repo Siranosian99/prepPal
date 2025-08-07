@@ -2,6 +2,7 @@ import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
+import 'package:preppal/service/model/other_recipes_model.dart';
 
 class PrepPalRepository {
   final ApiService apiService;
@@ -22,5 +23,8 @@ class PrepPalRepository {
 
   Future<List<MealsById>?> RandomMeal() async {
     return await apiService.GetRandomMeal();
+  }
+  Future<List<OtherRecipes>?> OtherRecipesCall() async {
+    return await apiService.OtherRecipesCall();
   }
 }

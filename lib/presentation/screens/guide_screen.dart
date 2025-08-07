@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:preppal/consts/texts.dart';
 
@@ -17,13 +18,15 @@ class _GuideScreenState extends State<GuideScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(AppTexts.guide),
+        title: Text(AppTexts.recipes),
         actions: [IconButton(onPressed: () {}, icon: (Icon(Icons.search)))],
       ),
       body: ListView.separated(
-        itemBuilder: (context, index) => GuideIcon(),
+        itemBuilder: (context, index) => GuideIcon(onTap:(){
+          context.goNamed('recipes');
+        },),
         separatorBuilder: (context, index) => SizedBox(height: 12),
-        itemCount: 2,
+        itemCount: 1,
       ),
     );
   }
