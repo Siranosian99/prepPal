@@ -25,9 +25,10 @@ final GoRouter router = GoRouter(
           name: '/',
           builder: (context, state) {
             return BlocProvider(
-              create: (context) => PrepPalCubit(
-                PrepPalRepository(apiService:ApiService())..CatCall()
-              ),
+              create:
+                  (context) => PrepPalCubit(
+                    PrepPalRepository(apiService: ApiService())..CatCall(),
+                  ),
               child: HomeScreen(),
             );
           },
@@ -35,7 +36,14 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/guide',
           name: 'guide',
-          builder: (context, state) => GuideScreen(),
+          builder: (context, state) {
+            return BlocProvider(
+              create:
+                  (context) =>
+                      PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+              child: GuideScreen(),
+            );
+          },
         ),
         GoRoute(
           path: '/inside',
@@ -60,25 +68,30 @@ final GoRouter router = GoRouter(
           name: 'detailed',
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>?;
-            return BlocProvider(create: (context)=>PrepPalCubit(PrepPalRepository(apiService: ApiService())),
-            child:  DetailedItemScreen(
-              mealName: extra?['mealName'],
-              imgLink: extra?['imgLink'],
-              mealId: extra?['mealId'],
-
-            ),);
+            return BlocProvider(
+              create:
+                  (context) =>
+                      PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+              child: DetailedItemScreen(
+                mealName: extra?['mealName'],
+                imgLink: extra?['imgLink'],
+                mealId: extra?['mealId'],
+              ),
+            );
           },
         ),
         GoRoute(
           path: '/recipes',
           name: 'recipes',
           builder: (context, state) {
-            return BlocProvider(create: (context)=>PrepPalCubit(PrepPalRepository(apiService: ApiService())),
-                child: RecipeDetailScreen());
-
+            return BlocProvider(
+              create:
+                  (context) =>
+                      PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+              child: RecipeDetailScreen(),
+            );
           },
         ),
-
       ],
     ),
   ],

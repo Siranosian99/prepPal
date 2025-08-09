@@ -169,12 +169,23 @@ class ApiService {
 
     return meals;
   }
-  Future<List<OtherRecipes>?> OtherRecipesCall()async{
+
+  Future<List<OtherRecipes>?> OtherRecipesCall() async {
     List<OtherRecipes> recipes = [];
-    final result = await _dio2.get('recipes?size=100&');
+    final result = await _dio2.get(
+      'recipes?size=100&page=2',
+      options: Options(
+        headers: {
+          'x-rapidapi-key':'05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
+          // Your API key
+          'x-rapidapi-host':'recipe-food-nutrition16.p.rapidapi.com',
+          // API host from RapidAPI
+        },
+      ),
+    );
     try {
       if (result.statusCode == 200) {
-        List<dynamic> m = result.data['data'];
+        List<dynamic> m = result.data["data"];
         recipes = m.map((e) => OtherRecipes.fromJson(e)).toList();
       }
     } on DioException catch (e) {
