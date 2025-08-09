@@ -43,10 +43,10 @@ class _GuideScreenState extends State<GuideScreen> {
                     child: Stack(
                       alignment: Alignment.bottomLeft,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(23),
-                          child: Image.network(recipes[index].images as String)
-                        ),
+                        // ClipRRect(
+                        //   borderRadius: BorderRadius.circular(23),
+                        //   child: Image.network(recipes[index].images![0].toString())
+                        // ),
                         Container(
                           padding: EdgeInsets.only(left: 20.0, bottom: 2),
                           decoration: BoxDecoration(
