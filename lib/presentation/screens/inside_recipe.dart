@@ -11,6 +11,7 @@ class RecipeDetailScreen extends StatefulWidget {
 }
 
 class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
+  String noRecipeLogo="https://noreciperequired.ca/wp-content/uploads/2024/01/no-recipe-required-logo.jpg";
   List<OtherRecipes> recipes = [];
 
   @override
@@ -27,10 +28,18 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
         appBar: AppBar(title: Text('Recipe Detail')),
         body: BlocBuilder<PrepPalCubit, PrepPalState>(
             builder: (context, state) {
-              if (state is OtherRecipesLoad) {
-                recipes = state.recipes;
-                return ListView.separated(itemBuilder: (context,index)=>Text(recipes[index].calories.toString()),
-                    separatorBuilder: (context,index)=>SizedBox(height: 10,),
+              if (state is OtherRecipesByNameLoad) {
+                recipes = state.recipesByName;
+                return ListView.separated(itemBuilder: (context,index)=>Column(
+                  children: [
+                    Stack(children: [
+                      Image.network( recipes[index].images != null && recipes[index].images!.isNotEmpty && recipes[index].images![0] != null
+                          ? recipes[index].images![0].toString()
+                          : noRecipeLogo,)
+                    ],),
+                  ],
+                ),
+                    separatorBuilder: (context,index)=>Divider(height: 200,),
                     itemCount: recipes.length);
               }
               return Center(child: CircularProgressIndicator(),);

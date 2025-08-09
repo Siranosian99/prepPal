@@ -113,7 +113,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
           return Center(
             child: Lottie.asset(
               'assets/lottie/plant_loader.json',
-              repeat: true,
+              repeat: true, 
               frameRate: FrameRate(120),
               controller: _animationController,
               width: 100,

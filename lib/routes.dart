@@ -92,6 +92,18 @@ final GoRouter router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: '/insideRecipe',
+          name: 'insideRecipe',
+          builder: (context, state) {
+            return BlocProvider(
+              create:
+                  (context) =>
+                  PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+              child: RecipeDetailScreen(),
+            );
+          },
+        ),
       ],
     ),
   ],

@@ -27,4 +27,7 @@ class PrepPalRepository {
   Future<List<OtherRecipes>?> OtherRecipesCall() async {
     return await apiService.OtherRecipesCall();
   }
+  Future<List<OtherRecipes>?> OtherRecipesCallByName(String name) async {
+    return await apiService.OtherRecipesByName(name);
+  }
 }

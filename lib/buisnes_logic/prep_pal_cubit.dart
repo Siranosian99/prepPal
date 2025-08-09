@@ -17,6 +17,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<MealsById> meal=[];
   List<MealsById> random=[];
   List<OtherRecipes> recipes=[];
+  List<OtherRecipes> recipesByName=[];
   Future<void>getAllCatagories(String category)async {
     cat=await repository.CatCall() ?? [];
     insideCat= await repository.InsideCat(category) ?? [];
@@ -30,6 +31,10 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   Future<void>getOtherRecipes()async {
     recipes=await repository.OtherRecipesCall() ?? [];
     emit(OtherRecipesLoad(recipes: recipes ?? []));
+  }
+  Future<void>getOtherRecipesByName(String name)async {
+    recipes=await repository.OtherRecipesCallByName(name) ?? [];
+    emit(OtherRecipesByNameLoad(recipesByName: recipesByName ?? []));
   }
   // Future<void>getRandomMeal()async {
   //   meal=await repository.RandomMeal() ?? [];

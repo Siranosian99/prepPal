@@ -23,3 +23,7 @@ final class OtherRecipesLoad extends PrepPalState {
   OtherRecipesLoad({required this.recipes});
 }
 final class  OtherRecipesError extends PrepPalState {}
+final class OtherRecipesByNameLoad extends PrepPalState {
+  late List<OtherRecipes> recipesByName;
+  OtherRecipesByNameLoad({required this.recipesByName});
+}

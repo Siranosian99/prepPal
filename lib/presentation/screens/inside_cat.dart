@@ -48,7 +48,7 @@ class _InsideCatState extends State<InsideCat> {
               'mealId':meals[index].idMeal,
               'mealName':meals[index].strMeal
             });
-            // print("----------------- printing data:${meals[index].strMeal}-----------------");
+
           },
           child: InsideCatIcon(
             imgLink: meals[index].strMealThumb.toString(),

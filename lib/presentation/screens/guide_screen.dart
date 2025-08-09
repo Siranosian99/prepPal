@@ -16,6 +16,7 @@ class GuideScreen extends StatefulWidget {
 }
 
 class _GuideScreenState extends State<GuideScreen> {
+  String noRecipeLogo="https://noreciperequired.ca/wp-content/uploads/2024/01/no-recipe-required-logo.jpg";
   List<OtherRecipes> recipes=[];
   @override
   void initState() {
@@ -34,19 +35,39 @@ class _GuideScreenState extends State<GuideScreen> {
         builder: (context, state) {
           if (state is OtherRecipesLoad) {
             recipes=state.recipes;
-            return GestureDetector(
-              // onTap: onTap,
-              child: ListView.separated(itemBuilder: (context,index)=>Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
+            return ListView.separated(itemBuilder: (context,index)=>Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: GestureDetector(
+                    onTap:(){
+                      context.goNamed("insideRecipe");
+
+                    },
                     child: Stack(
                       alignment: Alignment.bottomLeft,
                       children: [
-                        // ClipRRect(
-                        //   borderRadius: BorderRadius.circular(23),
-                        //   child: Image.network(recipes[index].images![0].toString())
-                        // ),
+                        ClipRRect(
+                          borderRadius:BorderRadius.only(bottomLeft:Radius.circular(23),topRight: Radius.circular(23)),
+                          child: Center(
+                            child: Image.network(
+                              recipes[index].images != null && recipes[index].images!.isNotEmpty && recipes[index].images![0] != null
+                                  ? recipes[index].images![0].toString()
+                                  : noRecipeLogo,
+
+                              filterQuality: FilterQuality.high,
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.fill,
+                              errorBuilder:
+                                  (_, __, ___) => Container(
+                                height: 200,
+                                color: Colors.grey[300],
+                                child: Icon(Icons.image_not_supported, size: 48),
+                              ),
+                            ),
+                          ),
+                        ),
                         Container(
                           padding: EdgeInsets.only(left: 20.0, bottom: 2),
                           decoration: BoxDecoration(
@@ -70,9 +91,9 @@ class _GuideScreenState extends State<GuideScreen> {
                       ],
                     ),
                   ),
-                ],
-              ),separatorBuilder: (context,index)=>SizedBox(height: 10,), itemCount: recipes.length)
-            );
+                ),
+              ],
+            ),separatorBuilder: (context,index)=>SizedBox(height: 10,), itemCount: recipes.length);
           }
           return Center(child: CircularProgressIndicator());
         },
