@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/model/other_recipes_model.dart';
@@ -15,13 +16,23 @@ class GuideScreen extends StatefulWidget {
   State<GuideScreen> createState() => _GuideScreenState();
 }
 
-class _GuideScreenState extends State<GuideScreen> {
+class _GuideScreenState extends State<GuideScreen> with TickerProviderStateMixin {
   String noRecipeLogo="https://noreciperequired.ca/wp-content/uploads/2024/01/no-recipe-required-logo.jpg";
   List<OtherRecipes> recipes=[];
+  late final AnimationController _animationController;
   @override
   void initState() {
-    BlocProvider.of<PrepPalCubit>(context).getOtherRecipes();print(recipes.length);
+    BlocProvider.of<PrepPalCubit>(context).getOtherRecipes();
+    _animationController = AnimationController(
+      duration: Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
     super.initState();
+  }
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -41,8 +52,12 @@ class _GuideScreenState extends State<GuideScreen> {
                   padding: const EdgeInsets.all(20.0),
                   child: GestureDetector(
                     onTap:(){
-                      context.goNamed("insideRecipe");
-
+                      context.goNamed("insideRecipe",extra:{
+                      'name': recipes[0].name,
+                        'index':index
+                      },);
+                      print("index is:$index"
+                          "data is:${recipes[index].name}");
                     },
                     child: Stack(
                       alignment: Alignment.bottomLeft,
@@ -95,7 +110,16 @@ class _GuideScreenState extends State<GuideScreen> {
               ],
             ),separatorBuilder: (context,index)=>SizedBox(height: 10,), itemCount: recipes.length);
           }
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: Lottie.asset(
+              'assets/lottie/loader.json',
+              repeat: true,
+              frameRate: FrameRate(120),
+              controller: _animationController,
+              height: 100,
+              width: 100,
+            ),
+          );
         },
       )
     );

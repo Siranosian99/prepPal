@@ -32,10 +32,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     recipes=await repository.OtherRecipesCall() ?? [];
     emit(OtherRecipesLoad(recipes: recipes ?? []));
   }
-  Future<void>getOtherRecipesByName(String name)async {
-    recipes=await repository.OtherRecipesCallByName(name) ?? [];
-    emit(OtherRecipesByNameLoad(recipesByName: recipesByName ?? []));
-  }
+
   // Future<void>getRandomMeal()async {
   //   meal=await repository.RandomMeal() ?? [];
   //   emit(MealIdLoaded(meal: meal ?? []));
