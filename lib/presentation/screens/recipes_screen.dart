@@ -90,7 +90,7 @@ class _GuideScreenState extends State<GuideScreen> with TickerProviderStateMixin
                               bottomLeft: Radius.circular(23),
                               bottomRight: Radius.circular(23),
                             ),
-                            color: Colors.grey[700],
+                            color:Colors.green
                           ),
                           width: double.infinity,
                           height: 45,
@@ -99,9 +99,9 @@ class _GuideScreenState extends State<GuideScreen> with TickerProviderStateMixin
                            maxLines: 1,
                            overflow:TextOverflow.ellipsis,
                            recipes[index].name.toString(),
-                            style: GoogleFonts.poppins(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
+                            style: GoogleFonts.alumniSans(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                           ),

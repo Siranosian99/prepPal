@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ThemesData {
 
@@ -21,10 +22,14 @@ class ThemesData {
         color:Colors.lightGreen
       ),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      iconTheme: IconThemeData(color: Colors.green),
-      titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+      iconTheme: const IconThemeData(color: Colors.green),
+      titleTextStyle: GoogleFonts.aBeeZee(
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
       elevation: 0,
     ),
 
@@ -50,10 +55,14 @@ class ThemesData {
           color:Colors.lightGreen
       ),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: Colors.black,
-      iconTheme: IconThemeData(color: Colors.green),
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+      iconTheme: const IconThemeData(color: Colors.green),
+      titleTextStyle: GoogleFonts.aBeeZee(
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
       elevation: 0,
     ),
   );

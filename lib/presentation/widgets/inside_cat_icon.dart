@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class InsideCatIcon extends StatelessWidget {
   final String imgLink;
@@ -37,7 +38,7 @@ class InsideCatIcon extends StatelessWidget {
                 bottomLeft: Radius.circular(12),
                 bottomRight: Radius.circular(12),
               ),
-              color: Colors.grey,
+              color: Colors.green,
             ),
             height: 50,
             width: double.infinity,
@@ -53,7 +54,7 @@ class InsideCatIcon extends StatelessWidget {
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: GoogleFonts.alumniSans(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
