@@ -63,7 +63,7 @@ class _GuideScreenState extends State<GuideScreen> with TickerProviderStateMixin
                       alignment: Alignment.bottomLeft,
                       children: [
                         ClipRRect(
-                          borderRadius:BorderRadius.only(bottomLeft:Radius.circular(23),topRight: Radius.circular(23)),
+                          borderRadius:BorderRadius.only(bottomLeft:Radius.circular(23),bottomRight: Radius.circular(23)),
                           child: Center(
                             child: Image.network(
                               recipes[index].images != null && recipes[index].images!.isNotEmpty && recipes[index].images![0] != null
@@ -93,9 +93,12 @@ class _GuideScreenState extends State<GuideScreen> with TickerProviderStateMixin
                             color: Colors.grey[700],
                           ),
                           width: double.infinity,
-                          height: 40,
+                          height: 45,
                           child: Text(
-                           "${ recipes[index].name.toString()} $index",
+                            textAlign: TextAlign.center,
+                           maxLines: 1,
+                           overflow:TextOverflow.ellipsis,
+                           recipes[index].name.toString(),
                             style: GoogleFonts.poppins(
                               fontSize: 24,
                               fontWeight: FontWeight.w600,

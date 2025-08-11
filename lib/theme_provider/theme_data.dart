@@ -13,6 +13,14 @@ class ThemesData {
       titleLarge: TextStyle(color: Colors.black),
     ),
     dividerColor:Colors.black,
+    bottomNavigationBarTheme:BottomNavigationBarThemeData(
+      selectedIconTheme:IconThemeData(
+        color:Colors.green,
+      ),
+      unselectedIconTheme:IconThemeData(
+        color:Colors.lightGreen
+      ),
+    ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       iconTheme: IconThemeData(color: Colors.green),
@@ -34,6 +42,14 @@ class ThemesData {
       titleLarge: TextStyle(color: Colors.white),
     ),
     dividerColor:Colors.white,
+    bottomNavigationBarTheme:BottomNavigationBarThemeData(
+      selectedIconTheme:IconThemeData(
+        color:Colors.green,
+      ),
+      unselectedIconTheme:IconThemeData(
+          color:Colors.lightGreen
+      ),
+    ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.black,
       iconTheme: IconThemeData(color: Colors.green),

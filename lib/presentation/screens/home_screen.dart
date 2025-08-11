@@ -77,14 +77,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text(AppTexts.prepPal),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print(_pageIndex);
-            },
-            icon: (Icon(Icons.search)),
-          ),
-        ],
+
       ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {

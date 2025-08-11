@@ -6,19 +6,19 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../consts/texts.dart';
 
 class ContainerDetailed extends StatelessWidget with urlLunch {
-  String about;
-  String tags;
-  String country;
-  String ingredinet;
-  String link;
+  String? about;
+  String? tags;
+  String? country;
+  String? ingredinet;
+  String? link;
 
   ContainerDetailed({
     super.key,
-    required this.about,
-    required this.tags,
-    required this.country,
-    required this.ingredinet,
-    required this.link,
+     this.about,
+     this.tags,
+     this.country,
+     this.ingredinet,
+     this.link,
   });
 
   @override
@@ -53,7 +53,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 ),
               ),
               Text(
-                tags,
+                tags ?? "Ooops",
                 style: TextStyle(
                   decoration: TextDecoration.overline,
                   shadows: [
@@ -74,7 +74,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
               SizedBox(height: 10),
               Text(
                 textAlign: TextAlign.start,
-                about,
+                about ?? 'Ooops',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
               Divider(),
@@ -86,7 +86,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
               SizedBox(height: 10),
               Text(
                 textAlign: TextAlign.start,
-                ingredinet,
+                ingredinet ??'Ooops',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
               Divider(color: Colors.black),
@@ -111,26 +111,26 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 ),
               ),
               Divider(),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text("Video:"),
-                  GestureDetector(
-                    onTap:()async{
-                      await launchInBrowser(link);
-                    },
-                    child: Text(
-                      link,
-                      maxLines: 1,
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
-                        overflow: TextOverflow.ellipsis
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+             link !=null ?Row(
+               mainAxisSize: MainAxisSize.max,
+               children: [
+                 Text("Video:"),
+                 GestureDetector(
+                   onTap:()async{
+                     await launchInBrowser(link ?? 'Ooops');
+                   },
+                   child: Text(
+                     link ?? "Ooops",
+                     maxLines: 1,
+                     style: const TextStyle(
+                         color: Colors.blue,
+                         decoration: TextDecoration.underline,
+                         overflow: TextOverflow.ellipsis
+                     ),
+                   ),
+                 ),
+               ],
+             ):Divider()
             ],
           ),
         ),

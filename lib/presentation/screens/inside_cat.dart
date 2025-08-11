@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/data/api_service.dart';
-import 'package:preppal/service/model/meal_areas_model.dart';
-
 import '../../service/model/meals_by_cat.dart';
 import '../widgets/inside_cat_icon.dart';
 
@@ -18,6 +15,8 @@ class InsideCat extends StatefulWidget {
 class _InsideCatState extends State<InsideCat> {
   late final ApiService _apiService;
   List<MealsbyCat> meals = [];
+  List<MealsbyCat> filteredMeals = [];
+  bool isSearching=false;
 
   @override
   void initState() {
@@ -33,10 +32,23 @@ class _InsideCatState extends State<InsideCat> {
     });
   }
 
+  void searchFilter(String e){
+    filteredMeals=meals.where((e)=>meals.contains(e)).toList();
+    isSearching=true;
+    setState(() {
+    });
+    print(filteredMeals);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(title:Text(widget.category),
+      actions: [
+        IconButton(onPressed: (){
+          searchFilter('Apam balik');
+        }, icon: Icon(Icons.search,color:Colors.green,))
+      ],
       centerTitle: true,),
       body: meals.isEmpty
           ? Center(child: CircularProgressIndicator())
@@ -44,9 +56,9 @@ class _InsideCatState extends State<InsideCat> {
         itemBuilder: (context, index) => GestureDetector(
           onTap:(){
             context.pushNamed("detailed",extra:{
-              'imgLink':meals[index].strMealThumb,
-              'mealId':meals[index].idMeal,
-              'mealName':meals[index].strMeal
+              'imgLink':isSearching ?filteredMeals:meals[index].strMealThumb,
+              'mealId':isSearching ?filteredMeals:meals[index].idMeal,
+              'mealName':isSearching ?filteredMeals:meals[index].strMeal
             });
 
           },
