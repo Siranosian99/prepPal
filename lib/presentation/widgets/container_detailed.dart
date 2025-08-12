@@ -24,7 +24,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
-      offset: const Offset(0, -20),
+      offset: const Offset(0, 2),
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: const BoxDecoration(

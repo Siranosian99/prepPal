@@ -56,11 +56,14 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                     // Image with food name and heart icon
                     Stack(
                       children: [
-                        Image.network(
-                          widget.imgLink,
-                          width: double.infinity,
-                          height: 250,
-                          fit: BoxFit.cover,
+                        ClipRRect(
+                          borderRadius:BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight:Radius.circular(50)),
+                          child: Image.network(
+                            widget.imgLink,
+                            width: double.infinity,
+                            height: 250,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         Positioned(
                           bottom: 20,

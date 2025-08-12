@@ -38,7 +38,7 @@ class _PersonelScreenState extends State<PersonelScreen> {
           // ),
           SettingsItems(onTap:(){
             print(themeProvider.isDark);
-          },txt: AppTexts.feed, icon:Icons.feedback_outlined),
+          },txt: AppTexts.report, icon:Icons.report),
           Divider(
 
             thickness: 1,

@@ -7,23 +7,22 @@ class ThemeProvider extends ChangeNotifier {
   bool isDark = false;
 
   ThemeProvider(){
-    isDark;
+    loadThemeMode();
   }
 
   void themeSwitch() {
     isDark = !isDark;
     themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     saveThemeData();
-    print(isDark);
     notifyListeners();
   }
   void saveThemeData() {
-    // Save bool
     box.put('isDarkMode', isDark);
     notifyListeners();
   }
   void loadThemeMode() {
-    var box = Hive.box('themes').get('isDarkMode', defaultValue: false);;
+   isDark= box.get('isDarkMode', defaultValue: false);
+   themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
 

@@ -13,7 +13,7 @@ class AppTexts {
   static String health = "Health & nutrition";
   static String settings = "Settings";
   static String signIn = "Login";
-  static String feed = "FeedBack";
+  static String report = "Report About Issue";
   static String vegt = "Vegetarian Filter";
   static String favourite="My Favourite";
   static String themes="Switch Themes";

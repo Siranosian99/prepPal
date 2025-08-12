@@ -1,7 +1,14 @@
+import 'package:hive/hive.dart';
+part 'meal_cat_model.g.dart';
+@HiveType(typeId: 0)
 class MealsCat {
+  @HiveField(0)
   String? idCategory;
+  @HiveField(1)
   String? strCategory;
+  @HiveField(2)
   String? strCategoryThumb;
+  @HiveField(3)
   String? strCategoryDescription;
 
   MealsCat(

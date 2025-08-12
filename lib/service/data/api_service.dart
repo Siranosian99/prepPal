@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:preppal/consts/api_consts.dart';
 import 'package:preppal/service/model/meal_areas_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
-import 'package:preppal/service/model/meal_items_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/other_recipes_model.dart';
 
@@ -12,23 +11,40 @@ class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.mainUrl));
   final Dio _dio2 = Dio(BaseOptions(baseUrl: ApiConsts.seconderyUrl));
 
-  Future<List<MealsModel>?> ItemsCall() async {
-    List<MealsModel> meals = [];
-    final result = await _dio.get('?i=list');
-    // i c a
-    try {
-      if (result.statusCode == 200) {
-        List<dynamic> m = result.data['meals'];
-        meals = m.map((e) => MealsModel.fromJson(e)).toList();
-      }
-    } on DioException catch (e) {
-      print(e.error);
-    } catch (e) {
-      print(e);
-    }
-
-    return meals;
-  }
+  // Future<List<MealsModel>?> ItemsCall() async {
+  //   List<MealsModel> meals = [];
+  //   final result = await _dio.get('?i=list');
+  //   // i c a
+  //   try {
+  //     if (result.statusCode == 200) {
+  //       List<dynamic> m = result.data['meals'];
+  //       meals = m.map((e) => MealsModel.fromJson(e)).toList();
+  //     }
+  //   } on DioException catch (e) {
+  //     print(e.error);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //
+  //   return meals;
+  // }
+  // Future<List<MealsArea>?> ArCall() async {
+  //     List<MealsArea> meals = [];
+  //     final result = await _dio.get('?a=list');
+  //     // i c a
+  //     try {
+  //       if (result.statusCode == 200) {
+  //         List<dynamic> m = result.data['meals'];
+  //         meals = m.map((e) => MealsArea.fromJson(e)).toList();
+  //       }
+  //     } on DioException catch (e) {
+  //       print(e.error);
+  //     } catch (e) {
+  //       print(e);
+  //     }
+  //
+  //     return meals;
+  //   }
 
   Future<List<MealsCat>?> CatCall() async {
     List<MealsCat> meals = [];
@@ -38,24 +54,6 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['categories'];
         meals = m.map((e) => MealsCat.fromJson(e)).toList();
-      }
-    } on DioException catch (e) {
-      print(e.error);
-    } catch (e) {
-      print(e);
-    }
-
-    return meals;
-  }
-
-  Future<List<MealsArea>?> ArCall() async {
-    List<MealsArea> meals = [];
-    final result = await _dio.get('?a=list');
-    // i c a
-    try {
-      if (result.statusCode == 200) {
-        List<dynamic> m = result.data['meals'];
-        meals = m.map((e) => MealsArea.fromJson(e)).toList();
       }
     } on DioException catch (e) {
       print(e.error);
@@ -176,9 +174,10 @@ class ApiService {
       'recipes?size=100&page=1',
       options: Options(
         headers: {
-          'x-rapidapi-key':'05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
+          'x-rapidapi-key':
+              '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
           // Your API key
-          'x-rapidapi-host':'recipe-food-nutrition16.p.rapidapi.com',
+          'x-rapidapi-host': 'recipe-food-nutrition16.p.rapidapi.com',
           // API host from RapidAPI
         },
       ),
@@ -196,5 +195,4 @@ class ApiService {
 
     return recipes;
   }
-
 }

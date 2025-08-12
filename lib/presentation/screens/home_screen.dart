@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
-import 'package:preppal/service/model/meal_items_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
 import 'package:preppal/utilites/navigation_mixin.dart';
@@ -23,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen>
     with NavigatorMixin, TickerProviderStateMixin {
   late final PageController _pageController;
   late final AnimationController _animationController;
-  List<MealsModel> meals = [];
   List<MealsCat> mlsCat = [];
   List<MealsbyCat> mlsByCt = [];
   List<MealsById> random = [];
