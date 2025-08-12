@@ -36,21 +36,23 @@ class _PersonelScreenState extends State<PersonelScreen> {
           //   thickness: 1,
           //   height: 10, // space above/below
           // ),
-          // SettingsItems(txt: AppTexts.feed, icon:Icons.feedback_outlined),
-          // Divider(
-          //
-          //   thickness: 1,
-          //   height: 10, // space above/below
-          // ),
-          SettingsItems(txt: AppTexts.themes, icon:Icons.switch_left_rounded,onTap: (){
-          // themeProvider.themeSwitch();
-          },),
-          Switch(
-            value: themeProvider.isDark,
-            onChanged: (_) {
-              themeProvider.themeSwitch();
-            },
+          SettingsItems(onTap:(){
+            print(themeProvider.isDark);
+          },txt: AppTexts.feed, icon:Icons.feedback_outlined),
+          Divider(
+
+            thickness: 1,
+            height: 10, // space above/below
           ),
+          SettingsItems(txt: AppTexts.themes, icon:Icons.switch_left_rounded,onTap: (){
+          themeProvider.themeSwitch();
+          },),
+          // Switch(
+          //   value: themeProvider.isDark,
+          //   onChanged: (_) {
+          //     themeProvider.themeSwitch();
+          //   },
+          // ),
 
           Divider(
             thickness: 1,
