@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hive/hive.dart';
 import 'package:preppal/consts/api_consts.dart';
 import 'package:preppal/service/model/meal_areas_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
@@ -54,6 +55,9 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['categories'];
         meals = m.map((e) => MealsCat.fromJson(e)).toList();
+        var box = Hive.box<MealsCat>('category');
+        await box.clear(); // Optional: clear old data
+        await box.addAll(meals); // Save to Hive
       }
     } on DioException catch (e) {
       print(e.error);
@@ -71,6 +75,9 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
         meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
+        var box = Hive.box<MealsbyCat>('SeaFood');
+        await box.clear(); // Optional: clear old data
+        await box.addAll(meals); // Save to Hive
       }
     } on DioException catch (e) {
       print(e.error);
@@ -88,6 +95,9 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
         meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
+        var box = Hive.box<MealsbyCat>('inCatagory');
+        await box.clear(); // Optional: clear old data
+        await box.addAll(meals); // Save to Hive
       }
     } on DioException catch (e) {
       print(e.error);
@@ -123,6 +133,9 @@ class ApiService {
         }
         meals[0].strIngredient = ingredient;
         meals[0].strMeasure = measures;
+        var box = Hive.box<MealsById>('byId');
+        await box.clear(); // Optional: clear old data
+        await box.addAll(meals);
       }
     } on DioException catch (e) {
       print(e.error);

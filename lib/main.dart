@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:preppal/routes.dart';
+import 'package:preppal/service/model/meal_cat_model.dart';
+import 'package:preppal/service/model/meals_by_cat.dart';
+import 'package:preppal/service/model/meals_by_id.dart';
 import 'package:preppal/theme_provider/theme_data.dart';
 import 'package:preppal/theme_provider/theme_state.dart';
+import 'package:preppal/utilites/hive_init.dart';
 import 'package:provider/provider.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await Hive.openBox('themes'); // open box before use
+  await initHive();
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),

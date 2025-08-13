@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
@@ -32,8 +33,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    _pageController = PageController();
+    hiveData();
     _callCubit();
+    _pageController = PageController();
+
     _animationController = AnimationController(
       duration: Duration(seconds: 3),
       vsync: this,
@@ -44,6 +47,14 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _callCubit() {
     BlocProvider.of<PrepPalCubit>(context).getAllCatagories("SeaFood");
+  }
+  void hiveData(){
+    var myBox=Hive.box<MealsCat>('category');
+    var myBoxx=Hive.box<MealsbyCat>('SeaFood');
+    setState(() {
+      mlsCat=myBox.values.toList();
+      mlsByCt=myBoxx.values.toList();
+    });
   }
 
   void _startAutoScroll() async {
@@ -81,8 +92,6 @@ class _HomeScreenState extends State<HomeScreen>
         builder: (context, state) {
           if (state is CatLoaded) {
             random = state.random;
-            mlsCat = state.cat;
-            mlsByCt = state.insideCat;
             return Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -158,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen>
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemBuilder:
-                          (context, index) => GestureDetector(
+                          (context, index) => GestureDetector (
                             onTap: () {
                               context.pushNamed(
                                 "detailed",

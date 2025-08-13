@@ -1,6 +1,13 @@
+import 'package:hive_flutter/adapters.dart';
+part 'meals_by_cat.g.dart';
+
+@HiveType(typeId:1)
 class MealsbyCat {
+  @HiveField(0)
   String? strMeal;
+  @HiveField(1)
   String? strMealThumb;
+  @HiveField(2)
   String? idMeal;
 
   MealsbyCat({this.strMeal, this.strMealThumb, this.idMeal});

@@ -1,17 +1,31 @@
+import 'package:hive/hive.dart';
+part 'meals_by_id.g.dart';
+@HiveType(typeId: 2)
 class MealsById {
+  @HiveField(0)
   String? idMeal;
+  @HiveField(1)
   String? strMeal;
+  @HiveField(2)
   String? strMealAlternate;
+  @HiveField(3)
   String? strCategory;
+  @HiveField(4)
   String? strArea;
+  @HiveField(5)
   String? strInstructions;
+  @HiveField(6)
   String? strMealThumb;
+  @HiveField(7)
   String? strTags;
+  @HiveField(8)
   String? strYoutube;
+  @HiveField(9)
   List<String>? strIngredient;
+  @HiveField(10)
   List<String>? strMeasure;
+  @HiveField(11)
   String? strSource;
-
   MealsById({
     this.idMeal,
     this.strMeal,
