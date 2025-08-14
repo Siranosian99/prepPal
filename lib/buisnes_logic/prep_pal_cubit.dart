@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
@@ -18,11 +19,25 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<MealsById> random=[];
   List<OtherRecipes> recipes=[];
   List<OtherRecipes> recipesByName=[];
-  Future<void>getAllCatagories(String category)async {
-    cat=await repository.CatCall() ?? [];
-    insideCat= await repository.InsideCat(category) ?? [];
-    random=await repository.RandomMeal() ?? [];
-    emit(CatLoaded(cat: cat, insideCat: insideCat,random:random));
+  Future<void> getAllCatagories(String category) async {
+    try {
+      // Fetch data from API
+      cat = await repository.CatCall() ?? [];
+      insideCat = await repository.InsideCat(category) ?? [];
+      random = await repository.RandomMeal() ?? [];
+
+      // Save insideCat to Hive
+      var mbox = Hive.box<MealsbyCat>('SeaFood');
+      await mbox.clear(); // Optional: clear old data
+      await mbox.addAll(insideCat);
+      var cbox = Hive.box<MealsCat>('category');
+      await cbox.clear(); // Optional: clear old data
+      await cbox.addAll(cat);
+
+      emit(CatLoaded(cat: cat, insideCat: insideCat, random: random));
+    } catch (e) {
+
+    }
   }
   Future<void>getMealById(String id)async {
     meal=await repository.MealbyId(id) ?? [];

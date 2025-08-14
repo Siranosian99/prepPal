@@ -47,10 +47,12 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _callCubit() {
     BlocProvider.of<PrepPalCubit>(context).getAllCatagories("SeaFood");
+
   }
   void hiveData(){
     var myBox=Hive.box<MealsCat>('category');
     var myBoxx=Hive.box<MealsbyCat>('SeaFood');
+    print("------------$mlsByCt");
     setState(() {
       mlsCat=myBox.values.toList();
       mlsByCt=myBoxx.values.toList();

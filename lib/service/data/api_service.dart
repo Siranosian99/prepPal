@@ -55,9 +55,6 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['categories'];
         meals = m.map((e) => MealsCat.fromJson(e)).toList();
-        var box = Hive.box<MealsCat>('category');
-        await box.clear(); // Optional: clear old data
-        await box.addAll(meals); // Save to Hive
       }
     } on DioException catch (e) {
       print(e.error);
@@ -75,9 +72,6 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
         meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
-        var box = Hive.box<MealsbyCat>('SeaFood');
-        await box.clear(); // Optional: clear old data
-        await box.addAll(meals); // Save to Hive
       }
     } on DioException catch (e) {
       print(e.error);
@@ -89,15 +83,12 @@ class ApiService {
   }
 
   Future<List<MealsbyCat>?> CallByCatInsdie(String category) async {
-    List<MealsbyCat> meals = [];
+    List<MealsbyCat> inMeals = [];
     final result = await _dio.get('filter.php?c=$category');
     try {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
-        meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
-        var box = Hive.box<MealsbyCat>('inCatagory');
-        await box.clear(); // Optional: clear old data
-        await box.addAll(meals); // Save to Hive
+        inMeals = m.map((e) => MealsbyCat.fromJson(e)).toList();
       }
     } on DioException catch (e) {
       print(e.error);
@@ -105,7 +96,7 @@ class ApiService {
       print(e);
     }
 
-    return meals;
+    return inMeals;
   }
 
   Future<List<MealsById>?> GetMealsById(String mealId) async {
@@ -133,9 +124,7 @@ class ApiService {
         }
         meals[0].strIngredient = ingredient;
         meals[0].strMeasure = measures;
-        var box = Hive.box<MealsById>('byId');
-        await box.clear(); // Optional: clear old data
-        await box.addAll(meals);
+
       }
     } on DioException catch (e) {
       print(e.error);
