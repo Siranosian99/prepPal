@@ -46,17 +46,16 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _callCubit() {
-    BlocProvider.of<PrepPalCubit>(context).getAllCatagories("SeaFood");
-
+    BlocProvider.of<PrepPalCubit>(context).getAllCatagories();
   }
-  void hiveData(){
-    var myBox=Hive.box<MealsCat>('category');
-    var myBoxx=Hive.box<MealsbyCat>('SeaFood');
+
+  void hiveData() {
+    var myBox = Hive.box<MealsCat>('category');
+    var myBoxx = Hive.box<MealsbyCat>('SeaFood');
     print("------------$mlsByCt");
-    setState(() {
-      mlsCat=myBox.values.toList();
-      mlsByCt=myBoxx.values.toList();
-    });
+    mlsCat = myBox.values.toList();
+    mlsByCt = myBoxx.values.toList();
+
   }
 
   void _startAutoScroll() async {
@@ -86,13 +85,11 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppTexts.prepPal),
-
-      ),
+      appBar: AppBar(title: Text(AppTexts.prepPal)),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is CatLoaded) {
+            mlsByCt=state.seaFood;
             random = state.random;
             return Padding(
               padding: const EdgeInsets.all(10),
@@ -124,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen>
                               fit: BoxFit.cover,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -169,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen>
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemBuilder:
-                          (context, index) => GestureDetector (
+                          (context, index) => GestureDetector(
                             onTap: () {
                               context.pushNamed(
                                 "detailed",

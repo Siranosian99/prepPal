@@ -55,6 +55,7 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['categories'];
         meals = m.map((e) => MealsCat.fromJson(e)).toList();
+
       }
     } on DioException catch (e) {
       print(e.error);
@@ -65,22 +66,22 @@ class ApiService {
     return meals;
   }
 
-  Future<List<MealsbyCat>?> CallByCat() async {
-    List<MealsbyCat> meals = [];
-    final result = await _dio.get('filter.php?c=Seafood');
-    try {
-      if (result.statusCode == 200) {
-        List<dynamic> m = result.data['meals'];
-        meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
-      }
-    } on DioException catch (e) {
-      print(e.error);
-    } catch (e) {
-      print(e);
-    }
-
-    return meals;
-  }
+  // Future<List<MealsbyCat>?> CallByCat() async {
+  //   List<MealsbyCat> meals = [];
+  //   final result = await _dio.get('filter.php?c=Seafood');
+  //   try {
+  //     if (result.statusCode == 200) {
+  //       List<dynamic> m = result.data['meals'];
+  //       meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
+  //     }
+  //   } on DioException catch (e) {
+  //     print(e.error);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //
+  //   return meals;
+  // }
 
   Future<List<MealsbyCat>?> CallByCatInsdie(String category) async {
     List<MealsbyCat> inMeals = [];

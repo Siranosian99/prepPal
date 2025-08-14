@@ -50,7 +50,12 @@ final GoRouter router = GoRouter(
           name: 'inside',
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>?;
-            return InsideCat(category: extra?['category']);
+            return BlocProvider(
+              create:
+                  (context) =>
+                      PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+              child: InsideCat(category: extra?['category']),
+            );
           },
         ),
         GoRoute(
@@ -100,10 +105,10 @@ final GoRouter router = GoRouter(
             return BlocProvider(
               create:
                   (context) =>
-                  PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+                      PrepPalCubit(PrepPalRepository(apiService: ApiService())),
               child: RecipeDetailScreen(
-               name:extra?['name'],
-                index:extra?['index'],
+                name: extra?['name'],
+                index: extra?['index'],
               ),
             );
           },
