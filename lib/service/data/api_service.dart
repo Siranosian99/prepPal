@@ -12,40 +12,7 @@ class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.mainUrl));
   final Dio _dio2 = Dio(BaseOptions(baseUrl: ApiConsts.seconderyUrl));
 
-  // Future<List<MealsModel>?> ItemsCall() async {
-  //   List<MealsModel> meals = [];
-  //   final result = await _dio.get('?i=list');
-  //   // i c a
-  //   try {
-  //     if (result.statusCode == 200) {
-  //       List<dynamic> m = result.data['meals'];
-  //       meals = m.map((e) => MealsModel.fromJson(e)).toList();
-  //     }
-  //   } on DioException catch (e) {
-  //     print(e.error);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //
-  //   return meals;
-  // }
-  // Future<List<MealsArea>?> ArCall() async {
-  //     List<MealsArea> meals = [];
-  //     final result = await _dio.get('?a=list');
-  //     // i c a
-  //     try {
-  //       if (result.statusCode == 200) {
-  //         List<dynamic> m = result.data['meals'];
-  //         meals = m.map((e) => MealsArea.fromJson(e)).toList();
-  //       }
-  //     } on DioException catch (e) {
-  //       print(e.error);
-  //     } catch (e) {
-  //       print(e);
-  //     }
-  //
-  //     return meals;
-  //   }
+
 
   Future<List<MealsCat>?> CatCall() async {
     List<MealsCat> meals = [];
@@ -66,22 +33,6 @@ class ApiService {
     return meals;
   }
 
-  // Future<List<MealsbyCat>?> CallByCat() async {
-  //   List<MealsbyCat> meals = [];
-  //   final result = await _dio.get('filter.php?c=Seafood');
-  //   try {
-  //     if (result.statusCode == 200) {
-  //       List<dynamic> m = result.data['meals'];
-  //       meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
-  //     }
-  //   } on DioException catch (e) {
-  //     print(e.error);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //
-  //   return meals;
-  // }
 
   Future<List<MealsbyCat>?> CallByCatInsdie(String category) async {
     List<MealsbyCat> inMeals = [];
@@ -199,3 +150,59 @@ class ApiService {
     return recipes;
   }
 }
+
+
+
+
+
+
+// Future<List<MealsModel>?> ItemsCall() async {
+//   List<MealsModel> meals = [];
+//   final result = await _dio.get('?i=list');
+//   // i c a
+//   try {
+//     if (result.statusCode == 200) {
+//       List<dynamic> m = result.data['meals'];
+//       meals = m.map((e) => MealsModel.fromJson(e)).toList();
+//     }
+//   } on DioException catch (e) {
+//     print(e.error);
+//   } catch (e) {
+//     print(e);
+//   }
+//
+//   return meals;
+// }
+// Future<List<MealsArea>?> ArCall() async {
+//     List<MealsArea> meals = [];
+//     final result = await _dio.get('?a=list');
+//     // i c a
+//     try {
+//       if (result.statusCode == 200) {
+//         List<dynamic> m = result.data['meals'];
+//         meals = m.map((e) => MealsArea.fromJson(e)).toList();
+//       }
+//     } on DioException catch (e) {
+//       print(e.error);
+//     } catch (e) {
+//       print(e);
+//     }
+//
+//     return meals;
+//   }
+// Future<List<MealsbyCat>?> CallByCat() async {
+//   List<MealsbyCat> meals = [];
+//   final result = await _dio.get('filter.php?c=Seafood');
+//   try {
+//     if (result.statusCode == 200) {
+//       List<dynamic> m = result.data['meals'];
+//       meals = m.map((e) => MealsbyCat.fromJson(e)).toList();
+//     }
+//   } on DioException catch (e) {
+//     print(e.error);
+//   } catch (e) {
+//     print(e);
+//   }
+//
+//   return meals;
+// }
