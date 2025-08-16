@@ -20,6 +20,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<MealsById> random = [];
   List<OtherRecipes> recipes = [];
   List<OtherRecipes> recipesByName = [];
+  List<MealsbyCat> favList=[];
 
   Future<void> getAllCatagories() async {
     try {
@@ -27,14 +28,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
       cat = await repository.CatCall() ?? [];
       seaFood=await repository.InsideCat("SeaFood")?? [];
       random = await repository.RandomMeal() ?? [];
-      //
-      // // Save insideCat to Hive
-      // var mbox = Hive.box<MealsbyCat>('SeaFood');
-      // await mbox.clear(); // Optional: clear old data
-      // await mbox.addAll(insideCat);
-      var cbox = Hive.box<MealsCat>('category');
-      await cbox.clear(); // Optional: clear old data
-      await cbox.addAll(cat);
+
       emit(CatLoaded(cat: cat, random: random,seaFood:seaFood));
     } catch (e) {
       print(e.toString());
@@ -43,9 +37,6 @@ class PrepPalCubit extends Cubit<PrepPalState> {
 
   Future<void> getMealById(String id) async {
     meal = await repository.MealbyId(id) ?? [];
-    var mbox = Hive.box<MealsById>('byId');
-    await mbox.clear();
-    await mbox.addAll(meal);
     emit(MealIdLoaded(meal: meal ?? []));
   }
 

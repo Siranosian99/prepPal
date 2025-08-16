@@ -20,6 +20,7 @@ void main()async {
   await Hive.openBox<MealsCat>('category');
   await Hive.openBox<MealsById>('byId');
   await Hive.openBox<MealsbyCat>('SeaFood');
+  await Hive.openBox<MealsbyCat>('inCat');
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:preppal/service/data/api_service.dart';
 
 import '../../buisnes_logic/prep_pal_cubit.dart';
@@ -17,7 +18,6 @@ class InsideCat extends StatefulWidget {
 }
 
 class _InsideCatState extends State<InsideCat> {
-  late final ApiService _apiService;
   List<MealsbyCat> meals = [];
   List<MealsbyCat> filteredMeals = [];
   TextEditingController _filter = TextEditingController();
@@ -31,6 +31,9 @@ class _InsideCatState extends State<InsideCat> {
 
   void _callCubit() {
     BlocProvider.of<PrepPalCubit>(context).getInCatagory(widget.category);
+    var myBox = Hive.box<MealsbyCat>('inCat');
+    print("------------$meals");
+    meals = myBox.values.toList();
   }
 
   void switchBool() {
@@ -46,7 +49,7 @@ class _InsideCatState extends State<InsideCat> {
               .where(
                 (meal) =>
                     meal.strMeal != null &&
-                    meal.strMeal!.contains(query.toLowerCase()),
+                    meal.strMeal!.toLowerCase().contains(query.toLowerCase())&& meal.strMeal!.toLowerCase().startsWith(query.toLowerCase())
               )
               .toList();
       setState(() {
@@ -85,34 +88,34 @@ class _InsideCatState extends State<InsideCat> {
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is InsideCatLoad) {
-            meals = state.insideCat;
-            if(meals.isEmpty){Center(child: CircularProgressIndicator());}
-           return ListView.separated(
-                  itemBuilder: (context, index) {
-                    final meal =
-                        isSearching ? filteredMeals[index] : meals[index];
-                    return GestureDetector(
-                      onTap: () {
-                        context.pushNamed(
-                          "detailed",
-                          extra: {
-                            'imgLink': meal.strMealThumb,
-                            'mealId': meal.idMeal,
-                            'mealName': meal.strMeal,
-                          },
-                        );
+            if (meals.isEmpty) {
+              Center(child: CircularProgressIndicator());
+            }
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                final meal = isSearching ? filteredMeals[index] : meals[index];
+                return GestureDetector(
+                  onTap: () {
+                    context.pushNamed(
+                      "detailed",
+                      extra: {
+                        'imgLink': meal.strMealThumb,
+                        'mealId': meal.idMeal,
+                        'mealName': meal.strMeal,
                       },
-                      child: InsideCatIcon(
-                        imgLink: meal.strMealThumb.toString(),
-                        txt: meal.strMeal.toString(),
-                      ),
                     );
                   },
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemCount: isSearching ? filteredMeals.length : meals.length,
+                  child: InsideCatIcon(
+                    imgLink: meal.strMealThumb.toString(),
+                    txt: meal.strMeal.toString(),
+                  ),
                 );
+              },
+              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              itemCount: isSearching ? filteredMeals.length : meals.length,
+            );
           }
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       ),
     );

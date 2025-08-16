@@ -29,3 +29,9 @@ final class InsideCatLoad extends PrepPalState{
 }
 final class InsideCatError extends PrepPalState{
 }
+final class FavLoad extends PrepPalState{
+  late List<MealsbyCat> favList;
+  FavLoad({required this.favList});
+}
+final class FavError extends PrepPalState{
+}

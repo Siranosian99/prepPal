@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    _hiveData();
+
     _callCubit();
     _pageController = PageController();
 
@@ -45,21 +45,15 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
   }
 
-  void _callCubit() {
+  void _callCubit(){
     BlocProvider.of<PrepPalCubit>(context).getAllCatagories();
-  }
-
-  void _hiveData() {
-    var myBox = Hive.box<MealsCat>('category');
-    var myBoxx = Hive.box<MealsbyCat>('SeaFood');
+    var myBox =Hive.box<MealsCat>('category');
+    var myBoxx =Hive.box<MealsbyCat>('SeaFood');
     print("------------$mlsByCt");
     mlsCat = myBox.values.toList();
     mlsByCt = myBoxx.values.toList();
-    setState(() {
-      mlsCat;
-      mlsByCt;
-    });
   }
+
 
   void _startAutoScroll() async {
     while (_isScrolling && mounted) {
