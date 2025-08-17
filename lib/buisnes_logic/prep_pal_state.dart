@@ -15,7 +15,8 @@ final class CatLoaded extends PrepPalState {
 final class  CatError extends PrepPalState {}
 final class MealIdLoaded extends PrepPalState {
   late List<MealsById> meal;
-  MealIdLoaded({required this.meal});
+  late List<MealsById> favList;
+  MealIdLoaded({required this.meal,required this.favList});
 }
 final class  MealIdError extends PrepPalState {}
 final class OtherRecipesLoad extends PrepPalState {
@@ -30,7 +31,7 @@ final class InsideCatLoad extends PrepPalState{
 final class InsideCatError extends PrepPalState{
 }
 final class FavLoad extends PrepPalState{
-  late List<MealsbyCat> favList;
+  late List<MealsById> favList;
   FavLoad({required this.favList});
 }
 final class FavError extends PrepPalState{

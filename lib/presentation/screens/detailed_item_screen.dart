@@ -90,10 +90,14 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                                 ),
                               ),
                               IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.favorite_border),
-                                color: Colors.blueAccent,
+                                onPressed: () {
+
+                                  print('added');
+                                },
+                                icon: Icon(Icons.favorite),
+                                color: Colors.green,
                               ),
+
                             ],
                           ),
                         ),

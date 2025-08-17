@@ -27,5 +27,10 @@ class PrepPalRepository {
   Future<List<OtherRecipes>?> OtherRecipesCall() async {
     return await apiService.OtherRecipesCall();
   }
+  List<MealsById> addFavouriteList(MealsById meal){
+    List<MealsById>meals=[];
+    meals.add(meal);
+    return  meals;
+  }
 
 }

@@ -83,8 +83,8 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(AppTexts.prepPal)),
-      body: BlocBuilder<PrepPalCubit, PrepPalState>(
-        builder: (context, state) {
+        body: BlocBuilder<PrepPalCubit, PrepPalState>(
+          builder: (context, state) {
           if (state is CatLoaded) {
             random = state.random;
             return Padding(
