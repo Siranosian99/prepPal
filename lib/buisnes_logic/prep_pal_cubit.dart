@@ -50,11 +50,15 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     emit(InsideCatLoad(insideCat: insideCat));
   }
 
-  void addFavouriteList(MealsById meal){
-    favList= repository.addFavouriteList(meal);
-    emit(FavLoad(favList: favList));
-  }
+  List<MealsById> addFavouriteList(MealsById meal) {
+    // Eski listeyi değiştirmeden, yeni bir liste oluşturup meal ekliyoruz
+    favList = [...favList, meal];
 
+    // Yeni listeyi emit ediyoruz
+    emit(FavLoad(favList: favList));
+
+    return favList;
+  }
   // Future<void>getRandomMeal()async {
   //   meal=await repository.RandomMeal() ?? [];
   //   emit(MealIdLoaded(meal: meal ?? []));
