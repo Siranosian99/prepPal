@@ -1,13 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 import 'package:preppal/consts/texts.dart';
+import 'package:preppal/service/data/api_service.dart';
+import 'package:preppal/service/model/meals_by_cat.dart';
+import 'package:preppal/service/model/meals_by_id.dart';
 
-class FavouriteScreen extends StatelessWidget {
+class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});
 
   @override
+  State<FavouriteScreen> createState() => _FavouriteScreenState();
+}
+
+class _FavouriteScreenState extends State<FavouriteScreen> {
+  List<MealsById> mls=[];
+  late ApiService _apiService;
+  @override
+  void initState() {
+    calldata();
+    super.initState();
+  }
+
+  Future<void>calldata()async{
+    mls= await BlocProvider.of<PrepPalCubit>(context).favList;
+    setState(() {
+      mls;
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppTexts.favourite), centerTitle: true),
+      appBar: AppBar(title: Text(AppTexts.favourite), centerTitle: true,
+      actions: [
+        IconButton(onPressed: (){
+          print("Printing mls:${mls[0]}");
+        }, icon: Icon(Icons.print))
+      ],),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +76,7 @@ class FavouriteScreen extends StatelessWidget {
                       leading: Image.network(
                         'https://picsum.photos/200/300',
                       ),
-                      title: Text("This is Title"),
+                      title: Text(mls[0].idMeal.toString()),
                       subtitle: Text("this is Sub"),
                       trailing: IconButton(
                         onPressed: () {},

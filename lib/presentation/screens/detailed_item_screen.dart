@@ -91,7 +91,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                               ),
                               IconButton(
                                 onPressed: () {
-
+                                  context.read<PrepPalCubit>().addFavouriteList(meals[0]);
                                   print('added');
                                 },
                                 icon: Icon(Icons.favorite),
@@ -106,6 +106,9 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
 
                     // Main container below image
                     ContainerDetailed(
+                      onTap:(){
+                        print("This${state.favList}");
+                      },
                       link:meals[0].strYoutube ??'There is No Link',
                       ingredinet:
                           meals[0].strIngredient?.join('') ??
@@ -120,7 +123,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
           return Center(
             child: Lottie.asset(
               'assets/lottie/plant_loader.json',
-              repeat: true, 
+              repeat: true,
               frameRate: FrameRate(120),
               controller: _animationController,
               width: 100,

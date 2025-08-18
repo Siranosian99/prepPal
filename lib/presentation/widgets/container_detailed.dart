@@ -11,6 +11,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
   String? country;
   String? ingredinet;
   String? link;
+  VoidCallback? onTap;
 
   ContainerDetailed({
     super.key,
@@ -19,6 +20,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
      this.country,
      this.ingredinet,
      this.link,
+    this.onTap
   });
 
   @override
@@ -105,9 +107,12 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Add to Favourite',
-                  style: TextStyle(fontSize: 16),
+                child: GestureDetector(
+                  onTap:onTap,
+                  child: const Text(
+                    'Add to Favourite',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
               ),
               Divider(),

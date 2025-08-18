@@ -15,21 +15,21 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   final PrepPalRepository repository;
   List<MealsCat> cat = [];
   List<MealsbyCat> insideCat = [];
-  List<MealsbyCat> seaFood=[];
+  List<MealsbyCat> seaFood = [];
   List<MealsById> meal = [];
   List<MealsById> random = [];
   List<OtherRecipes> recipes = [];
   List<OtherRecipes> recipesByName = [];
-  List<MealsById> favList=[];
+  List<MealsById> favList = [];
 
   Future<void> getAllCatagories() async {
     try {
       // Fetch data from API
       cat = await repository.CatCall() ?? [];
-      seaFood=await repository.InsideCat("SeaFood")?? [];
+      seaFood = await repository.InsideCat("SeaFood") ?? [];
       random = await repository.RandomMeal() ?? [];
 
-      emit(CatLoaded(cat: cat, random: random,seaFood:seaFood));
+      emit(CatLoaded(cat: cat, random: random, seaFood: seaFood));
     } catch (e) {
       print(e.toString());
     }
@@ -37,7 +37,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
 
   Future<void> getMealById(String id) async {
     meal = await repository.MealbyId(id) ?? [];
-    emit(MealIdLoaded(meal: meal ?? [],favList: favList));
+    emit(MealIdLoaded(meal: meal ?? [], favList: favList));
   }
 
   Future<void> getOtherRecipes() async {
@@ -53,12 +53,12 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<MealsById> addFavouriteList(MealsById meal) {
     // Eski listeyi değiştirmeden, yeni bir liste oluşturup meal ekliyoruz
     favList = [...favList, meal];
-
     // Yeni listeyi emit ediyoruz
+    print("THE FAV LIST IS:$favList");
     emit(FavLoad(favList: favList));
-
     return favList;
   }
+
   // Future<void>getRandomMeal()async {
   //   meal=await repository.RandomMeal() ?? [];
   //   emit(MealIdLoaded(meal: meal ?? []));
