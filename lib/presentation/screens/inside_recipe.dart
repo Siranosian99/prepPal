@@ -79,8 +79,8 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                             ),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.favorite_border),
-                              color: Colors.blueAccent,
+                              icon: Icon(Icons.favorite),
+                              color: Colors.green,
                             ),
                           ],
                         ),

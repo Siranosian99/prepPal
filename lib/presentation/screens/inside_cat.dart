@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
+import 'package:lottie/lottie.dart';
 import 'package:preppal/service/data/api_service.dart';
 
 import '../../buisnes_logic/prep_pal_cubit.dart';
@@ -17,22 +18,26 @@ class InsideCat extends StatefulWidget {
   State<InsideCat> createState() => _InsideCatState();
 }
 
-class _InsideCatState extends State<InsideCat> {
+class _InsideCatState extends State<InsideCat> with TickerProviderStateMixin{
   List<MealsbyCat> meals = [];
   List<MealsbyCat> filteredMeals = [];
   TextEditingController _filter = TextEditingController();
+  late final AnimationController _animationController;
   bool isSearching = false;
 
   @override
   void initState() {
     _callCubit();
+    _animationController = AnimationController(
+      duration: Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
     super.initState();
   }
 
   void _callCubit() {
     BlocProvider.of<PrepPalCubit>(context).getInCatagory(widget.category);
     var myBox = Hive.box<MealsbyCat>('inCat');
-    print("------------$meals");
     meals = myBox.values.toList();
   }
 
@@ -41,7 +46,11 @@ class _InsideCatState extends State<InsideCat> {
       isSearching = !isSearching;
     });
   }
-
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
   void searchFilter(String query) {
     if (query.isNotEmpty) {
       filteredMeals =
@@ -115,7 +124,16 @@ class _InsideCatState extends State<InsideCat> {
               itemCount: isSearching ? filteredMeals.length : meals.length,
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: Lottie.asset(
+              'assets/lottie/plant_loader.json',
+              repeat: true,
+              frameRate: FrameRate(120),
+              controller: _animationController,
+              width: 100,
+              height: 100,
+            ),
+          );
         },
       ),
     );

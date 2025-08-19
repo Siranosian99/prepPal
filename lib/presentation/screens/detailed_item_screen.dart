@@ -40,7 +40,11 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
     )..repeat();
     super.initState();
   }
-
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +54,16 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
           if (state is MealIdLoaded) {
             meals = state.meal;
             return meals.isEmpty
-                ? Center(child: CircularProgressIndicator())
+                ? Center(
+              child: Lottie.asset(
+                'assets/lottie/plant_loader.json',
+                repeat: true,
+                frameRate: FrameRate(120),
+                controller: _animationController,
+                width: 100,
+                height: 100,
+              ),
+            )
                 : Column(
                   children: [
                     // Image with food name and heart icon
@@ -107,7 +120,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                     // Main container below image
                     ContainerDetailed(
                       onTap:(){
-                        print("This${state.favList}");
+
                       },
                       link:meals[0].strYoutube ??'There is No Link',
                       ingredinet:

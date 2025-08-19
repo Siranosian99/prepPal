@@ -18,6 +18,7 @@ void main()async {
   Hive.registerAdapter(MealsByIdAdapter());
   await Hive.openBox('themes');
   await Hive.openBox<MealsCat>('category');
+  await Hive.openBox<MealsById>('save');
   await Hive.openBox<MealsById>('byId');
   await Hive.openBox<MealsbyCat>('SeaFood');
   await Hive.openBox<MealsbyCat>('inCat');

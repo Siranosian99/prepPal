@@ -61,7 +61,14 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/fav',
           name: 'fav',
-          builder: (context, state) => FavouriteScreen(),
+          builder: (context, state) {
+            return BlocProvider(
+              create:
+                  (context) =>
+                  PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+              child: FavouriteScreen(),
+            );
+          },
         ),
         GoRoute(
           path: '/settings',

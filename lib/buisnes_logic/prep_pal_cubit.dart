@@ -37,7 +37,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
 
   Future<void> getMealById(String id) async {
     meal = await repository.MealbyId(id) ?? [];
-    emit(MealIdLoaded(meal: meal ?? [], favList: favList));
+    emit(MealIdLoaded(meal: meal ?? []));
   }
 
   Future<void> getOtherRecipes() async {
@@ -50,14 +50,14 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     emit(InsideCatLoad(insideCat: insideCat));
   }
 
-  List<MealsById> addFavouriteList(MealsById meal) {
-    // Eski listeyi değiştirmeden, yeni bir liste oluşturup meal ekliyoruz
+  Future<List<MealsById>> addFavouriteList(MealsById meal) async{
     favList = [...favList, meal];
-    // Yeni listeyi emit ediyoruz
-    print("THE FAV LIST IS:$favList");
-    emit(FavLoad(favList: favList));
+    print("I am Fav List Fac Eu:$favList");
+    var inbox = Hive.box<MealsById>('save');
+    await inbox.addAll(favList);
     return favList;
   }
+
 
   // Future<void>getRandomMeal()async {
   //   meal=await repository.RandomMeal() ?? [];

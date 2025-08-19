@@ -22,7 +22,6 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['categories'];
         meals = m.map((e) => MealsCat.fromJson(e)).toList();
-
         var cbox = Hive.box<MealsCat>('category');
         await cbox.clear(); // Optional: clear old data
         await cbox.addAll(meals);
@@ -45,10 +44,8 @@ class ApiService {
         List<dynamic> m = result.data['meals'];
         inMeals = m.map((e) => MealsbyCat.fromJson(e)).toList();
         var mbox = Hive.box<MealsbyCat>('SeaFood');
-        await mbox.clear(); // Optional: clear old data
         await mbox.addAll(inMeals);
         var inbox = Hive.box<MealsbyCat>('inCat');
-        await inbox.clear(); // Optional: clear old data
         await inbox.addAll(inMeals);
       }
     } on DioException catch (e) {
