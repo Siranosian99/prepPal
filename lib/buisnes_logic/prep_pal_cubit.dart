@@ -50,12 +50,23 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     emit(InsideCatLoad(insideCat: insideCat));
   }
 
-  Future<List<MealsById>> addFavouriteList(MealsById meal) async{
+  Future<void> addFavouriteList(MealsById meal) async {
     favList = [...favList, meal];
-    print("I am Fav List Fac Eu:$favList");
     var inbox = Hive.box<MealsById>('save');
-    await inbox.addAll(favList);
-    return favList;
+    await inbox.add(meal);
+  }
+  Future<void> removeFavouriteList(int index) async {
+    var inbox = Hive.box<MealsById>('save');
+    await inbox.deleteAt(index);
+    favList = inbox.values.toList();
+    emit(FavLoad(favList:favList));
+  }
+
+
+  void loadFavourites() {
+    var inbox = Hive.box<MealsById>('save');
+    favList = inbox.values.toList();
+    emit(FavLoad(favList:favList));
   }
 
 

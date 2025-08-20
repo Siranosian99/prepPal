@@ -32,6 +32,7 @@ class _FavouriteScreenState extends State<FavouriteScreen>
   }
 
   void _callCubit(){
+    BlocProvider.of<PrepPalCubit>(context).loadFavourites();
     var myBox =Hive.box<MealsById>('save');
     mls = myBox.values.toList();
   }
@@ -47,17 +48,11 @@ class _FavouriteScreenState extends State<FavouriteScreen>
       appBar: AppBar(
         title: Text(AppTexts.favourite),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-            },
-            icon: Icon(Icons.print),
-          ),
-        ],
       ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is FavLoad) {
+            mls=state.favList;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -83,32 +78,28 @@ class _FavouriteScreenState extends State<FavouriteScreen>
                     )
                     : Expanded(
                       child: ListView.separated(
-                        padding: EdgeInsets.all(12),
                         itemBuilder:
                             (context, index) => Container(
-                              padding: EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(12),
-                                  bottomRight: Radius.circular(12),
-                                ),
-                              ),
+                              padding: EdgeInsets.all(10),
                               child: ListTile(
-                                leading: Image.network(
-                                  'https://picsum.photos/200/300',
+                                leading: ClipRRect(
+                                  borderRadius:BorderRadius.circular(10),
+                                  child: Image.network(
+                                    mls[index].strMealThumb.toString(),
+                                  ),
                                 ),
-                                title: Text(mls[0].idMeal.toString()),
-                                subtitle: Text("this is Sub"),
+                                title: Text(mls[index].strMeal.toString()),
                                 trailing: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.read<PrepPalCubit>().removeFavouriteList(index);
+                                  },
                                   icon: Icon(Icons.favorite),
                                 ),
                               ),
                             ),
                         separatorBuilder:
                             (context, index) => SizedBox(height: 10),
-                        itemCount: 2,
+                        itemCount: mls.length,
                       ),
                     ),
               ],
