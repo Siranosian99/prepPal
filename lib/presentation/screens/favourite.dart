@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
@@ -81,19 +82,31 @@ class _FavouriteScreenState extends State<FavouriteScreen>
                         itemBuilder:
                             (context, index) => Container(
                               padding: EdgeInsets.all(10),
-                              child: ListTile(
-                                leading: ClipRRect(
-                                  borderRadius:BorderRadius.circular(10),
-                                  child: Image.network(
-                                    mls[index].strMealThumb.toString(),
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.pushNamed(
+                                    "detailed",
+                                    extra: {
+                                      'imgLink': mls[index].strMealThumb,
+                                      'mealId': mls[index].idMeal,
+                                      'mealName': mls[index].strMeal,
+                                    },
+                                  );
+                                },
+                                child: ListTile(
+                                  leading: ClipRRect(
+                                    borderRadius:BorderRadius.circular(10),
+                                    child: Image.network(
+                                      mls[index].strMealThumb.toString(),
+                                    ),
                                   ),
-                                ),
-                                title: Text(mls[index].strMeal.toString()),
-                                trailing: IconButton(
-                                  onPressed: () {
-                                    context.read<PrepPalCubit>().removeFavouriteList(index);
-                                  },
-                                  icon: Icon(Icons.favorite),
+                                  title: Text(mls[index].strMeal.toString()),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      context.read<PrepPalCubit>().removeFavouriteList(index);
+                                    },
+                                    icon: Icon(Icons.favorite),
+                                  ),
                                 ),
                               ),
                             ),

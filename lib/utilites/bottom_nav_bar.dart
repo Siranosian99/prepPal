@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:preppal/utilites/navigation_mixin.dart';
 
 import '../consts/texts.dart';
@@ -38,7 +39,7 @@ class _BottomNavBarState extends State<BottomNavBar> with NavigatorMixin {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Guides'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.heart_broken_rounded),
+            icon: FaIcon(FontAwesomeIcons.heart),
             label: 'Favourites',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),

@@ -104,7 +104,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                               ),
                               IconButton(
                                 onPressed: () {
-                                  context.read<PrepPalCubit>().addFavouriteList(meals[0]);
+                                  context.read<PrepPalCubit>().addFavouriteList(meals[0],context);
                                   print('added');
                                 },
                                 icon: Icon(Icons.favorite),

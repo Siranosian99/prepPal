@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
@@ -50,10 +51,22 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     emit(InsideCatLoad(insideCat: insideCat));
   }
 
-  Future<void> addFavouriteList(MealsById meal) async {
-    favList = [...favList, meal];
+  Future<void> addFavouriteList(MealsById meal,BuildContext ctx) async {
     var inbox = Hive.box<MealsById>('save');
-    await inbox.add(meal);
+    favList = inbox.values.toList();
+   if(favList.any((item)=>item.idMeal == meal.idMeal)){
+     ScaffoldMessenger.of(ctx).showSnackBar(
+       SnackBar(
+         content: Text("Item recently favourites!"),
+       ),
+     );
+     return;
+   }
+    else{
+      favList = [...favList, meal];
+      await inbox.add(meal);
+    }
+
   }
   Future<void> removeFavouriteList(int index) async {
     var inbox = Hive.box<MealsById>('save');

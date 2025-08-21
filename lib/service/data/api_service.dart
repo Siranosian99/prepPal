@@ -155,6 +155,9 @@ class ApiService {
 
     return recipes;
   }
+  Future<void> TranslateApi()async{
+    
+  }
 }
 
 

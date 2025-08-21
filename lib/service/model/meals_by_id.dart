@@ -72,7 +72,14 @@ class MealsById {
     data['strSource'] = this.strSource;
     return data;
   }
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is MealsById && other.idMeal == idMeal;
+  }
 
+  @override
+  int get hashCode => idMeal.hashCode;
   @override
   String toString() {
     return '$idMeal,$strMeal,$strMealAlternate,$strCategory,$strArea,$strInstructions,$strMealThumb,$strTags,$strYoutube,$strIngredient,$strMeasure,$strSource';

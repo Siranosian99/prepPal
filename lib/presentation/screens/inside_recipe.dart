@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 import 'package:preppal/presentation/widgets/container_detailed.dart';
 import 'package:preppal/service/model/other_recipes_model.dart';
@@ -18,7 +19,8 @@ class RecipeDetailScreen extends StatefulWidget {
   State<RecipeDetailScreen> createState() => _RecipeDetailScreenState();
 }
 
-class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
+class _RecipeDetailScreenState extends State<RecipeDetailScreen>with TickerProviderStateMixin {
+  late final AnimationController _animationController;
   String noRecipeLogo =
       "https://noreciperequired.ca/wp-content/uploads/2024/01/no-recipe-required-logo.jpg";
   List<OtherRecipes> recipes = [];
@@ -26,6 +28,10 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   @override
   void initState() {
     BlocProvider.of<PrepPalCubit>(context).getOtherRecipes();
+    _animationController = AnimationController(
+      duration: Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
     super.initState();
   }
 
@@ -77,11 +83,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                                 ),
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite),
-                              color: Colors.green,
-                            ),
+
                           ],
                         ),
                       ),
@@ -101,7 +103,16 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
               ],
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: Lottie.asset(
+              'assets/lottie/bird_loader.json',
+              repeat: true,
+              frameRate: FrameRate(120),
+              controller: _animationController,
+              height: 100,
+              width: 100,
+            ),
+          );
         },
       ),
     );
