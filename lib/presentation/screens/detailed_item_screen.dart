@@ -118,17 +118,19 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                     ),
 
                     // Main container below image
-                    ContainerDetailed(
-                      onTap:(){
+                    Expanded(
+                      child: ContainerDetailed(
+                        onTap:(){
 
-                      },
-                      link:meals[0].strYoutube ??'There is No Link',
-                      ingredinet:
-                          meals[0].strIngredient?.join('') ??
-                          "No ingredients available",
-                      tags: meals[0].strTags ?? "OOPS there is No Tags",
-                      country: meals[0].strArea ?? "OOPS",
-                      about: meals[0].strInstructions.toString(),
+                        },
+                        link:meals[0].strYoutube ??'There is No Link',
+                        ingredinet:
+                            meals[0].strIngredient?.join('') ??
+                            "No ingredients available",
+                        tags: meals[0].strTags ?? "OOPS there is No Tags",
+                        country: meals[0].strArea ?? "OOPS",
+                        about: meals[0].strInstructions.toString(),
+                      ),
                     ),
                   ],
                 );

@@ -91,7 +91,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 ingredinet ??'Ooops',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
-              Divider(color: Colors.black),
+              Divider(),
               ElevatedButton(
                 onPressed: () {
                   // Add your logic here
@@ -110,7 +110,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 child: GestureDetector(
                   onTap:onTap,
                   child: const Text(
-                    'Add to Favourite',
+                    'Translate',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -126,7 +126,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                    },
                    child: Text(
                      link ?? "Ooops",
-                     maxLines: 1,
+                     maxLines: 2,
                      style: const TextStyle(
                          color: Colors.blue,
                          decoration: TextDecoration.underline,
