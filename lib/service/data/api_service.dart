@@ -11,8 +11,7 @@ import '../model/meals_by_id.dart';
 class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.mainUrl));
   final Dio _dio2 = Dio(BaseOptions(baseUrl: ApiConsts.seconderyUrl));
-
-
+  final Dio _dioT = Dio();
 
   Future<List<MealsCat>?> CatCall() async {
     List<MealsCat> meals = [];
@@ -74,7 +73,7 @@ class ApiService {
           final mes = result.data['meals'][0]['strMeasure$i'];
           if (ing != null && ing.toString().trim().isNotEmpty) {
             // ingredient.add(ing.toString().trim());
-            // measures.add(mes.toString().trim());
+            // measures.add(mes.toString().trim());git
             ingredient.add(
               '$i━ ${ing.toString().trim()} :${mes.toString().trim()}\n',
             );
@@ -155,8 +154,36 @@ class ApiService {
 
     return recipes;
   }
-  Future<void> TranslateApi()async{
-    
+  Future<void> TranslateService(String toLang,String text) async {
+
+    final result = await _dioT.post(ApiConsts.translateUrl,
+      queryParameters: {
+        "from": 'en',
+        "to": toLang,
+        "query": text,
+      },
+      options: Options(
+        headers: {
+          'x-rapidapi-key':
+          '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
+          // Your API key
+          'x-rapidapi-host': 'free-google-translator.p.rapidapi.com',
+          // API host from RapidAPI
+        },
+      ),
+    );
+    try {
+      if (result.statusCode == 200) {
+        // List<dynamic> m = result.data["data"];
+        print(result.data["translation"]);
+      }
+    } on DioException catch (e) {
+      print(e.error);
+    } catch (e) {
+      print(e);
+    }
+
+
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 import 'package:preppal/consts/texts.dart';
@@ -81,7 +82,10 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppTexts.prepPal)),
+      appBar: AppBar(title: Text(AppTexts.prepPal),
+      actions: [IconButton(onPressed: (){
+        BlocProvider.of<PrepPalCubit>(context).translateText('ar', "My Name is Vartan");
+      }, icon: Icon(Icons.print))],),
         body: BlocBuilder<PrepPalCubit, PrepPalState>(
           builder: (context, state) {
           if (state is CatLoaded) {
@@ -91,34 +95,66 @@ class _HomeScreenState extends State<HomeScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 200,
-                    child: PageView(
-                      physics: NeverScrollableScrollPhysics(),
-                      controller: _pageController,
-                      // default starts at index 0
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            context.goNamed(
-                              "detailed",
-                              extra: {
-                                'imgLink': random[0].strMealThumb,
-                                'mealId': random[0].idMeal,
-                                'mealName': random[0].strMeal,
+                  Stack(
+                    alignment:Alignment.bottomLeft,
+                    children: [
+                      SizedBox(
+                        height: 200,
+                        child: PageView(
+                          physics: NeverScrollableScrollPhysics(),
+                          controller: _pageController,
+                          // default starts at index 0
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                context.goNamed(
+                                  "detailed",
+                                  extra: {
+                                    'imgLink': random[0].strMealThumb,
+                                    'mealId': random[0].idMeal,
+                                    'mealName': random[0].strMeal,
+                                  },
+                                );
                               },
-                            );
-                          },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(21),
-                            child: Image.network(
-                              random[0].strMealThumb ?? '',
-                              fit: BoxFit.cover,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(21),
+                                child: Image.network(
+                                  random[0].strMealThumb ?? '',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.indigo, // Dark translucent background
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          random[0].strMeal.toString(),
+                          style: GoogleFonts.poppins(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.2,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(1, 1),
+                                blurRadius: 3,
+                                color: Colors.green,
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      )
+
+
+                    ],
                   ),
                   SizedBox(height: 25),
                   Text(

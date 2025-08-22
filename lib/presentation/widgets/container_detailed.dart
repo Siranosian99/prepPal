@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:preppal/utilites/language_select.dart';
 import 'package:preppal/utilites/url_open.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,7 +23,15 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
      this.link,
     this.onTap
   });
+  String? selectedLang = "en"; // default value
 
+  final List<Map<String, String>> languages = [
+    {"code": "en", "name": "English"},
+    {"code": "es", "name": "Spanish"},
+    {"code": "fr", "name": "French"},
+    {"code": "de", "name": "German"},
+    {"code": "tr", "name": "Turkish"},
+  ];
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
@@ -92,29 +101,11 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
               Divider(),
-              ElevatedButton(
-                onPressed: () {
-                  // Add your logic here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green, // background color
-                  foregroundColor: Colors.white, // text color
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: GestureDetector(
-                  onTap:onTap,
-                  child: const Text(
-                    'Translate',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
+             Row(
+               children: [
+                 LanguageSelect()
+               ],
+             ),
               Divider(),
              link !=null ?Row(
                mainAxisSize: MainAxisSize.max,

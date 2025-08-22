@@ -27,6 +27,9 @@ class PrepPalRepository {
   Future<List<OtherRecipes>?> OtherRecipesCall() async {
     return await apiService.OtherRecipesCall();
   }
+  Future<void> TranslateService(String toLang,String text) async {
+    return await apiService.TranslateService(toLang, text);
+  }
   // List<MealsById> addFavouriteList(MealsById meal){
   //   List<MealsById>meals=[];
   //   meals.add(meal);

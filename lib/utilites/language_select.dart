@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+
+class LanguageSelect extends StatefulWidget {
+  @override
+  _LanguageSelectState createState() => _LanguageSelectState();
+}
+
+class _LanguageSelectState extends State<LanguageSelect> {
+  String? selectedLang = "en"; // default value
+
+  final List<Map<String, String>> languages = [
+    {"code": "en", "name": "English"},
+    {"code": "es", "name": "Spanish"},
+    {"code": "fr", "name": "French"},
+    {"code": "de", "name": "German"},
+    {"code": "tr", "name": "Turkish"},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return  DropdownButton<String>(
+      value: selectedLang,
+      items: languages.map((lang) {
+        return DropdownMenuItem<String>(
+          value: lang["code"],
+          child: Text(lang["name"]!),
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {
+          selectedLang = value;
+        });
+      },
+    );
+  }
+}

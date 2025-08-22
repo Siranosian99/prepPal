@@ -1,13 +1,13 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
-import 'package:preppal/service/data/api_service.dart';
-
-import '../../buisnes_logic/prep_pal_cubit.dart';
-import '../../service/model/meals_by_cat.dart';
-import '../widgets/inside_cat_icon.dart';
+import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
+import 'package:preppal/presentation/widgets/inside_cat_icon.dart';
+import 'package:preppal/service/model/meals_by_cat.dart';
 
 class InsideCat extends StatefulWidget {
   final String category;
@@ -97,6 +97,7 @@ class _InsideCatState extends State<InsideCat> with TickerProviderStateMixin{
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is InsideCatLoad) {
+            meals=state.insideCat;
             if (meals.isEmpty) {
               Center(child: CircularProgressIndicator());
             }
