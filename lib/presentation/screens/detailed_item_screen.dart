@@ -49,6 +49,16 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(
+        title: Text('Normal AppBar'),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.purple],
+            ),
+          ),
+        ),
+      ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is MealIdLoaded) {

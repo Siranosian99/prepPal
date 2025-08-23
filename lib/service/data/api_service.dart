@@ -21,6 +21,8 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['categories'];
         meals = m.map((e) => MealsCat.fromJson(e)).toList();
+        TranslateService('ar',meals.toString());
+        print(TranslateService('ar',meals.toString()));
         var cbox = Hive.box<MealsCat>('category');
         await cbox.clear(); // Optional: clear old data
         await cbox.addAll(meals);
