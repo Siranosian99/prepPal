@@ -40,6 +40,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
     )..repeat();
     super.initState();
   }
+
   @override
   void dispose() {
     _animationController.dispose();
@@ -49,38 +50,31 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-        title: Text('Normal AppBar'),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.purple],
-            ),
-          ),
-        ),
-      ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is MealIdLoaded) {
             meals = state.meal;
             return meals.isEmpty
                 ? Center(
-              child: Lottie.asset(
-                'assets/lottie/plant_loader.json',
-                repeat: true,
-                frameRate: FrameRate(120),
-                controller: _animationController,
-                width: 100,
-                height: 100,
-              ),
-            )
+                  child: Lottie.asset(
+                    'assets/lottie/plant_loader.json',
+                    repeat: true,
+                    frameRate: FrameRate(120),
+                    controller: _animationController,
+                    width: 100,
+                    height: 100,
+                  ),
+                )
                 : Column(
                   children: [
                     // Image with food name and heart icon
                     Stack(
                       children: [
                         ClipRRect(
-                          borderRadius:BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight:Radius.circular(50)),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
                           child: Image.network(
                             widget.imgLink,
                             width: double.infinity,
@@ -114,13 +108,15 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                               ),
                               IconButton(
                                 onPressed: () {
-                                  context.read<PrepPalCubit>().addFavouriteList(meals[0],context);
+                                  context.read<PrepPalCubit>().addFavouriteList(
+                                    meals[0],
+                                    context,
+                                  );
                                   print('added');
                                 },
                                 icon: Icon(Icons.favorite),
                                 color: Colors.green,
                               ),
-
                             ],
                           ),
                         ),
@@ -130,10 +126,8 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                     // Main container below image
                     Expanded(
                       child: ContainerDetailed(
-                        onTap:(){
-
-                        },
-                        link:meals[0].strYoutube ??'There is No Link',
+                        onTap: () {},
+                        link: meals[0].strYoutube ?? 'There is No Link',
                         ingredinet:
                             meals[0].strIngredient?.join('') ??
                             "No ingredients available",

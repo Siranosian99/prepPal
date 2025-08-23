@@ -10,8 +10,8 @@ class _LanguageSelectState extends State<LanguageSelect> {
 
   final List<Map<String, String>> languages = [
     {"code": "en", "name": "English"},
-    {"code": "es", "name": "Spanish"},
-    {"code": "fr", "name": "French"},
+    {"code": "ar", "name": "Arabic"},
+    {"code": "hy", "name": "Armenian"},
     {"code": "de", "name": "German"},
     {"code": "tr", "name": "Turkish"},
   ];

@@ -21,7 +21,7 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['categories'];
         meals = m.map((e) => MealsCat.fromJson(e)).toList();
-        TranslateService('ar',meals.toString());
+        TranslateService('ar',meals[0].toString());
         print(TranslateService('ar',meals.toString()));
         var cbox = Hive.box<MealsCat>('category');
         await cbox.clear(); // Optional: clear old data
@@ -156,8 +156,7 @@ class ApiService {
 
     return recipes;
   }
-  Future<void> TranslateService(String toLang,String text) async {
-
+  Future<String> TranslateService(String toLang,String text) async {
     final result = await _dioT.post(ApiConsts.translateUrl,
       queryParameters: {
         "from": 'en',
@@ -184,8 +183,7 @@ class ApiService {
     } catch (e) {
       print(e);
     }
-
-
+    return text;
   }
 }
 
