@@ -82,9 +82,9 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     emit(FavLoad(favList:favList));
   }
 
-  Future<void> translateText(String toLang,String text)async{
-    await repository.TranslateService(toLang, text);
-  }
+  // Future<void> translateText(String toLang,String text)async{
+  //   await repository.TranslateService(toLang, text);
+  // }
 
   // Future<void>getRandomMeal()async {
   //   meal=await repository.RandomMeal() ?? [];

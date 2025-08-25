@@ -21,8 +21,6 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['categories'];
         meals = m.map((e) => MealsCat.fromJson(e)).toList();
-        TranslateService('ar',meals[0].toString());
-        print(TranslateService('ar',meals.toString()));
         var cbox = Hive.box<MealsCat>('category');
         await cbox.clear(); // Optional: clear old data
         await cbox.addAll(meals);
@@ -156,35 +154,35 @@ class ApiService {
 
     return recipes;
   }
-  Future<String> TranslateService(String toLang,String text) async {
-    final result = await _dioT.post(ApiConsts.translateUrl,
-      queryParameters: {
-        "from": 'en',
-        "to": toLang,
-        "query": text,
-      },
-      options: Options(
-        headers: {
-          'x-rapidapi-key':
-          '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
-          // Your API key
-          'x-rapidapi-host': 'free-google-translator.p.rapidapi.com',
-          // API host from RapidAPI
-        },
-      ),
-    );
-    try {
-      if (result.statusCode == 200) {
-        // List<dynamic> m = result.data["data"];
-        print(result.data["translation"]);
-      }
-    } on DioException catch (e) {
-      print(e.error);
-    } catch (e) {
-      print(e);
-    }
-    return text;
-  }
+  // Future<String> TranslateService(String toLang,String text) async {
+  //   final result = await _dioT.post(ApiConsts.translateUrl,
+  //     queryParameters: {
+  //       "from": 'en',
+  //       "to": toLang,
+  //       "query": text,
+  //     },
+  //     options: Options(
+  //       headers: {
+  //         'x-rapidapi-key':
+  //         '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
+  //         // Your API key
+  //         'x-rapidapi-host': 'free-google-translator.p.rapidapi.com',
+  //         // API host from RapidAPI
+  //       },
+  //     ),
+  //   );
+  //   try {
+  //     if (result.statusCode == 200) {
+  //       // List<dynamic> m = result.data["data"];
+  //       print(result.data["translation"]);
+  //     }
+  //   } on DioException catch (e) {
+  //     print(e.error);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   return text;
+  // }
 }
 
 

@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:preppal/utilites/format_convertor/date_time.dart';
 import 'package:preppal/utilites/language_select.dart';
 import 'package:preppal/utilites/url_open.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,15 +25,16 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
      this.link,
     this.onTap
   });
-  String? selectedLang = "en"; // default value
+  // String? selectedLang = "en"; // default value
+  //
+  // final List<Map<String, String>> languages = [
+  //   {"code": "en", "name": "English"},
+  //   {"code": "es", "name": "Spanish"},
+  //   {"code": "fr", "name": "French"},
+  //   {"code": "de", "name": "German"},
+  //   {"code": "tr", "name": "Turkish"},
+  // ];
 
-  final List<Map<String, String>> languages = [
-    {"code": "en", "name": "English"},
-    {"code": "es", "name": "Spanish"},
-    {"code": "fr", "name": "French"},
-    {"code": "de", "name": "German"},
-    {"code": "tr", "name": "Turkish"},
-  ];
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
@@ -103,7 +106,10 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
               Divider(),
              Row(
                children: [
-                 LanguageSelect()
+                 LanguageSelect(),
+                 IconButton(onPressed: (){
+                   // _date_time.displayTimePicker(context,_dateController );
+                 }, icon: FaIcon(Icons.calendar_month))
                ],
              ),
               Divider(),
