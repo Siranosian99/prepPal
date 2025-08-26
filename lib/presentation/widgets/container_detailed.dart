@@ -7,6 +7,7 @@ import 'package:preppal/utilites/url_open.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/texts.dart';
+import '../../utilites/notification.dart';
 
 class ContainerDetailed extends StatelessWidget with urlLunch {
   String? about;
@@ -34,7 +35,9 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
   //   {"code": "de", "name": "German"},
   //   {"code": "tr", "name": "Turkish"},
   // ];
-
+  DateAndTime _date_time = DateAndTime();
+  TextEditingController _dateController=TextEditingController();
+  TextEditingController _timeController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
@@ -104,12 +107,26 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
               Divider(),
+              LanguageSelect(),
              Row(
                children: [
-                 LanguageSelect(),
                  IconButton(onPressed: (){
-                   // _date_time.displayTimePicker(context,_dateController );
-                 }, icon: FaIcon(Icons.calendar_month))
+                   _date_time.displayDatePicker(context,_dateController );
+                 }, icon: FaIcon(Icons.calendar_month)),
+                 IconButton(onPressed: (){
+                   _date_time.displayTimePicker(context,_timeController );
+                 }, icon: FaIcon(Icons.timer)),
+                 ElevatedButton(
+                   onPressed: (){
+                     NotificationMethod.scheduleNotificationFromInput(
+
+                         1,
+                         _date_time.selectedDate,
+                         _date_time.selectedTime,
+                         ingredinet.toString());
+                   },
+                   child: const Text("Save Timer"),
+                 ),
                ],
              ),
               Divider(),

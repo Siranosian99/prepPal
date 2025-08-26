@@ -12,6 +12,7 @@ android {
 
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -39,7 +40,12 @@ android {
         }
     }
 }
+dependencies {
+    // ✅ Kotlin DSL uses function call, not Groovy string syntax
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8") // usually auto-added
+}
 flutter {
     source = "../.."
 }

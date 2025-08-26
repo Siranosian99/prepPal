@@ -5,7 +5,7 @@ class DateAndTime {
   TimeOfDay selectedTime = TimeOfDay.now();
 
   /// Date
-  DateTime initial = DateTime(2024);
+  DateTime initial = DateTime(2025);
   DateTime last = DateTime(2100);
 
   Future displayDatePicker(
