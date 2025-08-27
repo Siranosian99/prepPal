@@ -8,6 +8,7 @@ import 'package:preppal/service/model/meals_by_id.dart';
 import 'package:preppal/theme_provider/theme_data.dart';
 import 'package:preppal/theme_provider/theme_state.dart';
 import 'package:preppal/utilites/hive_init.dart';
+import 'package:preppal/utilites/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -23,7 +24,6 @@ void main()async {
   await Hive.openBox<MealsById>('byId');
   await Hive.openBox<MealsbyCat>('SeaFood');
   await Hive.openBox<MealsbyCat>('inCat');
-  tz.initializeTimeZones();
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
