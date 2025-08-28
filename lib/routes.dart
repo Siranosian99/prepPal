@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 import 'package:preppal/presentation/screens/detailed_item_screen.dart';
@@ -12,7 +13,9 @@ import 'package:preppal/service/repository.dart';
 import 'package:preppal/utilites/bottom_nav_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
+  navigatorKey: navigatorKey,
   initialLocation: '/',
   routes: [
     ShellRoute(
@@ -65,7 +68,7 @@ final GoRouter router = GoRouter(
             return BlocProvider(
               create:
                   (context) =>
-                  PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+                      PrepPalCubit(PrepPalRepository(apiService: ApiService())),
               child: FavouriteScreen(),
             );
           },

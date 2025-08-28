@@ -14,6 +14,8 @@ import 'package:timezone/data/latest.dart' as tz;
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+  NotificationMethod.init();
   await Hive.initFlutter();
   Hive.registerAdapter(MealsbyCatAdapter());
   Hive.registerAdapter(MealsCatAdapter());
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
       theme: ThemesData.lightTheme,
       darkTheme: ThemesData.darkTheme,
       routerConfig: router,
+
     );
   }
 }
