@@ -136,6 +136,8 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                         tags: meals[0].strTags ?? "OOPS there is No Tags",
                         country: meals[0].strArea ?? "OOPS",
                         about: meals[0].strInstructions.toString(),
+                        mealName: meals[0].strMeal,
+                        imgLink: meals[0].strMealThumb,
                       ),
                     ),
                   ],

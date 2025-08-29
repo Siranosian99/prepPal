@@ -19,6 +19,8 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
   String? link;
   VoidCallback? onTap;
   String? mealId;
+  String? imgLink;
+  String? mealName;
 
   ContainerDetailed({
     super.key,
@@ -30,6 +32,8 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
     this.link,
     this.mealId,
     this.onTap,
+    this.imgLink,
+    this.mealName,
   });
 
   // String? selectedLang = "en"; // default value
@@ -44,6 +48,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
   final DateAndTime _date_time = DateAndTime();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
+  final noImg='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/2560px-No_image_3x4.svg.png';
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +142,8 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                         _date_time.selectedTime,
                         name ?? "MealName",
                         mealId ??'',
-                      'https://picsum.photos/200/300',
-                        'ads'
+                     imgLink?? noImg,
+                          mealName ?? "MealName"
                       );
                     },
                     child: const Text("Save Timer"),
