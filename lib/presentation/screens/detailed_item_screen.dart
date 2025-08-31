@@ -50,6 +50,11 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.print))
+        ],
+      ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is MealIdLoaded) {

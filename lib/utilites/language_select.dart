@@ -6,10 +6,10 @@ class LanguageSelect extends StatefulWidget {
 }
 
 class _LanguageSelectState extends State<LanguageSelect> {
-  String? selectedLang = "en"; // default value
+  String? selectedLang = "splash_screen"; // default value
 
   final List<Map<String, String>> languages = [
-    {"code": "en", "name": "English"},
+    {"code": "splash_screen", "name": "English"},
     {"code": "ar", "name": "Arabic"},
     {"code": "hy", "name": "Armenian"},
     {"code": "de", "name": "German"},

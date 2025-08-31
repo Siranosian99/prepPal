@@ -157,7 +157,7 @@ class ApiService {
   // Future<String> TranslateService(String toLang,String text) async {
   //   final result = await _dioT.post(ApiConsts.translateUrl,
   //     queryParameters: {
-  //       "from": 'en',
+  //       "from": 'splash_screen',
   //       "to": toLang,
   //       "query": text,
   //     },

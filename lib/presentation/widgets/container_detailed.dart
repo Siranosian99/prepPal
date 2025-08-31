@@ -36,15 +36,6 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
     this.mealName,
   });
 
-  // String? selectedLang = "en"; // default value
-  //
-  // final List<Map<String, String>> languages = [
-  //   {"code": "en", "name": "English"},
-  //   {"code": "es", "name": "Spanish"},
-  //   {"code": "fr", "name": "French"},
-  //   {"code": "de", "name": "German"},
-  //   {"code": "tr", "name": "Turkish"},
-  // ];
   final DateAndTime _date_time = DateAndTime();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();

@@ -8,6 +8,7 @@ import 'package:preppal/presentation/screens/home_screen.dart';
 import 'package:preppal/presentation/screens/inside_cat.dart';
 import 'package:preppal/presentation/screens/inside_recipe.dart';
 import 'package:preppal/presentation/screens/personel_screen.dart';
+import 'package:preppal/presentation/screens/splash_screen.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/repository.dart';
 import 'package:preppal/utilites/bottom_nav_bar.dart';
@@ -24,8 +25,13 @@ final GoRouter router = GoRouter(
       },
       routes: [
         GoRoute(
-          path: '/',
-          name: '/',
+        path: '/',
+        name: 'splash',
+        builder: (context, state) => SplashScreen(),
+      ),
+        GoRoute(
+          path: '/home',
+          name: 'home',
           builder: (context, state) {
             return BlocProvider(
               create:

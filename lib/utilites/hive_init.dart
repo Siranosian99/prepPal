@@ -17,3 +17,4 @@ Future<void> initHive() async {
   await Hive.openBox<MealsbyCat>('SeaFood');
 
 }
+

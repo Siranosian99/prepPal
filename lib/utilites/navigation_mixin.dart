@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 mixin NavigatorMixin<T extends StatefulWidget> on State<T> {
   void navigateTo(int index) {
     if (index == 0) {
-      context.goNamed('/');
+      context.goNamed('home');
     } else if (index == 1) {
       context.goNamed('guide');
     } else if (index == 2) {

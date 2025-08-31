@@ -29,7 +29,6 @@ class NotificationMethod {
         if (payload != null) {
         final data = jsonDecode(payload);
 
-        print("_________________________$payload");
 
         navigatorKey.currentContext?.go(
           "/detailed",
@@ -39,7 +38,7 @@ class NotificationMethod {
             'mealName': data["mealName"],
           },
         );
-      }},
+     }},
 
       // onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
