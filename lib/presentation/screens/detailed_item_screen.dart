@@ -6,6 +6,7 @@ import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
 
+import '../../utilites/translate.dart';
 import '../widgets/container_detailed.dart'; // Assume this defines AppTexts.about
 
 class DetailedItemScreen extends StatefulWidget {
@@ -52,7 +53,9 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
     return Scaffold(
       appBar:AppBar(
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.print))
+          IconButton(onPressed: (){
+            translateData("This is a test Notification",'es');
+          }, icon: Icon(Icons.print))
         ],
       ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(

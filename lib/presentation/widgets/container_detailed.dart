@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/texts.dart';
 import '../../utilites/notification.dart';
+import '../../utilites/translate_dialog.dart';
 
 class ContainerDetailed extends StatelessWidget with urlLunch {
   String? name;
@@ -111,35 +112,46 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
               ),
               Divider(),
               LanguageSelect(),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      _date_time.displayDatePicker(context, _dateController);
-                    },
-                    icon: FaIcon(Icons.calendar_month),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      _date_time.displayTimePicker(context, _timeController);
-                    },
-                    icon: FaIcon(Icons.timer),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await NotificationMethod.scheduleNotificationFromInput(
-                        1,
-                        _date_time.selectedDate,
-                        _date_time.selectedTime,
-                        name ?? "MealName",
-                        mealId ??'',
-                     imgLink?? noImg,
-                          mealName ?? "MealName"
-                      );
-                    },
-                    child: const Text("Save Timer"),
-                  ),
-                ],
+              SingleChildScrollView(
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        _date_time.displayDatePicker(context, _dateController);
+                      },
+                      icon: FaIcon(Icons.calendar_month),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _date_time.displayTimePicker(context, _timeController);
+                      },
+                      icon: FaIcon(Icons.timer),
+                    ),
+
+                    ElevatedButton(
+                      onPressed: () async {
+                        await NotificationMethod.scheduleNotificationFromInput(
+                            1,
+                            _date_time.selectedDate,
+                            _date_time.selectedTime,
+                            name ?? "MealName",
+                            mealId ??'',
+                            imgLink?? noImg,
+                            mealName ?? "MealName"
+                        );
+                      },
+                      child: const Text("Set Timer"),
+                    ),
+                    SizedBox(width: 10,),
+
+                    ElevatedButton(
+                      onPressed: ()  {
+                        translateDialog(context);
+                      },
+                      child: const Text("Translate"),
+                    ),
+                  ],
+                ),
               ),
               Divider(),
               link != null

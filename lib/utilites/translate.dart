@@ -3,7 +3,7 @@ import 'package:translator/translator.dart';
 void translateData(String input,String lang) async {
   final translator = GoogleTranslator();
 
-  final input = "Здравствуйте. Ты в порядке?";
+  // final input = "Здравствуйте. Ты в порядке?";
 
   translator.translate(input, from: 'en', to: lang).then(print);
   // prints Hello. Are you okay?

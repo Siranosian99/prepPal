@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen>
                           children: [
                             GestureDetector(
                               onTap: () {
-                                context.goNamed(
+                                context.pushNamed(
                                   "detailed",
                                   extra: {
                                     'imgLink': random[0].strMealThumb,
