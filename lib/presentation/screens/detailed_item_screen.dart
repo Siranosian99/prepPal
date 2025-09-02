@@ -131,7 +131,6 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                       child: ContainerDetailed(
                         mealId: meals[0].idMeal,
                         name:"Let's Make ${meals[0].strMeal}",
-                        onTap: () {},
                         link: meals[0].strYoutube ?? 'There is No Link',
                         ingredinet:
                             meals[0].strIngredient?.join('') ??

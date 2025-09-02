@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-mixin urlLunch on StatelessWidget{
+mixin urlLunch <T extends StatefulWidget> on State<T>{
 
 Future<void> launchInBrowser(String urlString) async {
   final Uri _url = Uri.parse(urlString);

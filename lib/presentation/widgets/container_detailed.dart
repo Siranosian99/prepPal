@@ -13,14 +13,13 @@ import '../../utilites/notification.dart';
 import '../../utilites/translate.dart';
 import '../../utilites/translate_dialog.dart';
 
-class ContainerDetailed extends StatelessWidget with urlLunch {
+class ContainerDetailed extends StatefulWidget {
   String? name;
   String? about;
   String? tags;
   String? country;
   String? ingredinet;
   String? link;
-  VoidCallback? onTap;
   String? mealId;
   String? imgLink;
   String? mealName;
@@ -34,18 +33,33 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
     this.ingredinet,
     this.link,
     this.mealId,
-    this.onTap,
     this.imgLink,
     this.mealName,
   });
 
+  @override
+  State<ContainerDetailed> createState() => _ContainerDetailedState();
+}
+
+class _ContainerDetailedState extends State<ContainerDetailed>with urlLunch  {
   final DateAndTime _date_time = DateAndTime();
+
   final TextEditingController _dateController = TextEditingController();
+
   final TextEditingController _timeController = TextEditingController();
+
   final noImg =
       'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/2560px-No_image_3x4.svg.png';
-  final box = Hive.box('language');
 
+  final box = Hive.box('language');
+@override
+  void initState() {
+  // clearLanguage();
+    super.initState();
+  }
+  void clearLanguage()async{
+  await box.clear();
+  }
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
@@ -65,7 +79,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Area:$country",
+                "Area:${widget.country}",
                 style: TextStyle(
                   decoration: TextDecoration.overline,
                   shadows: [
@@ -78,7 +92,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 ),
               ),
               Text(
-                tags ?? "Ooops",
+                widget.tags ?? "Ooops",
                 style: TextStyle(
                   decoration: TextDecoration.overline,
                   shadows: [
@@ -99,7 +113,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
               SizedBox(height: 10),
               Text(
                 textAlign: TextAlign.start,
-                about ?? 'Ooops',
+                widget.about ?? 'Ooops',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
               Divider(),
@@ -111,7 +125,7 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
               SizedBox(height: 10),
               Text(
                 textAlign: TextAlign.start,
-                ingredinet ?? 'Ooops',
+                widget.ingredinet ?? 'Ooops',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
               Divider(),
@@ -138,10 +152,10 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                           1,
                           _date_time.selectedDate,
                           _date_time.selectedTime,
-                          name ?? "MealName",
-                          mealId ?? '',
-                          imgLink ?? noImg,
-                          mealName ?? "MealName",
+                          widget.name ?? "MealName",
+                          widget.mealId ?? '',
+                          widget.imgLink ?? noImg,
+                          widget.mealName ?? "MealName",
                         );
                       },
                       child: const Text("Set Timer"),
@@ -152,36 +166,36 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                       onPressed: () async {
                         final lang = box.get('language');
                         final translatedAbout = await translateData(
-                          about ?? '',
+                          widget.about ?? '',
                           lang,
                         );
                         final translatedCountry = await translateData(
-                          country ?? '',
+                          widget.country ?? '',
                           lang,
                         );
                         final translatedIngredinet = await translateData(
-                          ingredinet ?? '',
+                          widget.ingredinet ?? '',
                           lang,
                         );
-                        final t1 = await translateData('About:', lang);
+                        final t1 = await translateData('About:', lang?? 'en');
                         final t2 = await translateData(
                           'Ingredient and Measures:',
-                          lang,
+                          lang?? 'en',
                         );
-                        final t3 = await translateData('Area:', lang);
-                        final t4 = await translateData('Meal Name:', lang);
+                        final t3 = await translateData('Area:', lang?? 'en');
+                        final t4 = await translateData('Meal Name:', lang ?? 'en');
                         translateDialog(
                           context,
                           t1,
                           t2,
                           t3,
                           t4,
-                          mealName ?? "No Meal",
-                          imgLink ?? noImg,
+                          widget.mealName ?? "No Meal",
+                          widget.imgLink ?? noImg,
                           translatedAbout,
                           translatedCountry,
                           translatedIngredinet,
-                          link ?? '',
+                          widget.link ?? '',
                         );
                       },
                       child: const Text("Translate"),
@@ -190,17 +204,17 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                 ),
               ),
               Divider(),
-              link != null
+              widget.link != null
                   ? Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text("Video:"),
                       GestureDetector(
                         onTap: () async {
-                          await launchInBrowser(link ?? 'Ooops');
+                          await launchInBrowser(widget.link ?? 'Ooops');
                         },
                         child: Text(
-                          link ?? "Ooops",
+                          widget.link ?? "Ooops",
                           maxLines: 1,
                           style: const TextStyle(
                             color: Colors.blue,

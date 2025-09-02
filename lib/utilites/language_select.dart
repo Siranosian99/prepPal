@@ -7,8 +7,11 @@ class LanguageSelect extends StatefulWidget {
 }
 
 class _LanguageSelectState extends State<LanguageSelect> {
-  String? selectedLang = "en"; // default value
+  String defaultLang="en";
+  var lang;
+  String? selectedLang; // default value
   final box= Hive.box('language');
+  String langTxt="Select Translate Language";
   final List<Map<String, String>> languages = [
     {"code": "en", "name": "English"},
     {"code": "ar", "name": "Arabic"},
@@ -17,10 +20,19 @@ class _LanguageSelectState extends State<LanguageSelect> {
     {"code": "de", "name": "German"},
     {"code": "tr", "name": "Turkish"},
   ];
-
+  @override
+  void initState() {
+    lang = box.get('language');
+    selectedLang=lang;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return  DropdownButton<String>(
+    return Row(
+      mainAxisAlignment:MainAxisAlignment.spaceBetween,
+      children: [
+        Text(langTxt),
+      DropdownButton<String>(
       value: selectedLang,
       items: languages.map((lang) {
         return DropdownMenuItem<String>(
@@ -34,6 +46,8 @@ class _LanguageSelectState extends State<LanguageSelect> {
         });
         box.put('language', value);
       },
+    )
+      ],
     );
   }
 }
