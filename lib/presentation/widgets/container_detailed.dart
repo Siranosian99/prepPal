@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/texts.dart';
 import '../../utilites/notification.dart';
+import '../../utilites/translate.dart';
 import '../../utilites/translate_dialog.dart';
 
 class ContainerDetailed extends StatelessWidget with urlLunch {
@@ -145,8 +146,12 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                     SizedBox(width: 10,),
 
                     ElevatedButton(
-                      onPressed: ()  {
-                        translateDialog(context);
+                      onPressed: ()  async{
+                        final translatedAbout= await translateData(about?? '','hy');
+                        final translatedCountry=await translateData(country?? '','ar');
+                        final translatedIngredinet=await translateData(ingredinet?? '','ar');
+
+                       translateDialog(context,translatedAbout,translatedCountry,translatedIngredinet,link ??'',);
                       },
                       child: const Text("Translate"),
                     ),

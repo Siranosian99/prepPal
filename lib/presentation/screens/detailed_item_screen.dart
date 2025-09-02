@@ -52,11 +52,6 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        actions: [
-          IconButton(onPressed: (){
-            translateData("This is a test Notification",'es');
-          }, icon: Icon(Icons.print))
-        ],
       ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
