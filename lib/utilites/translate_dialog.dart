@@ -1,66 +1,73 @@
 import 'package:flutter/material.dart';
 
-void translateDialog(BuildContext context,String about,String area,String ingredient,String link) {
+void translateDialog(
+  BuildContext context,
+  String t1,
+  String t2,
+  String t3,
+  String t4,
+  String name,
+  String imgLink,
+  String about,
+  String area,
+  String ingredient,
+  String link,
+) {
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(21),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21)),
         child: Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(21),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(21)),
           width: double.infinity,
           height: double.infinity,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Image.network(imgLink),
                 // First Title
                 Text(
-                  area,
+                  '$t3$area',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.red,
                   ),
                 ),
-            
                 Text(
-                  "About:\n",
+                  '$t4$name',
                   style: TextStyle(
                     fontSize: 20,
-                    color:Colors.greenAccent,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
+                ),
+                Text(
+                  "$t1\n",
+
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.greenAccent,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Text(
-                  about,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+                Text(about, style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 12),
                 // Second Title
                 Text(
-                  "Ingredient and Measures:\n",
+                  "$t2\n",
                   style: TextStyle(
                     fontSize: 20,
-                    color:Colors.greenAccent,
+                    color: Colors.greenAccent,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Text(
-                  ingredient,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+                Text(ingredient, style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 12),
-            
+
                 // Video Link Part
                 // Text(
                 //   "Link:$link",
@@ -100,9 +107,6 @@ void translateDialog(BuildContext context,String about,String area,String ingred
     },
   );
 }
-
-
-
 
 //AlertDialog(
 //           title: const Text('Alert!'),

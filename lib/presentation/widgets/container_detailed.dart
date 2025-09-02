@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/utilites/format_convertor/date_time.dart';
 import 'package:preppal/utilites/language_select.dart';
@@ -41,7 +42,9 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
   final DateAndTime _date_time = DateAndTime();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
-  final noImg='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/2560px-No_image_3x4.svg.png';
+  final noImg =
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/2560px-No_image_3x4.svg.png';
+  final box = Hive.box('language');
 
   @override
   Widget build(BuildContext context) {
@@ -132,26 +135,54 @@ class ContainerDetailed extends StatelessWidget with urlLunch {
                     ElevatedButton(
                       onPressed: () async {
                         await NotificationMethod.scheduleNotificationFromInput(
-                            1,
-                            _date_time.selectedDate,
-                            _date_time.selectedTime,
-                            name ?? "MealName",
-                            mealId ??'',
-                            imgLink?? noImg,
-                            mealName ?? "MealName"
+                          1,
+                          _date_time.selectedDate,
+                          _date_time.selectedTime,
+                          name ?? "MealName",
+                          mealId ?? '',
+                          imgLink ?? noImg,
+                          mealName ?? "MealName",
                         );
                       },
                       child: const Text("Set Timer"),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(width: 10),
 
                     ElevatedButton(
-                      onPressed: ()  async{
-                        final translatedAbout= await translateData(about?? '','hy');
-                        final translatedCountry=await translateData(country?? '','ar');
-                        final translatedIngredinet=await translateData(ingredinet?? '','ar');
-
-                       translateDialog(context,translatedAbout,translatedCountry,translatedIngredinet,link ??'',);
+                      onPressed: () async {
+                        final lang = box.get('language');
+                        final translatedAbout = await translateData(
+                          about ?? '',
+                          lang,
+                        );
+                        final translatedCountry = await translateData(
+                          country ?? '',
+                          lang,
+                        );
+                        final translatedIngredinet = await translateData(
+                          ingredinet ?? '',
+                          lang,
+                        );
+                        final t1 = await translateData('About:', lang);
+                        final t2 = await translateData(
+                          'Ingredient and Measures:',
+                          lang,
+                        );
+                        final t3 = await translateData('Area:', lang);
+                        final t4 = await translateData('Meal Name:', lang);
+                        translateDialog(
+                          context,
+                          t1,
+                          t2,
+                          t3,
+                          t4,
+                          mealName ?? "No Meal",
+                          imgLink ?? noImg,
+                          translatedAbout,
+                          translatedCountry,
+                          translatedIngredinet,
+                          link ?? '',
+                        );
                       },
                       child: const Text("Translate"),
                     ),

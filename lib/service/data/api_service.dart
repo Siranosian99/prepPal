@@ -11,7 +11,7 @@ import '../model/meals_by_id.dart';
 class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.mainUrl));
   final Dio _dio2 = Dio(BaseOptions(baseUrl: ApiConsts.seconderyUrl));
-  final Dio _dioT = Dio();
+
 
   Future<List<MealsCat>?> CatCall() async {
     List<MealsCat> meals = [];

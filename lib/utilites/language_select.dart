@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class LanguageSelect extends StatefulWidget {
   @override
@@ -6,12 +7,13 @@ class LanguageSelect extends StatefulWidget {
 }
 
 class _LanguageSelectState extends State<LanguageSelect> {
-  String? selectedLang = "splash_screen"; // default value
-
+  String? selectedLang = "en"; // default value
+  final box= Hive.box('language');
   final List<Map<String, String>> languages = [
-    {"code": "splash_screen", "name": "English"},
+    {"code": "en", "name": "English"},
     {"code": "ar", "name": "Arabic"},
     {"code": "hy", "name": "Armenian"},
+    {"code": "es", "name": "Spanish"},
     {"code": "de", "name": "German"},
     {"code": "tr", "name": "Turkish"},
   ];
@@ -26,11 +28,25 @@ class _LanguageSelectState extends State<LanguageSelect> {
           child: Text(lang["name"]!),
         );
       }).toList(),
-      onChanged: (value) {
+      onChanged: (value) async{
         setState(() {
           selectedLang = value;
         });
+        box.put('language', value);
       },
     );
   }
 }
+
+
+//  void saveThemeData() {
+//     box.put('isDarkMode', isDark);
+//     notifyListeners();
+//   }
+//   void loadThemeMode() {
+//    isDark= box.get('isDarkMode', defaultValue: false);
+//    themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+//     notifyListeners();
+//   }
+//   var box = Hive.box('themes');
+//   bool isDark = false;
