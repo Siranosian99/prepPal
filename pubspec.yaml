@@ -55,6 +55,19 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   fluttericon: ^2.0.0
 
+flutter_native_splash:
+  color: "#ffffff"           # Light mode background color
+  color_dark: "#121212"      # Dark mode background color
+
+#  image: assets/splash_light.png        # Light mode splash image
+#  image_dark: assets/splash_dark.png    # Dark mode splash image
+
+  # Optional: Android 12 specific configurations
+  android_12:
+#    image: assets/splash_android12_light.png
+#    image_dark: assets/splash_android12_dark.png
+    icon_background_color: "#ffffff"
+    icon_background_color_dark: "#121212"
 
 dev_dependencies:
   flutter_test:
