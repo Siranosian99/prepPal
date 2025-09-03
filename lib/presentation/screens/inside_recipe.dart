@@ -93,6 +93,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>with TickerProvi
 
                 // Main container below image
                 ContainerDetailed(
+                  imgLink: recipes[widget.index].images?[0] ,
                   ingredinet:
                       recipes[widget.index].recipeIngredientParts?.join(' ') ??
                       "No ingredients available",
