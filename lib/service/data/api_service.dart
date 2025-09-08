@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_retry_interceptor/dio_retry_interceptor.dart';
 import 'package:hive/hive.dart';
 import 'package:preppal/consts/api_consts.dart';
 import 'package:preppal/service/model/meal_areas_model.dart';
@@ -10,7 +11,22 @@ import '../model/meals_by_id.dart';
 
 class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.mainUrl));
-  final Dio _dio2 = Dio(BaseOptions(baseUrl: ApiConsts.seconderyUrl));
+  final Dio _dio2 = Dio(
+    BaseOptions(
+      baseUrl: ApiConsts.seconderyUrl,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+    ),
+  )
+
+    ..interceptors.add(
+      RetryOnConnectionChangeInterceptor(
+        Dio(),
+        maxRetryAttempts: 3,
+        retryPost: false,
+        enableLogging: true,
+      ),
+    );
 
 
   Future<List<MealsCat>?> CatCall() async {
