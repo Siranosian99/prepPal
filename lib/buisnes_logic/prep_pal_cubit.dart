@@ -6,7 +6,7 @@ import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
 import 'package:preppal/service/model/other_recipes_model.dart';
-import 'package:preppal/service/repository.dart';
+import 'package:preppal/service/repository/repository.dart';
 
 part 'prep_pal_state.dart';
 

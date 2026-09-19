@@ -8,7 +8,7 @@ import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
-import 'package:preppal/utilites/navigation_mixin.dart';
+import 'package:preppal/core/utils/navigation_mixin.dart';
 
 import '../../buisnes_logic/prep_pal_cubit.dart';
 import '../widgets/category_icon.dart';
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen>
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.indigo, // Dark translucent background
+                          color: Colors.indigo,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(

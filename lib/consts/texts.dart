@@ -23,5 +23,7 @@ class AppTexts {
   static String about="About";
   static String ingredients="Ingredient & Measure";
   static String shopping="Add to Shopping List";
+  static String aiTitle="Turn Ingredients Into Magic";
+  static String txtHintAi="Tell me what ingredients you have...";
 
 }

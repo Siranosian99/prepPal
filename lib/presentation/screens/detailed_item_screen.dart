@@ -6,7 +6,7 @@ import 'package:preppal/consts/texts.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
 
-import '../../utilites/translate.dart';
+import '../../core/utils/translate.dart';
 import '../widgets/container_detailed.dart'; // Assume this defines AppTexts.about
 
 class DetailedItemScreen extends StatefulWidget {

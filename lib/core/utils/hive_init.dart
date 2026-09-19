@@ -3,7 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
 
-import '../service/model/meal_cat_model.dart';
+import '../../service/model/meal_cat_model.dart';
 
 Future<void> initHive() async {
   await Hive.initFlutter();

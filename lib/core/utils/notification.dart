@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import '../routes.dart';
+import '../../routes.dart';
 
 class NotificationMethod {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

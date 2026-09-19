@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:preppal/consts/texts.dart';
-import 'package:preppal/theme_provider/theme_state.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/theme_provider/theme_state.dart';
 import '../widgets/settings_items.dart';
 
 class PersonelScreen extends StatefulWidget {

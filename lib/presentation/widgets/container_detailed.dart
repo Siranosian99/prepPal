@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
-import 'package:preppal/utilites/format_convertor/date_time.dart';
-import 'package:preppal/utilites/language_select.dart';
-import 'package:preppal/utilites/url_open.dart';
+import 'package:preppal/core/utils/language_select.dart';
+import 'package:preppal/core/utils/url_open.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/texts.dart';
-import '../../utilites/notification.dart';
-import '../../utilites/translate.dart';
-import '../../utilites/translate_dialog.dart';
+import '../../core/utils/format_convertor/date_time.dart';
+import '../../core/utils/notification.dart';
+import '../../core/utils/translate.dart';
+import '../../core/utils/translate_dialog.dart';
 
 class ContainerDetailed extends StatefulWidget {
   String? name;
@@ -137,13 +137,13 @@ class _ContainerDetailedState extends State<ContainerDetailed>with urlLunch  {
                       onPressed: () {
                         _date_time.displayDatePicker(context, _dateController);
                       },
-                      icon: FaIcon(Icons.calendar_month),
+                      icon: FaIcon(FontAwesomeIcons.calendar),
                     ),
                     IconButton(
                       onPressed: () {
                         _date_time.displayTimePicker(context, _timeController);
                       },
-                      icon: FaIcon(Icons.timer),
+                      icon: FaIcon(FontAwesomeIcons.timeline),
                     ),
 
                     ElevatedButton(

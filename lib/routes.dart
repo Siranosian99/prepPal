@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
+import 'package:preppal/presentation/screens/ai_chat_screen.dart';
 import 'package:preppal/presentation/screens/detailed_item_screen.dart';
 import 'package:preppal/presentation/screens/favourite.dart';
 import 'package:preppal/presentation/screens/recipes_screen.dart';
@@ -10,8 +11,8 @@ import 'package:preppal/presentation/screens/inside_recipe.dart';
 import 'package:preppal/presentation/screens/personel_screen.dart';
 import 'package:preppal/presentation/screens/splash_screen.dart';
 import 'package:preppal/service/data/api_service.dart';
-import 'package:preppal/service/repository.dart';
-import 'package:preppal/utilites/bottom_nav_bar.dart';
+import 'package:preppal/service/repository/repository.dart';
+import 'package:preppal/presentation/widgets/bottom_nav_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -100,6 +101,11 @@ final GoRouter router = GoRouter(
               ),
             );
           },
+        ),
+        GoRoute(
+          path: '/ai',
+          name: 'ai',
+          builder: (context, state) => AiChatScreen(),
         ),
         // GoRoute(
         //   path: '/recipes',

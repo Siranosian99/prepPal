@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:dio_retry_interceptor/dio_retry_interceptor.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:preppal/consts/api_consts.dart';
+import 'package:preppal/service/model/ai_recipes_model.dart';
 import 'package:preppal/service/model/meal_areas_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
@@ -14,6 +16,13 @@ class ApiService {
   final Dio _dio2 = Dio(
     BaseOptions(
       baseUrl: ApiConsts.seconderyUrl,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+    ),
+  );
+  final Dio _dio3= Dio(
+    BaseOptions(
+      baseUrl: ApiConsts.baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),
@@ -170,7 +179,121 @@ class ApiService {
 
     return recipes;
   }
-  // Future<String> TranslateService(String toLang,String text) async {
+
+  Future<List<AiRecipeModel>> AiRecipesGet(String query) async {
+      try {
+        final response = await _dio.post(
+          ApiConsts.endPoint,
+          data: {
+            "model": ApiConsts.modelName,
+            "messages": [
+              {"role": "user", "content": query},
+            ],
+          },
+          options: Options(
+            headers: {
+              "Authorization": ApiConsts.apiKey,
+              "Content-Type": "application/json",
+            },
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          final msg = response.data['choices'][0]['message'];
+
+          final userMessage = AiRecipeModel(role: 'user', content: query);
+
+          final aiMessage = AiRecipeModel(
+            role: msg['role'],
+            reasoning: msg['reasoning'],
+            refusal: msg['refusal'],
+            content: msg['content'],
+          );
+
+          debugPrint("AI response added: ${aiMessage.content}");
+
+          return [userMessage, aiMessage];
+        }
+
+        throw Exception("Unexpected status code: ${response.statusCode}");
+      } on DioException catch (e) {
+        final statusCode = e.response?.statusCode;
+
+        debugPrint("DioException");
+        debugPrint("Status Code: $statusCode");
+        debugPrint("Message: ${e.message}");
+        debugPrint("Response: ${e.response?.data}");
+
+        final bool shouldRetry =
+            e.type == DioExceptionType.connectionTimeout ||
+                e.type == DioExceptionType.sendTimeout ||
+                e.type == DioExceptionType.receiveTimeout ||
+                e.type == DioExceptionType.connectionError ||
+                statusCode == 500 ||
+                statusCode == 502 ||
+                statusCode == 503 ||
+                statusCode == 504;
+
+
+      } catch (e) {
+        debugPrint("Unexpected error: $e");
+        throw Exception("Something went wrong.");
+      }
+    }
+  }
+
+  String _getErrorMessage(DioException e) {
+    final statusCode = e.response?.statusCode;
+
+    if (e.type == DioExceptionType.connectionError) {
+      return "No internet connection. Please check your network.";
+    }
+
+    if (e.type == DioExceptionType.connectionTimeout) {
+      return "Unable to connect to the server.";
+    }
+
+    if (e.type == DioExceptionType.sendTimeout) {
+      return "The request could not be sent. Please try again.";
+    }
+
+    if (e.type == DioExceptionType.receiveTimeout) {
+      return "The server took too long to respond.";
+    }
+
+    switch (statusCode) {
+      case 400:
+        return "Bad request.";
+      case 401:
+        return "Token is invalid or missing.";
+      case 403:
+        return "You do not have permission to perform this action.";
+      case 404:
+        return "The endpoint or requested resource was not found.";
+      case 405:
+        return "The HTTP method used is not allowed.";
+      case 408:
+        return "The request timed out.";
+      case 409:
+        return "The request conflicts with the current state.";
+      case 422:
+        return "The data sent cannot be processed.";
+      case 429:
+        return "Too many requests were sent. Rate limit exceeded.";
+      case 500:
+        return "An error occurred on the API server.";
+      case 502:
+        return "There is a problem with the gateway or proxy.";
+      case 503:
+        return "The API is currently unavailable.";
+      case 504:
+        return "The server did not respond in time.";
+      default:
+        return "Something went wrong.";
+    }
+  }
+
+// Future<String> TranslateService(String toLang,String text) async {
   //   final result = await _dioT.post(ApiConsts.translateUrl,
   //     queryParameters: {
   //       "from": 'splash_screen',

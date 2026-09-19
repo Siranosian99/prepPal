@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ThemesData {
   static final lightTheme = ThemeData(
+    floatingActionButtonTheme:FloatingActionButtonThemeData(backgroundColor: Colors.indigo),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.green,
@@ -43,6 +44,7 @@ class ThemesData {
   );
 
   static final darkTheme = ThemeData(
+    floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: Colors.indigo),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.green,
