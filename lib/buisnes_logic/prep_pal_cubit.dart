@@ -84,7 +84,10 @@ class PrepPalCubit extends Cubit<PrepPalState> {
       aiRecipes = await repository.AiRecipesGet(query) ?? [];
       emit(AiRecipesLoad(aiRecipes: aiRecipes));
     } catch (e) {
-      print(e.toString());
+      emit(
+          AiRecipesError(
+            message: e.toString(),
+          ));
     }
   }
 
