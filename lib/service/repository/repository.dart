@@ -28,8 +28,8 @@ class PrepPalRepository {
   Future<List<OtherRecipes>?> OtherRecipesCall() async {
     return await apiService.OtherRecipesCall();
   }
-  Future<List<AiRecipeModel>?> AiRecipesGet() async {
-    return await apiService.AiRecipesGet();
+  Future<List<AiRecipeModel>?> AiRecipesGet(String query) async {
+    return await apiService.AiRecipesGet(query);
   }
   // Future<String> TranslateService(String toLang,String text) async {
   //   return await apiService.TranslateService(toLang, text);

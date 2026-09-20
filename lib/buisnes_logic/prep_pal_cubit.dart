@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:meta/meta.dart';
+import 'package:preppal/service/model/ai_recipes_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
@@ -22,6 +22,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<OtherRecipes> recipes = [];
   List<OtherRecipes> recipesByName = [];
   List<MealsById> favList = [];
+  List<AiRecipeModel> aiRecipes = [];
 
   Future<void> getAllCatagories() async {
     try {
@@ -38,12 +39,12 @@ class PrepPalCubit extends Cubit<PrepPalState> {
 
   Future<void> getMealById(String id) async {
     meal = await repository.MealbyId(id) ?? [];
-    emit(MealIdLoaded(meal: meal ?? []));
+    emit(MealIdLoaded(meal: meal));
   }
 
   Future<void> getOtherRecipes() async {
     recipes = await repository.OtherRecipesCall() ?? [];
-    emit(OtherRecipesLoad(recipes: recipes ?? []));
+    emit(OtherRecipesLoad(recipes: recipes));
   }
 
   Future<void> getInCatagory(String category) async {
@@ -51,35 +52,40 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     emit(InsideCatLoad(insideCat: insideCat));
   }
 
-  Future<void> addFavouriteList(MealsById meal,BuildContext ctx) async {
+  Future<void> addFavouriteList(MealsById meal, BuildContext ctx) async {
     var inbox = Hive.box<MealsById>('save');
     favList = inbox.values.toList();
-   if(favList.any((item)=>item.idMeal == meal.idMeal)){
-     ScaffoldMessenger.of(ctx).showSnackBar(
-       SnackBar(
-         content: Text("Item recently favourites!"),
-       ),
-     );
-     return;
-   }
-    else{
+    if (favList.any((item) => item.idMeal == meal.idMeal)) {
+      ScaffoldMessenger.of(
+        ctx,
+      ).showSnackBar(SnackBar(content: Text("Item recently favourites!")));
+      return;
+    } else {
       favList = [...favList, meal];
       await inbox.add(meal);
     }
-
   }
+
   Future<void> removeFavouriteList(int index) async {
     var inbox = Hive.box<MealsById>('save');
     await inbox.deleteAt(index);
     favList = inbox.values.toList();
-    emit(FavLoad(favList:favList));
+    emit(FavLoad(favList: favList));
   }
-
 
   void loadFavourites() {
     var inbox = Hive.box<MealsById>('save');
     favList = inbox.values.toList();
-    emit(FavLoad(favList:favList));
+    emit(FavLoad(favList: favList));
+  }
+
+  Future<void> AiRecipesGet(String query) async {
+    try {
+      aiRecipes = await repository.AiRecipesGet(query) ?? [];
+      emit(AiRecipesLoad(aiRecipes: aiRecipes));
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   // Future<void> translateText(String toLang,String text)async{

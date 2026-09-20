@@ -29,4 +29,16 @@ class AiRecipeModel {
     data['steps'] = steps;
     return data;
   }
+
+
+  @override
+  String toString() {
+    return 'AiRecipeModel('
+        'name: $name, '
+        'ingredients: $ingredients, '
+        'duration: $duration, '
+        'difficulty: $difficulty, '
+        'steps: $steps'
+        ')';
+  }
 }

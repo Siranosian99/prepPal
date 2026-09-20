@@ -34,5 +34,9 @@ final class FavLoad extends PrepPalState{
   late List<MealsById> favList;
   FavLoad({required this.favList});
 }
+final class AiRecipesLoad extends PrepPalState{
+  late List<AiRecipeModel> aiRecipes;
+  AiRecipesLoad({required this.aiRecipes});
+}
 final class FavError extends PrepPalState{
 }
