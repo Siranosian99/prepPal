@@ -81,8 +81,10 @@ class PrepPalCubit extends Cubit<PrepPalState> {
 
   Future<void> AiRecipesGet(String query) async {
     try {
+      emit(AiRecipesLoad(aiRecipes: aiRecipes,isLoading: true));
       aiRecipes = await repository.AiRecipesGet(query) ?? [];
-      emit(AiRecipesLoad(aiRecipes: aiRecipes));
+      print('----------ARA$aiRecipes');
+      emit(AiRecipesLoad(aiRecipes: aiRecipes,isLoading: false));
     } catch (e) {
       emit(
           AiRecipesError(

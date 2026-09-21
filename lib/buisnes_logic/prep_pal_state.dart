@@ -39,9 +39,11 @@ final class FavError extends PrepPalState{
 
 final class AiRecipesLoad extends PrepPalState{
   late List<AiRecipeModel> aiRecipes;
-  AiRecipesLoad({required this.aiRecipes});
+  final bool isLoading;
+  AiRecipesLoad({required this.aiRecipes,required this.isLoading});
 }
 final class AiRecipesError extends PrepPalState{
   final String message;
   AiRecipesError({required this.message});
 }
+final class AiRecipesLoading extends PrepPalState{}

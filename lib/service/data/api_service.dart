@@ -32,7 +32,7 @@ class ApiService {
     ..interceptors.add(
       RetryOnConnectionChangeInterceptor(
         Dio(),
-        maxRetryAttempts: 3,
+        maxRetryAttempts: 1,
         retryPost: false,
         enableLogging: true,
       ),
