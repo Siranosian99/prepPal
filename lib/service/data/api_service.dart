@@ -242,11 +242,6 @@ class ApiService {
         final jsonData = jsonDecode(content);
         final lastData = AiRecipeModel.fromJson(jsonData);
         print('-==--------');
-        //  String? name;
-        //   List<String>? ingredients;
-        //   int? duration;
-        //   String? difficulty;
-        //   List<String>? steps;
         print(jsonEncode(lastData.toJson()));
         recipes.add(
           AiRecipeModel(

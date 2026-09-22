@@ -106,15 +106,14 @@ class _HomeScreenState extends State<HomeScreen>
                           children: [
                             GestureDetector(
                               onTap: () async{
-                               await context.read<PrepPalCubit>().AiRecipesGet('chicken, rice, tomato');
-                                // context.pushNamed(
-                                //   "detailed",
-                                //   extra: {
-                                //     'imgLink': random[0].strMealThumb,
-                                //     'mealId': random[0].idMeal,
-                                //     'mealName': random[0].strMeal,
-                                //   },
-                                // );
+                                context.pushNamed(
+                                  "detailed",
+                                  extra: {
+                                    'imgLink': random[0].strMealThumb,
+                                    'mealId': random[0].idMeal,
+                                    'mealName': random[0].strMeal,
+                                  },
+                                );
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(21),

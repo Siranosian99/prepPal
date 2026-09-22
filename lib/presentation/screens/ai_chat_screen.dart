@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:preppal/consts/texts.dart';
@@ -64,45 +65,109 @@ class _AiChatScreenState extends State<AiChatScreen> {
                                       height: 1.6,
                                     ),
                                     children: [
-                                      const TextSpan(
+                                      TextSpan(
                                         text: 'Ingredients: ',
                                         style: TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium?.color,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                       TextSpan(
+                                        style: TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium?.color,
+                                        ),
                                         text:
                                             state.aiRecipes[index].ingredients
                                                 ?.join(', ') ??
                                             '',
                                       ),
 
-                                      const TextSpan(
+                                      TextSpan(
                                         text: '\n\nSteps:\n',
                                         style: TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium?.color,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
 
                                       TextSpan(
+                                        style: TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium?.color,
+                                        ),
                                         text:
                                             state.aiRecipes[index].steps?.join(
                                               '\n',
                                             ) ??
                                             '',
                                       ),
+                                      TextSpan(text: '\n'),
+                                      TextSpan(
+                                        text: 'Difficulty: ',
+                                        style: TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium?.color,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        style: TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium?.color,
+                                        ),
+                                        text:
+                                            state.aiRecipes[index].difficulty ??
+                                            'Unknown',
+                                      ),
                                     ],
                                   ),
                                 ),
                               ),
 
-                              trailing: Text(
-                                state.aiRecipes[index].difficulty ?? '',
-                                style: const TextStyle(
-                                  fontFamily: 'sans-serif',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              trailing: Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () async {
+                                      final text = '''
+                                                 ${state.aiRecipes[index].name ?? ''}
+                                                  Ingredients:
+                                                 ${state.aiRecipes[index].ingredients?.join('\n') ?? ''}
+                                                     Steps:
+                                                 ${state.aiRecipes[index].steps?.join('\n') ?? ''}
+                                                 ''';
+
+                                      await Clipboard.setData(
+                                        ClipboardData(text: text),
+                                      );
+
+                                      if (context.mounted) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text('Recipe copied!'),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    icon: const Icon(Icons.copy),
+                                  ),
+                                ],
                               ),
                             );
                           },
@@ -113,53 +178,59 @@ class _AiChatScreenState extends State<AiChatScreen> {
                         )
                         : const Center(child: Text('What can I cook today?')),
               ),
-              TextFormField(
-                enabled: isLoading,
-                controller: _queryController,
-                maxLines: 4,
-                minLines: 1,
-                textInputAction: TextInputAction.newline,
-                decoration: InputDecoration(
-                  hintText: AppTexts.txtHintAi,
-                  hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
-                  prefixIcon: const Padding(
-                    padding: EdgeInsets.only(left: 16, right: 8, bottom: 12),
-                    child: Icon(Icons.restaurant_menu_rounded, size: 22),
-                  ),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: IconButton(
-                      onPressed: () async {
-                        await context.read<PrepPalCubit>().AiRecipesGet(
-                          _queryController.text,
-                        );
-                        _queryController.clear();
-                      },
-                      icon:
-                          isLoading
-                              ? Icon(Icons.stop_circle_outlined)
-                              : Icon(Icons.arrow_upward_rounded),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  enabled: !isLoading,
+                  controller: _queryController,
+                  maxLines: 4,
+                  minLines: 1,
+                  textInputAction: TextInputAction.newline,
+                  decoration: InputDecoration(
+                    hintText: AppTexts.txtHintAi,
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
                     ),
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22),
-                    borderSide: BorderSide.none,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(22),
-                    borderSide: const BorderSide(
-                      color: Colors.blue,
-                      width: 1.5,
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(left: 16, right: 8, bottom: 12),
+                      child: Icon(Icons.restaurant_menu_rounded, size: 22),
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: IconButton(
+                        onPressed: () async {
+                          await context.read<PrepPalCubit>().AiRecipesGet(
+                            _queryController.text,
+                          );
+                          _queryController.clear();
+                        },
+                        icon:
+                            isLoading
+                                ? Icon(Icons.stop_circle_outlined)
+                                : Icon(Icons.arrow_upward_rounded),
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(22),
+                      borderSide: const BorderSide(
+                        color: Colors.blue,
+                        width: 1.5,
+                      ),
                     ),
                   ),
                 ),
