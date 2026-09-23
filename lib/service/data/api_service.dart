@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:preppal/consts/api_consts.dart';
 import 'package:preppal/service/model/ai_recipes_model.dart';
-import 'package:preppal/service/model/meal_areas_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/other_recipes_model.dart';
@@ -40,11 +39,12 @@ class ApiService {
     );
   final Dio _dio4 = Dio(
     BaseOptions(
-      baseUrl: ApiConsts.baseUrlFoddFactor,
+      baseUrl: ApiConsts.baseUrlFoodFactor,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),
   );
+
   Future<List<MealsCat>?> CatCall() async {
     List<MealsCat> meals = [];
     final result = await _dio.get('categories.php');
@@ -184,6 +184,7 @@ class ApiService {
 
     return recipes;
   }
+
   Future<List<OtherRecipes>?> FoodFactsCall() async {
     List<OtherRecipes> recipes = [];
     final result = await _dio2.get(
@@ -191,7 +192,7 @@ class ApiService {
       options: Options(
         headers: {
           'x-rapidapi-key':
-          '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
+              '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
           // Your API key
           'x-rapidapi-host': 'recipe-food-nutrition16.p.rapidapi.com',
           // API host from RapidAPI
@@ -211,6 +212,7 @@ class ApiService {
 
     return recipes;
   }
+
   Future<List<AiRecipeModel>?> AiRecipesGet(String query) async {
     List<AiRecipeModel> recipes = [];
     try {
@@ -313,22 +315,25 @@ class ApiService {
     }
     return null;
   }
-  Future<void> FoodFactsGet(String query) async {
-    List<NutritionProduct> foods=[];
+
+  Future<List<NutritionProduct>?> FoodFactsGet(String query) async {
+    List<NutritionProduct> foods = [];
     try {
       final response = await _dio4.get(
-        ApiConsts.baseUrlFoddFactor,
+        ApiConsts.baseUrlFoodFactor,
         queryParameters: {
           'search_terms': 'chicken',
           'json': 1,
           'page_size': 20,
-        }
+        },
       );
 
       if (response.statusCode == 200) {
         final products = response.data['products'];
-        foods.add
         for (final product in products) {
+          foods.add(
+            NutritionProduct.fromJson(product),
+          );
           print('-------------------');
           print('Name: ${product['product_name']}');
           print('Brand: ${product['brands']}');
@@ -350,7 +355,7 @@ class ApiService {
         // );
         print("-----------");
       }
-
+      return foods;
       throw Exception("Unexpected status code: ${response.statusCode}");
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
@@ -362,13 +367,13 @@ class ApiService {
 
       final bool shouldRetry =
           e.type == DioExceptionType.connectionTimeout ||
-              e.type == DioExceptionType.sendTimeout ||
-              e.type == DioExceptionType.receiveTimeout ||
-              e.type == DioExceptionType.connectionError ||
-              statusCode == 500 ||
-              statusCode == 502 ||
-              statusCode == 503 ||
-              statusCode == 504;
+          e.type == DioExceptionType.sendTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.connectionError ||
+          statusCode == 500 ||
+          statusCode == 502 ||
+          statusCode == 503 ||
+          statusCode == 504;
     } catch (e) {
       debugPrint("Unexpected error: $e");
       throw Exception("Something went wrong.");

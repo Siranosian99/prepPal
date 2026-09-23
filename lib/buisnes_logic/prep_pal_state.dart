@@ -47,3 +47,9 @@ final class AiRecipesError extends PrepPalState{
   AiRecipesError({required this.message});
 }
 final class AiRecipesLoading extends PrepPalState{}
+final class FoodFactsLoad extends PrepPalState{
+  late List<NutritionProduct> products;
+  final bool isLoading;
+  FoodFactsLoad({required this.products,required this.isLoading});
+}
+final class FoodFactsLoading extends PrepPalState{}

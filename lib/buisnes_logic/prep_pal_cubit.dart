@@ -8,6 +8,8 @@ import 'package:preppal/service/model/meals_by_id.dart';
 import 'package:preppal/service/model/other_recipes_model.dart';
 import 'package:preppal/service/repository/repository.dart';
 
+import '../service/model/food_fact_model.dart';
+
 part 'prep_pal_state.dart';
 
 class PrepPalCubit extends Cubit<PrepPalState> {
@@ -23,7 +25,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<OtherRecipes> recipesByName = [];
   List<MealsById> favList = [];
   List<AiRecipeModel> aiRecipes = [];
-
+  List<NutritionProduct> products = [];
   Future<void> getAllCatagories() async {
     try {
       // Fetch data from API
@@ -92,7 +94,19 @@ class PrepPalCubit extends Cubit<PrepPalState> {
           ));
     }
   }
-
+  Future<void> FoodFactGet(String query) async {
+    try {
+      emit(FoodFactsLoad(products: products,isLoading: true));
+      final result = await repository.FoodFactsGet(query) ?? [];
+      products.addAll(result);
+      emit(AiRecipesLoad(aiRecipes: aiRecipes,isLoading: false));
+    } catch (e) {
+      emit(
+          AiRecipesError(
+            message: e.toString(),
+          ));
+    }
+  }
   // Future<void> translateText(String toLang,String text)async{
   //   await repository.TranslateService(toLang, text);
   // }

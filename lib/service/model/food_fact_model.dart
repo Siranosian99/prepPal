@@ -12,6 +12,5 @@ class NutritionProduct {
   NutritionProduct.fromJson(Map<String, dynamic> json) {
     name = json['product_name'];
     brand = json['brands'];
-    calories = json['nutriments']?['energy-kcal_100g'];
-  }
+    calories = (json['nutriments']?['energy-kcal_100g'] as num?)!.toDouble();  }
 }

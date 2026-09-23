@@ -1,5 +1,6 @@
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/ai_recipes_model.dart';
+import 'package:preppal/service/model/food_fact_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
@@ -30,6 +31,9 @@ class PrepPalRepository {
   }
   Future<List<AiRecipeModel>?> AiRecipesGet(String query) async {
     return await apiService.AiRecipesGet(query);
+  }
+  Future<List<NutritionProduct>?> FoodFactsGet(String query) async {
+    return await apiService.FoodFactsGet(query);
   }
   // Future<String> TranslateService(String toLang,String text) async {
   //   return await apiService.TranslateService(toLang, text);

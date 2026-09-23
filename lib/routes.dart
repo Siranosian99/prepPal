@@ -44,14 +44,14 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
-          path: '/guide',
-          name: 'guide',
+          path: '/nutrition',
+          name: 'nutrition',
           builder: (context, state) {
             return BlocProvider(
               create:
                   (context) =>
                       PrepPalCubit(PrepPalRepository(apiService: ApiService())),
-              child: GuideScreen(),
+              child: NutritionScreen(),
             );
           },
         ),

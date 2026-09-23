@@ -6,7 +6,7 @@ mixin NavigatorMixin<T extends StatefulWidget> on State<T> {
     if (index == 0) {
       context.goNamed('home');
     } else if (index == 1) {
-      context.goNamed('guide');
+      context.goNamed('nutrition');
     } else if (index == 2) {
       context.goNamed('fav');
     } else if (index == 3) {
