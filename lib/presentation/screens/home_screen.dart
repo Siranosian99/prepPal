@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 import 'package:preppal/consts/texts.dart';
+import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
@@ -34,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-
     _callCubit();
     _pageController = PageController();
 
@@ -46,14 +46,13 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
   }
 
-  void _callCubit(){
+  void _callCubit() {
     BlocProvider.of<PrepPalCubit>(context).getAllCatagories();
-    var myBox =Hive.box<MealsCat>('category');
-    var myBoxx =Hive.box<MealsbyCat>('SeaFood');
+    var myBox = Hive.box<MealsCat>('category');
+    var myBoxx = Hive.box<MealsbyCat>('SeaFood');
     mlsCat = myBox.values.toList();
     mlsByCt = myBoxx.values.toList();
   }
-
 
   void _startAutoScroll() async {
     while (_isScrolling && mounted) {
@@ -82,11 +81,13 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppTexts.prepPal),),
+      appBar: AppBar(title: Text(AppTexts.prepPal),leading:IconButton(onPressed: (){
+        ApiService().FoodFactsGet('choclate');
+      }, icon: Icon(Icons.eleven_mp)),),
       // actions: [IconButton(onPressed: (){
       // }, icon: Icon(Icons.print))],),
-        body: BlocBuilder<PrepPalCubit, PrepPalState>(
-          builder: (context, state) {
+      body: BlocBuilder<PrepPalCubit, PrepPalState>(
+        builder: (context, state) {
           if (state is CatLoaded) {
             random = state.random;
             return Padding(
@@ -95,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Stack(
-                    alignment:Alignment.bottomLeft,
+                    alignment: Alignment.bottomLeft,
                     children: [
                       SizedBox(
                         height: 200,
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen>
                           // default starts at index 0
                           children: [
                             GestureDetector(
-                              onTap: () async{
+                              onTap: () async {
                                 context.pushNamed(
                                   "detailed",
                                   extra: {
@@ -127,7 +128,10 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.indigo,
                           borderRadius: BorderRadius.circular(8),
@@ -150,9 +154,7 @@ class _HomeScreenState extends State<HomeScreen>
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),
-                      )
-
-
+                      ),
                     ],
                   ),
                   SizedBox(height: 25),

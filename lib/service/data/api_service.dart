@@ -11,6 +11,7 @@ import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/other_recipes_model.dart';
 
+import '../model/food_fact_model.dart';
 import '../model/meals_by_id.dart';
 
 class ApiService {
@@ -37,7 +38,13 @@ class ApiService {
         enableLogging: true,
       ),
     );
-
+  final Dio _dio4 = Dio(
+    BaseOptions(
+      baseUrl: ApiConsts.baseUrlFoddFactor,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+    ),
+  );
   Future<List<MealsCat>?> CatCall() async {
     List<MealsCat> meals = [];
     final result = await _dio.get('categories.php');
@@ -177,7 +184,33 @@ class ApiService {
 
     return recipes;
   }
+  Future<List<OtherRecipes>?> FoodFactsCall() async {
+    List<OtherRecipes> recipes = [];
+    final result = await _dio2.get(
+      'recipes?size=100&page=1',
+      options: Options(
+        headers: {
+          'x-rapidapi-key':
+          '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
+          // Your API key
+          'x-rapidapi-host': 'recipe-food-nutrition16.p.rapidapi.com',
+          // API host from RapidAPI
+        },
+      ),
+    );
+    try {
+      if (result.statusCode == 200) {
+        List<dynamic> m = result.data["data"];
+        recipes = m.map((e) => OtherRecipes.fromJson(e)).toList();
+      }
+    } on DioException catch (e) {
+      print(e.error);
+    } catch (e) {
+      print(e);
+    }
 
+    return recipes;
+  }
   Future<List<AiRecipeModel>?> AiRecipesGet(String query) async {
     List<AiRecipeModel> recipes = [];
     try {
@@ -274,6 +307,68 @@ class ApiService {
           statusCode == 502 ||
           statusCode == 503 ||
           statusCode == 504;
+    } catch (e) {
+      debugPrint("Unexpected error: $e");
+      throw Exception("Something went wrong.");
+    }
+    return null;
+  }
+  Future<void> FoodFactsGet(String query) async {
+    List<NutritionProduct> foods=[];
+    try {
+      final response = await _dio4.get(
+        ApiConsts.baseUrlFoddFactor,
+        queryParameters: {
+          'search_terms': 'chicken',
+          'json': 1,
+          'page_size': 20,
+        }
+      );
+
+      if (response.statusCode == 200) {
+        final products = response.data['products'];
+        foods.add
+        for (final product in products) {
+          print('-------------------');
+          print('Name: ${product['product_name']}');
+          print('Brand: ${product['brands']}');
+          print('Code: ${product['code']}');
+        }
+        // final content = data['choices'][0]['message']['content'];
+        // final jsonData = jsonDecode(content);
+        // final lastData = AiRecipeModel.fromJson(jsonData);
+        // print('-==--------');
+        // print(jsonEncode(lastData.toJson()));
+        // recipes.add(
+        //   AiRecipeModel(
+        //     name: lastData.name,
+        //     ingredients: lastData.ingredients,
+        //     duration: lastData.duration,
+        //     difficulty: lastData.difficulty,
+        //     steps: lastData.steps,
+        //   ),
+        // );
+        print("-----------");
+      }
+
+      throw Exception("Unexpected status code: ${response.statusCode}");
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+
+      debugPrint("DioException");
+      debugPrint("Status Code: $statusCode");
+      debugPrint("Message: ${e.message}");
+      debugPrint("Response: ${e.response?.data}");
+
+      final bool shouldRetry =
+          e.type == DioExceptionType.connectionTimeout ||
+              e.type == DioExceptionType.sendTimeout ||
+              e.type == DioExceptionType.receiveTimeout ||
+              e.type == DioExceptionType.connectionError ||
+              statusCode == 500 ||
+              statusCode == 502 ||
+              statusCode == 503 ||
+              statusCode == 504;
     } catch (e) {
       debugPrint("Unexpected error: $e");
       throw Exception("Something went wrong.");
