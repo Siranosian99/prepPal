@@ -322,9 +322,9 @@ class ApiService {
       final response = await _dio4.get(
         ApiConsts.baseUrlFoodFactor,
         queryParameters: {
-          'search_terms': 'chicken',
-          'json': 1,
+          'categories_tags_en': query,
           'page_size': 20,
+          'fields': 'product_name,brands,nutriments',
         },
       );
 
@@ -334,10 +334,10 @@ class ApiService {
           foods.add(
             NutritionProduct.fromJson(product),
           );
-          print('-------------------');
-          print('Name: ${product['product_name']}');
-          print('Brand: ${product['brands']}');
-          print('Code: ${product['code']}');
+          // print('-------------------');
+          // print('Name: ${product['product_name']}');
+          // print('Brand: ${product['brands']}');
+          // print('Code: ${product['code']}');
         }
         // final content = data['choices'][0]['message']['content'];
         // final jsonData = jsonDecode(content);
@@ -355,6 +355,7 @@ class ApiService {
         // );
         print("-----------");
       }
+      print("foods$foods");
       return foods;
       throw Exception("Unexpected status code: ${response.statusCode}");
     } on DioException catch (e) {

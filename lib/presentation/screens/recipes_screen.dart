@@ -52,84 +52,120 @@ class _NutritionScreenState extends State<NutritionScreen>
       ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
-          Widget content;
+          return IconButton(onPressed: ()async{
+            await   context.read<PrepPalCubit>().FoodFactGet("chicken");
+          }, icon: Icon(Icons.send));
 
-          if (state is FoodFactsLoad) {
-            final List<NutritionProduct> products = state.products;
-            if (products.isEmpty) {
-              content = const Center(
-                child: Text('No products found'),
-              );
-            } else {
-              content = ListView.separated(
-                padding: const EdgeInsets.all(16),
-                itemCount: products.length,
-                separatorBuilder: (_, __) =>
-                const SizedBox(height: 10),
-                itemBuilder: (context, index) {
-                  final product = products[index];
-                  return Card(
-                    child: ListTile(
-                      title: Text(
-                        product.name ?? 'Unknown product',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        product.brand ?? 'Unknown brand',
-                      ),
-                      trailing: Text(
-                        '${product.calories ?? 0} kcal',
-                      ),
-                    ),
-                  );
-                },
-              );
-            }
-          } else {
-            content = Center(
-              child: Lottie.asset(
-                'assets/lottie/loader.json',
-                repeat: true,
-                frameRate: FrameRate(120),
-                controller: _animationController,
-                height: 100,
-                width: 100,
-              ),
-            );
-          }
-
-          return Column(
-            children: [
-              Expanded(
-                child: content,
-              ),
-
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: TextFormField(
-                  controller: _searchController,
-                  textInputAction: TextInputAction.search,
-                  onFieldSubmitted: (_) {
-                    _searchProduct();
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Search food...',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: IconButton(
-                      onPressed: _searchProduct,
-                      icon: const Icon(Icons.arrow_forward),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
         },
       ),
     );
   }
 }
+
+// Center(
+//               child: Lottie.asset(
+//                 'assets/lottie/loader.json',
+//                 repeat: true,
+//                 frameRate: FrameRate(120),
+//                 controller: _animationController,
+//                 height: 100,
+//                 width: 100,
+//               ),
+//             );
+
+
+//Widget content;
+//
+//           if (state is FoodFactsLoad) {
+//             final List<NutritionProduct> products = state.products;
+//             if (products.isEmpty) {
+//               content = const Center(
+//                 child: Text('No products found'),
+//               );
+//             } else {
+//               content = ListView.separated(
+//                 padding: const EdgeInsets.all(16),
+//                 itemCount: products.length,
+//                 separatorBuilder: (_, __) =>
+//                 const SizedBox(height: 10),
+//                 itemBuilder: (context, index) {
+//                   final product = products[index];
+//                   return Card(
+//                     child: ListTile(
+//                       title: Text(
+//                         product.name ?? 'Unknown product',
+//                         maxLines: 2,
+//                         overflow: TextOverflow.ellipsis,
+//                       ),
+//                       subtitle: Text(
+//                         product.brand ?? 'Unknown brand',
+//                       ),
+//                       trailing: Text(
+//                         '${product.calories ?? 0} kcal',
+//                       ),
+//                     ),
+//                   );
+//                 },
+//               );
+//             }
+//           } else {
+//             content = Center(
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   Icon(
+//                     Icons.restaurant_menu_outlined,
+//                     size: 64,
+//                   ),
+//                   const SizedBox(height: 16),
+//                   Text(
+//                     'Discover Nutrition',
+//                     style: TextStyle(
+//                       fontSize: 22,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   Text(
+//                     'Search for a food to explore its\nnutrition information.',
+//                     textAlign: TextAlign.center,
+//                     style: TextStyle(
+//                       fontSize: 15,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             );
+//           }
+//
+//           return Column(
+//             children: [
+//               Expanded(
+//                 child: content,
+//               ),
+//
+//               Padding(
+//                 padding: const EdgeInsets.all(12),
+//                 child: TextFormField(
+//                   controller: _searchController,
+//                   textInputAction: TextInputAction.search,
+//                   onFieldSubmitted: (_) {
+//                     _searchProduct();
+//                   },
+//                   decoration: InputDecoration(
+//                     hintText: 'Search food...',
+//                     prefixIcon: const Icon(Icons.search),
+//                     suffixIcon: IconButton(
+//                       onPressed: ()async{
+//                       await   context.read<PrepPalCubit>().FoodFactGet(_searchController.text);
+//                       },
+//                       icon: const Icon(Icons.arrow_forward),
+//                     ),
+//                     border: OutlineInputBorder(
+//                       borderRadius: BorderRadius.circular(15),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           );

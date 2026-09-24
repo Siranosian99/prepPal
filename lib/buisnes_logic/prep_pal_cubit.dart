@@ -83,6 +83,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
 
   Future<void> AiRecipesGet(String query) async {
     try {
+
       emit(AiRecipesLoad(aiRecipes: aiRecipes,isLoading: true));
       final result = await repository.AiRecipesGet(query) ?? [];
       aiRecipes.addAll(result);
@@ -99,10 +100,11 @@ class PrepPalCubit extends Cubit<PrepPalState> {
       emit(FoodFactsLoad(products: products,isLoading: true));
       final result = await repository.FoodFactsGet(query) ?? [];
       products.addAll(result);
-      emit(AiRecipesLoad(aiRecipes: aiRecipes,isLoading: false));
+      print("------$products");
+      emit(FoodFactsLoad(products: products,isLoading: false));
     } catch (e) {
       emit(
-          AiRecipesError(
+          FoodFactsError(
             message: e.toString(),
           ));
     }

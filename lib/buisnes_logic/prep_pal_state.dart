@@ -53,3 +53,7 @@ final class FoodFactsLoad extends PrepPalState{
   FoodFactsLoad({required this.products,required this.isLoading});
 }
 final class FoodFactsLoading extends PrepPalState{}
+final class FoodFactsError extends PrepPalState{
+  final String message;
+  FoodFactsError({required this.message});
+}
