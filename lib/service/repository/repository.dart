@@ -26,9 +26,7 @@ class PrepPalRepository {
   Future<List<MealsById>?> RandomMeal() async {
     return await apiService.GetRandomMeal();
   }
-  Future<List<OtherRecipes>?> OtherRecipesCall() async {
-    return await apiService.OtherRecipesCall();
-  }
+
   Future<List<AiRecipeModel>?> AiRecipesGet(String query) async {
     return await apiService.AiRecipesGet(query);
   }

@@ -5,7 +5,6 @@ import 'package:preppal/service/model/ai_recipes_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
-import 'package:preppal/service/model/other_recipes_model.dart';
 import 'package:preppal/service/repository/repository.dart';
 
 import '../service/model/food_fact_model.dart';
@@ -21,8 +20,6 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<MealsbyCat> seaFood = [];
   List<MealsById> meal = [];
   List<MealsById> random = [];
-  List<OtherRecipes> recipes = [];
-  List<OtherRecipes> recipesByName = [];
   List<MealsById> favList = [];
   List<AiRecipeModel> aiRecipes = [];
   List<NutritionProduct> products = [];
@@ -44,10 +41,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     emit(MealIdLoaded(meal: meal));
   }
 
-  Future<void> getOtherRecipes() async {
-    recipes = await repository.OtherRecipesCall() ?? [];
-    emit(OtherRecipesLoad(recipes: recipes));
-  }
+
 
   Future<void> getInCatagory(String category) async {
     insideCat = await repository.InsideCat(category) ?? [];
@@ -96,11 +90,11 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     }
   }
   Future<void> FoodFactGet(String query) async {
+    products.clear();
     try {
       emit(FoodFactsLoad(products: products,isLoading: true));
       final result = await repository.FoodFactsGet(query) ?? [];
       products.addAll(result);
-      print("------$products");
       emit(FoodFactsLoad(products: products,isLoading: false));
     } catch (e) {
       emit(

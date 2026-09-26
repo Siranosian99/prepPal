@@ -81,11 +81,9 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppTexts.prepPal),leading:IconButton(onPressed: (){
-        ApiService().FoodFactsGet('choclate');
-      }, icon: Icon(Icons.eleven_mp)),),
-      // actions: [IconButton(onPressed: (){
-      // }, icon: Icon(Icons.print))],),
+      appBar: AppBar(
+        title: Text(AppTexts.prepPal),
+      ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is CatLoaded) {

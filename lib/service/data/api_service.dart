@@ -157,61 +157,6 @@ class ApiService {
     return meals;
   }
 
-  Future<List<OtherRecipes>?> OtherRecipesCall() async {
-    List<OtherRecipes> recipes = [];
-    final result = await _dio2.get(
-      'recipes?size=100&page=1',
-      options: Options(
-        headers: {
-          'x-rapidapi-key':
-              '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
-          // Your API key
-          'x-rapidapi-host': 'recipe-food-nutrition16.p.rapidapi.com',
-          // API host from RapidAPI
-        },
-      ),
-    );
-    try {
-      if (result.statusCode == 200) {
-        List<dynamic> m = result.data["data"];
-        recipes = m.map((e) => OtherRecipes.fromJson(e)).toList();
-      }
-    } on DioException catch (e) {
-      print(e.error);
-    } catch (e) {
-      print(e);
-    }
-
-    return recipes;
-  }
-
-  Future<List<OtherRecipes>?> FoodFactsCall() async {
-    List<OtherRecipes> recipes = [];
-    final result = await _dio2.get(
-      'recipes?size=100&page=1',
-      options: Options(
-        headers: {
-          'x-rapidapi-key':
-              '05dd5ab504mshe0b8e13b84f9856p100bb3jsnf942f962d553',
-          // Your API key
-          'x-rapidapi-host': 'recipe-food-nutrition16.p.rapidapi.com',
-          // API host from RapidAPI
-        },
-      ),
-    );
-    try {
-      if (result.statusCode == 200) {
-        List<dynamic> m = result.data["data"];
-        recipes = m.map((e) => OtherRecipes.fromJson(e)).toList();
-      }
-    } on DioException catch (e) {
-      print(e.error);
-    } catch (e) {
-      print(e);
-    }
-
-    return recipes;
-  }
 
   Future<List<AiRecipeModel>?> AiRecipesGet(String query) async {
     List<AiRecipeModel> recipes = [];
@@ -322,42 +267,23 @@ class ApiService {
       final response = await _dio4.get(
         ApiConsts.baseUrlFoodFactor,
         queryParameters: {
-          'categories_tags_en': query,
+          'q': query,
           'page_size': 20,
           'fields': 'product_name,brands,nutriments',
+          'langs': 'en',
         },
       );
 
       if (response.statusCode == 200) {
-        final products = response.data['products'];
-        for (final product in products) {
-          foods.add(
-            NutritionProduct.fromJson(product),
-          );
-          // print('-------------------');
-          // print('Name: ${product['product_name']}');
-          // print('Brand: ${product['brands']}');
-          // print('Code: ${product['code']}');
+        final products = response.data['hits'];
+        if (products == null) {
+          return [];
         }
-        // final content = data['choices'][0]['message']['content'];
-        // final jsonData = jsonDecode(content);
-        // final lastData = AiRecipeModel.fromJson(jsonData);
-        // print('-==--------');
-        // print(jsonEncode(lastData.toJson()));
-        // recipes.add(
-        //   AiRecipeModel(
-        //     name: lastData.name,
-        //     ingredients: lastData.ingredients,
-        //     duration: lastData.duration,
-        //     difficulty: lastData.difficulty,
-        //     steps: lastData.steps,
-        //   ),
-        // );
-        print("-----------");
+        for (final product in products) {
+          foods.add(NutritionProduct.fromJson(product));
+        }
       }
-      print("foods$foods");
       return foods;
-      throw Exception("Unexpected status code: ${response.statusCode}");
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
 
@@ -383,6 +309,11 @@ class ApiService {
   }
 }
 
+//       queryParameters: {
+//           'categories_tags_en': query,
+//           'page_size': 20,
+//           'fields': 'product_name,brands,nutriments',
+//         },
 String _getErrorMessage(DioException e) {
   final statusCode = e.response?.statusCode;
 

@@ -28,7 +28,7 @@ class DetailedItemScreen extends StatefulWidget {
 class _DetailedItemScreenState extends State<DetailedItemScreen>
     with TickerProviderStateMixin {
   List<MealsById> meals = [];
-
+  bool isLoading=false;
   late final AnimationController _animationController;
 
   // Dummy data
@@ -53,7 +53,8 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
     return Scaffold(
       appBar:AppBar(
       ),
-      body: BlocBuilder<PrepPalCubit, PrepPalState>(
+      body: isLoading ?Center(child:
+        CircularProgressIndicator(),): BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is MealIdLoaded) {
             meals = state.meal;
@@ -115,7 +116,6 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                                     meals[0],
                                     context,
                                   );
-                                  print('added');
                                 },
                                 icon: Icon(Icons.favorite),
                                 color: Colors.green,
@@ -140,6 +140,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                         about: meals[0].strInstructions.toString(),
                         mealName: meals[0].strMeal,
                         imgLink: meals[0].strMealThumb,
+                        isLoading: isLoading,
                       ),
                     ),
                   ],

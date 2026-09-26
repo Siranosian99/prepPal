@@ -42,7 +42,7 @@ class _BottomNavBarState extends State<BottomNavBar> with NavigatorMixin {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _navItem(Icons.home, 'Home', 0),
-            _navItem(Icons.menu, 'Guides', 1),
+            _navItem(Icons.restaurant, 'Nutrition', 1),
             const SizedBox(width: 50),
             _navItem(Icons.favorite, 'Favourites', 2),
             _navItem(Icons.person, 'Profile', 3),

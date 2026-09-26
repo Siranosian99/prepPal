@@ -35,12 +35,13 @@ class _NutritionScreenState extends State<NutritionScreen>
     super.dispose();
   }
 
-  void _searchProduct() {
+  Future<void> _searchProduct()async {
     final query = _searchController.text.trim();
 
     if (query.isEmpty) return;
 
-    context.read<PrepPalCubit>().FoodFactGet(query);
+    await context.read<PrepPalCubit>().FoodFactGet(query);
+    _searchController.clear();
   }
 
   @override
@@ -52,9 +53,101 @@ class _NutritionScreenState extends State<NutritionScreen>
       ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
-          return IconButton(onPressed: ()async{
-            await   context.read<PrepPalCubit>().FoodFactGet("chicken");
-          }, icon: Icon(Icons.send));
+          Widget content;
+
+          if (state is FoodFactsLoad) {
+            final List<NutritionProduct> products = state.products;
+            if (products.isEmpty) {
+              content = const Center(
+                child: Text('No products found'),
+              );
+            } else {
+              content = ListView.separated(
+                padding: const EdgeInsets.all(16),
+                itemCount: products.length,
+                separatorBuilder: (_, __) =>
+                const SizedBox(height: 10),
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        product.name ?? 'Unknown product',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Text(
+                        product.brand ?? 'Unknown brand',
+                      ),
+                      trailing: Text(
+                        '${product.calories ?? 0} kcal',
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+          } else {
+            content = Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.restaurant_menu_outlined,
+                    size: 64,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Discover Nutrition',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Search for a food to explore its\nnutrition information.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return Column(
+            children: [
+              Expanded(
+                child: content,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: TextFormField(
+                  controller: _searchController,
+                  textInputAction: TextInputAction.search,
+                  onFieldSubmitted: (_)async {
+                   await _searchProduct();
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Search food...',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      onPressed: ()async{
+                    await  _searchProduct();
+                      },
+                      icon: const Icon(Icons.arrow_forward),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
 
         },
       ),
@@ -74,98 +167,3 @@ class _NutritionScreenState extends State<NutritionScreen>
 //             );
 
 
-//Widget content;
-//
-//           if (state is FoodFactsLoad) {
-//             final List<NutritionProduct> products = state.products;
-//             if (products.isEmpty) {
-//               content = const Center(
-//                 child: Text('No products found'),
-//               );
-//             } else {
-//               content = ListView.separated(
-//                 padding: const EdgeInsets.all(16),
-//                 itemCount: products.length,
-//                 separatorBuilder: (_, __) =>
-//                 const SizedBox(height: 10),
-//                 itemBuilder: (context, index) {
-//                   final product = products[index];
-//                   return Card(
-//                     child: ListTile(
-//                       title: Text(
-//                         product.name ?? 'Unknown product',
-//                         maxLines: 2,
-//                         overflow: TextOverflow.ellipsis,
-//                       ),
-//                       subtitle: Text(
-//                         product.brand ?? 'Unknown brand',
-//                       ),
-//                       trailing: Text(
-//                         '${product.calories ?? 0} kcal',
-//                       ),
-//                     ),
-//                   );
-//                 },
-//               );
-//             }
-//           } else {
-//             content = Center(
-//               child: Column(
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: [
-//                   Icon(
-//                     Icons.restaurant_menu_outlined,
-//                     size: 64,
-//                   ),
-//                   const SizedBox(height: 16),
-//                   Text(
-//                     'Discover Nutrition',
-//                     style: TextStyle(
-//                       fontSize: 22,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   const SizedBox(height: 8),
-//                   Text(
-//                     'Search for a food to explore its\nnutrition information.',
-//                     textAlign: TextAlign.center,
-//                     style: TextStyle(
-//                       fontSize: 15,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             );
-//           }
-//
-//           return Column(
-//             children: [
-//               Expanded(
-//                 child: content,
-//               ),
-//
-//               Padding(
-//                 padding: const EdgeInsets.all(12),
-//                 child: TextFormField(
-//                   controller: _searchController,
-//                   textInputAction: TextInputAction.search,
-//                   onFieldSubmitted: (_) {
-//                     _searchProduct();
-//                   },
-//                   decoration: InputDecoration(
-//                     hintText: 'Search food...',
-//                     prefixIcon: const Icon(Icons.search),
-//                     suffixIcon: IconButton(
-//                       onPressed: ()async{
-//                       await   context.read<PrepPalCubit>().FoodFactGet(_searchController.text);
-//                       },
-//                       icon: const Icon(Icons.arrow_forward),
-//                     ),
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(15),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           );

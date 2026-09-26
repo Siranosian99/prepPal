@@ -23,6 +23,7 @@ class ContainerDetailed extends StatefulWidget {
   String? mealId;
   String? imgLink;
   String? mealName;
+  final bool isLoading;
 
   ContainerDetailed({
     super.key,
@@ -35,13 +36,14 @@ class ContainerDetailed extends StatefulWidget {
     this.mealId,
     this.imgLink,
     this.mealName,
+    required this.isLoading,
   });
 
   @override
   State<ContainerDetailed> createState() => _ContainerDetailedState();
 }
 
-class _ContainerDetailedState extends State<ContainerDetailed>with urlLunch  {
+class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
   final DateAndTime _date_time = DateAndTime();
 
   final TextEditingController _dateController = TextEditingController();
@@ -50,16 +52,25 @@ class _ContainerDetailedState extends State<ContainerDetailed>with urlLunch  {
 
   final noImg =
       'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/2560px-No_image_3x4.svg.png';
-
   final box = Hive.box('language');
-@override
+  @override
   void initState() {
-  // clearLanguage();
+    // clearLanguage();
     super.initState();
   }
-  void clearLanguage()async{
-  await box.clear();
+  @override
+  void dispose() {
+    super.dispose();
+    _dateController.dispose();
+    _timeController.dispose();
   }
+  bool isLoadingSwap(bool isLoading){
+   return isLoading = !isLoading;
+  }
+  void clearLanguage() async {
+    await box.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
@@ -164,6 +175,8 @@ class _ContainerDetailedState extends State<ContainerDetailed>with urlLunch  {
 
                     ElevatedButton(
                       onPressed: () async {
+                        isLoadingSwap(widget.isLoading);
+                        print("pressed first time ${widget.isLoading}");
                         final lang = box.get('language');
                         final translatedAbout = await translateData(
                           widget.about ?? '',
@@ -177,13 +190,17 @@ class _ContainerDetailedState extends State<ContainerDetailed>with urlLunch  {
                           widget.ingredinet ?? '',
                           lang,
                         );
-                        final t1 = await translateData('About:', lang?? 'en');
+                        final t1 = await translateData('About:', lang ?? 'en');
                         final t2 = await translateData(
                           'Ingredient and Measures:',
-                          lang?? 'en',
+                          lang ?? 'en',
                         );
-                        final t3 = await translateData('Area:', lang?? 'en');
-                        final t4 = await translateData('Meal Name:', lang ?? 'en');
+                        final t3 = await translateData('Area:', lang ?? 'en');
+                        final t4 = await translateData(
+                          'Meal Name:',
+                          lang ?? 'en',
+                        );
+                        if (!context.mounted) return;
                         translateDialog(
                           context,
                           t1,
@@ -197,6 +214,8 @@ class _ContainerDetailedState extends State<ContainerDetailed>with urlLunch  {
                           translatedIngredinet,
                           widget.link ?? '',
                         );
+                        isLoadingSwap(widget.isLoading);
+                        print("pressed second time ${widget.isLoading}");
                       },
                       child: const Text("Translate"),
                     ),
@@ -209,17 +228,19 @@ class _ContainerDetailedState extends State<ContainerDetailed>with urlLunch  {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text("Video:"),
-                      GestureDetector(
-                        onTap: () async {
-                          await launchInBrowser(widget.link ?? 'Ooops');
-                        },
-                        child: Text(
-                          widget.link ?? "Ooops",
-                          maxLines: 1,
-                          style: const TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                            overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () async {
+                            await launchInBrowser(widget.link ?? 'Ooops');
+                          },
+                          child: Text(
+                            widget.link ?? "Ooops",
+                            maxLines: 1,
+                            style: const TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ),
