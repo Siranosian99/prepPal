@@ -14,7 +14,10 @@ final class CatLoaded extends PrepPalState {
   CatLoaded({required this.cat, required this.random, required this.seaFood});
 }
 
-final class CatError extends PrepPalState {}
+final class CatError extends PrepPalState {
+  final String errorMessage;
+  CatError({required this.errorMessage});
+}
 
 final class MealIdLoaded extends PrepPalState {
   late final List<MealsById> meal;
@@ -23,7 +26,10 @@ final class MealIdLoaded extends PrepPalState {
   MealIdLoaded({required this.meal});
 }
 
-final class MealIdError extends PrepPalState {}
+final class MealIdError extends PrepPalState {
+  final String errorMessage;
+  MealIdError({required this.errorMessage});
+}
 
 final class InsideCatLoad extends PrepPalState {
   late final List<MealsbyCat> insideCat;
@@ -31,7 +37,10 @@ final class InsideCatLoad extends PrepPalState {
   InsideCatLoad({required this.insideCat});
 }
 
-final class InsideCatError extends PrepPalState {}
+final class InsideCatError extends PrepPalState {
+  final String errorMessage;
+  InsideCatError({required this.errorMessage});
+}
 
 final class FavLoad extends PrepPalState {
   late final List<MealsById> favList;
@@ -39,7 +48,10 @@ final class FavLoad extends PrepPalState {
   FavLoad({required this.favList});
 }
 
-final class FavError extends PrepPalState {}
+final class FavError extends PrepPalState {
+  final String errorMessage;
+  FavError({required this.errorMessage});
+}
 
 final class AiRecipesLoad extends PrepPalState {
   late final List<AiRecipeModel> aiRecipes;

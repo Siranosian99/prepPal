@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:preppal/core/utils/navigation_mixin.dart';
 
-import '../../consts/texts.dart';
 
 class BottomNavBar extends StatefulWidget {
   final Widget child;
@@ -32,12 +30,12 @@ class _BottomNavBarState extends State<BottomNavBar> with NavigatorMixin {
       floatingActionButton: SizedBox(
         child: FloatingActionButton(onPressed: () {
           context.goNamed('ai');
-        }, child:Text('🤖',style: TextStyle(fontSize: 30),),),
+        }, child:const Text('🤖',style: TextStyle(fontSize: 30),),),
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

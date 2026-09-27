@@ -39,7 +39,7 @@ class _PersonelScreenState extends State<PersonelScreen> {
           SettingsItems(onTap:(){
             print(themeProvider.isDark);
           },txt: AppTexts.report, icon:Icons.report),
-          Divider(
+          const Divider(
 
             thickness: 1,
             height: 10, // space above/below
@@ -54,7 +54,7 @@ class _PersonelScreenState extends State<PersonelScreen> {
           //   },
           // ),
 
-          Divider(
+          const Divider(
             thickness: 1,
             height: 10, // space above/below
           ),

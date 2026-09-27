@@ -8,7 +8,6 @@ import 'package:preppal/consts/api_consts.dart';
 import 'package:preppal/service/model/ai_recipes_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
-import 'package:preppal/service/model/other_recipes_model.dart';
 
 import '../model/food_fact_model.dart';
 import '../model/meals_by_id.dart';

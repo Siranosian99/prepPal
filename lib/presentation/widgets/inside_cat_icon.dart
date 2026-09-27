@@ -11,7 +11,7 @@ class InsideCatIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
       child: Stack(
         alignment: Alignment.bottomCenter,
@@ -28,12 +28,12 @@ class InsideCatIcon extends StatelessWidget {
                   (_, __, ___) => Container(
                     height: 200,
                     color: Colors.grey[300],
-                    child: Icon(Icons.image_not_supported, size: 48),
+                    child: const Icon(Icons.image_not_supported, size: 48),
                   ),
             ),
           ),
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(12),
                 bottomRight: Radius.circular(12),
@@ -62,14 +62,14 @@ class InsideCatIcon extends StatelessWidget {
                           Shadow(
                             blurRadius: 2,
                             color: Colors.grey.shade50,
-                            offset: Offset(1, 1),
+                            offset: const Offset(1, 1),
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                IconButton(onPressed: (){}, icon: FaIcon(FontAwesomeIcons.heart), )
+                IconButton(onPressed: (){}, icon: const FaIcon(FontAwesomeIcons.heart), )
               ],
             ),
           ),

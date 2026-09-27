@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       }
     });
     _animationController = AnimationController(
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
       vsync: this,
     )..repeat();
     super.initState();
@@ -36,11 +36,11 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       child: Lottie.asset(
         'assets/lottie/splash_screen/Gravity.json',
         repeat: true,
-        frameRate: FrameRate(120),
+        frameRate: const FrameRate(120),
         controller: _animationController,
         height: 100,
         width: 100,
       ),
-    );;
+    );
   }
 }

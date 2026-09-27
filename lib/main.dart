@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:preppal/routes.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
-import 'package:preppal/core/utils/hive_init.dart';
 import 'package:preppal/core/utils/notification.dart';
 import 'package:preppal/service/repository/repository.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +15,7 @@ import 'buisnes_logic/prep_pal_cubit.dart';
 import 'core/theme_provider/theme_data.dart';
 import 'core/theme_provider/theme_state.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
   NotificationMethod.init();
@@ -32,17 +30,16 @@ void main()async {
   await Hive.openBox<MealsById>('byId');
   await Hive.openBox<MealsbyCat>('SeaFood');
   await Hive.openBox<MealsbyCat>('inCat');
+  await Hive.openBox<MealsById>('random');
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => ThemeProvider(),
-        ),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => ThemeProvider())],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => PrepPalCubit(PrepPalRepository(apiService: ApiService())),
+            create:
+                (_) =>
+                    PrepPalCubit(PrepPalRepository(apiService: ApiService())),
           ),
         ],
         child: const MyApp(),
@@ -65,8 +62,6 @@ class MyApp extends StatelessWidget {
       theme: ThemesData.lightTheme,
       darkTheme: ThemesData.darkTheme,
       routerConfig: router,
-
     );
   }
 }
-

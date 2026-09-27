@@ -31,7 +31,7 @@ void translateDialog(
                 // First Title
                 Text(
                   '$t3$area',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.red,
@@ -39,7 +39,7 @@ void translateDialog(
                 ),
                 Text(
                   '$t4$name',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.red,
@@ -48,24 +48,24 @@ void translateDialog(
                 Text(
                   "$t1\n",
 
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.greenAccent,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Text(about, style: TextStyle(fontSize: 16)),
+                Text(about, style: const TextStyle(fontSize: 16)),
                 const SizedBox(height: 12),
                 // Second Title
                 Text(
                   "$t2\n",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.greenAccent,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Text(ingredient, style: TextStyle(fontSize: 16)),
+                Text(ingredient, style: const TextStyle(fontSize: 16)),
                 const SizedBox(height: 12),
 
                 // Video Link Part

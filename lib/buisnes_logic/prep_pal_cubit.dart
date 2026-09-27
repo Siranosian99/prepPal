@@ -23,38 +23,69 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   List<MealsById> favList = [];
   List<AiRecipeModel> aiRecipes = [];
   List<NutritionProduct> products = [];
+
   Future<void> getAllCatagories() async {
+    final categoryBox = Hive.box<MealsCat>('category');
+    final seaFoodBox = Hive.box<MealsbyCat>('SeaFood');
+    final randomBox = Hive.box<MealsById>('random');
+    final localCategories = categoryBox.values.toList();
+    final localSeaFood = seaFoodBox.values.toList();
+    final localRandom = randomBox.values.toList();
+    if (localCategories.isNotEmpty ||
+        localRandom.isNotEmpty ||
+        localSeaFood.isNotEmpty) {
+      emit(
+        CatLoaded(
+          cat: localCategories,
+          random: localRandom,
+          seaFood: localSeaFood,
+        ),
+      );
+    }
     try {
-      // Fetch data from API
       cat = await repository.CatCall() ?? [];
       seaFood = await repository.InsideCat("SeaFood") ?? [];
       random = await repository.RandomMeal() ?? [];
 
+      await categoryBox.clear();
+      await categoryBox.addAll(cat);
+
+      await seaFoodBox.clear();
+      await seaFoodBox.addAll(seaFood);
+
+      await randomBox.clear();
+      await randomBox.addAll(random);
       emit(CatLoaded(cat: cat, random: random, seaFood: seaFood));
     } catch (e) {
-      print(e.toString());
+      emit(CatError(errorMessage: e.toString()));
     }
   }
 
   Future<void> getMealById(String id) async {
-    meal = await repository.MealbyId(id) ?? [];
-    emit(MealIdLoaded(meal: meal));
+    try {
+      meal = await repository.MealbyId(id) ?? [];
+      emit(MealIdLoaded(meal: meal));
+    } catch (e) {
+      emit(MealIdError(errorMessage: e.toString()));
+    }
   }
 
-
-
   Future<void> getInCatagory(String category) async {
-    insideCat = await repository.InsideCat(category) ?? [];
-    emit(InsideCatLoad(insideCat: insideCat));
+    try {
+      insideCat = await repository.InsideCat(category) ?? [];
+      emit(InsideCatLoad(insideCat: insideCat));
+    } catch (e) {
+      emit(InsideCatError(errorMessage: e.toString()));
+    }
   }
 
   Future<void> addFavouriteList(MealsById meal, BuildContext ctx) async {
     var inbox = Hive.box<MealsById>('save');
     favList = inbox.values.toList();
     if (favList.any((item) => item.idMeal == meal.idMeal)) {
-      ScaffoldMessenger.of(
-        ctx,
-      ).showSnackBar(SnackBar(content: Text("Item recently favourites!")));
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(content: Text("Item recently favourites!")),
+      );
       return;
     } else {
       favList = [...favList, meal];
@@ -77,38 +108,24 @@ class PrepPalCubit extends Cubit<PrepPalState> {
 
   Future<void> AiRecipesGet(String query) async {
     try {
-
-      emit(AiRecipesLoad(aiRecipes: aiRecipes,isLoading: true));
+      emit(AiRecipesLoad(aiRecipes: aiRecipes, isLoading: true));
       final result = await repository.AiRecipesGet(query) ?? [];
       aiRecipes.addAll(result);
-      emit(AiRecipesLoad(aiRecipes: aiRecipes,isLoading: false));
+      emit(AiRecipesLoad(aiRecipes: aiRecipes, isLoading: false));
     } catch (e) {
-      emit(
-          AiRecipesError(
-            message: e.toString(),
-          ));
+      emit(AiRecipesError(message: e.toString()));
     }
   }
+
   Future<void> FoodFactGet(String query) async {
     products.clear();
     try {
-      emit(FoodFactsLoad(products: products,isLoading: true));
+      emit(FoodFactsLoad(products: products, isLoading: true));
       final result = await repository.FoodFactsGet(query) ?? [];
       products.addAll(result);
-      emit(FoodFactsLoad(products: products,isLoading: false));
+      emit(FoodFactsLoad(products: products, isLoading: false));
     } catch (e) {
-      emit(
-          FoodFactsError(
-            message: e.toString(),
-          ));
+      emit(FoodFactsError(message: e.toString()));
     }
   }
-  // Future<void> translateText(String toLang,String text)async{
-  //   await repository.TranslateService(toLang, text);
-  // }
-
-  // Future<void>getRandomMeal()async {
-  //   meal=await repository.RandomMeal() ?? [];
-  //   emit(MealIdLoaded(meal: meal ?? []));
-  // }
 }

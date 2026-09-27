@@ -4,7 +4,6 @@ import 'package:preppal/service/model/food_fact_model.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
-import 'package:preppal/service/model/other_recipes_model.dart';
 
 class PrepPalRepository {
   final ApiService apiService;

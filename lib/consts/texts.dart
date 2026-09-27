@@ -25,5 +25,6 @@ class AppTexts {
   static String shopping="Add to Shopping List";
   static String aiTitle="Turn Ingredients Into Magic";
   static String txtHintAi="Tell me what ingredients you have...";
+  static String whatCook="What can I cook today?";
 
 }

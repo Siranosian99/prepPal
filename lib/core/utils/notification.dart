@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
-import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../routes.dart';
@@ -19,7 +18,7 @@ class NotificationMethod {
     final InitializationSettings initializationSettings =
         InitializationSettings(
           android: initializationSettingsAndroid,
-          iOS: DarwinInitializationSettings(),
+          iOS: const DarwinInitializationSettings(),
         );
 
     flutterLocalNotificationsPlugin.initialize(
@@ -54,7 +53,7 @@ class NotificationMethod {
 
   ) async {
     AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
+        const AndroidNotificationDetails(
           'MealPlanner',
           'MealPlanner',
           channelDescription: 'MealPlanner',

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 
 import '../../service/model/food_fact_model.dart';
@@ -88,7 +87,7 @@ class _NutritionScreenState extends State<NutritionScreen>
               );
             }
           } else {
-            content = Center(
+            content = const Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -96,7 +95,7 @@ class _NutritionScreenState extends State<NutritionScreen>
                     Icons.restaurant_menu_outlined,
                     size: 64,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Text(
                     'Discover Nutrition',
                     style: TextStyle(
@@ -104,7 +103,7 @@ class _NutritionScreenState extends State<NutritionScreen>
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Text(
                     'Search for a food to explore its\nnutrition information.',
                     textAlign: TextAlign.center,

@@ -57,19 +57,19 @@ class MealsById {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['idMeal'] = this.idMeal;
-    data['strMeal'] = this.strMeal;
-    data['strMealAlternate'] = this.strMealAlternate;
-    data['strCategory'] = this.strCategory;
-    data['strArea'] = this.strArea;
-    data['strInstructions'] = this.strInstructions;
-    data['strMealThumb'] = this.strMealThumb;
-    data['strTags'] = this.strTags;
-    data['strYoutube'] = this.strYoutube;
-    data['strIngredient'] = this.strIngredient;
-    data['strMeasure'] = this.strMeasure;
-    data['strSource'] = this.strSource;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['idMeal'] = idMeal;
+    data['strMeal'] = strMeal;
+    data['strMealAlternate'] = strMealAlternate;
+    data['strCategory'] = strCategory;
+    data['strArea'] = strArea;
+    data['strInstructions'] = strInstructions;
+    data['strMealThumb'] = strMealThumb;
+    data['strTags'] = strTags;
+    data['strYoutube'] = strYoutube;
+    data['strIngredient'] = strIngredient;
+    data['strMeasure'] = strMeasure;
+    data['strSource'] = strSource;
     return data;
   }
   @override

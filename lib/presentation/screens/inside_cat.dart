@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -18,27 +16,27 @@ class InsideCat extends StatefulWidget {
   State<InsideCat> createState() => _InsideCatState();
 }
 
-class _InsideCatState extends State<InsideCat> with TickerProviderStateMixin{
+class _InsideCatState extends State<InsideCat> with TickerProviderStateMixin {
   List<MealsbyCat> meals = [];
   List<MealsbyCat> filteredMeals = [];
-  TextEditingController _filter = TextEditingController();
+  final TextEditingController _filter = TextEditingController();
   late final AnimationController _animationController;
   bool isSearching = false;
 
   @override
   void initState() {
-    _callCubit();
     _animationController = AnimationController(
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
       vsync: this,
     )..repeat();
+    _callCubit();
     super.initState();
   }
 
   void _callCubit() {
-    BlocProvider.of<PrepPalCubit>(context).getInCatagory(widget.category);
-    var myBox = Hive.box<MealsbyCat>('inCat');
-    meals = myBox.values.toList();
+    context.read<PrepPalCubit>().getInCatagory(widget.category);
+    // var myBox = Hive.box<MealsbyCat>('inCat');
+    // meals = myBox.values.toList();
   }
 
   void switchBool() {
@@ -46,23 +44,30 @@ class _InsideCatState extends State<InsideCat> with TickerProviderStateMixin{
       isSearching = !isSearching;
     });
   }
+
   @override
   void dispose() {
     _animationController.dispose();
+    _filter.dispose();
     super.dispose();
   }
+
   void searchFilter(String query) {
     if (query.isNotEmpty) {
-      filteredMeals =
-          meals
-              .where(
-                (meal) =>
-                    meal.strMeal != null &&
-                    meal.strMeal!.toLowerCase().contains(query.toLowerCase())&& meal.strMeal!.toLowerCase().startsWith(query.toLowerCase())
-              )
-              .toList();
       setState(() {
-        filteredMeals;
+        filteredMeals =
+            meals
+                .where(
+                  (meal) =>
+                      meal.strMeal != null &&
+                      meal.strMeal!.toLowerCase().contains(
+                        query.toLowerCase(),
+                      ) &&
+                      meal.strMeal!.toLowerCase().startsWith(
+                        query.toLowerCase(),
+                      ),
+                )
+                .toList();
       });
     } else {
       setState(() {
@@ -78,17 +83,18 @@ class _InsideCatState extends State<InsideCat> with TickerProviderStateMixin{
         title:
             isSearching
                 ? TextFormField(
-                  decoration: InputDecoration(hintText: "Search..."),
+                  decoration: const InputDecoration(hintText: "Search..."),
                   onChanged: searchFilter,
                 )
                 : Text(widget.category),
         actions: [
           IconButton(
             onPressed: () {
-              switchBool();
-              _filter.clear();
-              filteredMeals.clear;
-              filteredMeals = meals;
+              setState(() {
+                switchBool();
+                _filter.clear();
+                filteredMeals = meals;
+              });
             },
             icon: Icon(isSearching ? Icons.close : Icons.search),
           ),
@@ -97,9 +103,9 @@ class _InsideCatState extends State<InsideCat> with TickerProviderStateMixin{
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is InsideCatLoad) {
-            meals=state.insideCat;
+            meals = state.insideCat;
             if (meals.isEmpty) {
-              Center(child: CircularProgressIndicator());
+              const Center(child: CircularProgressIndicator());
             }
             return ListView.separated(
               itemBuilder: (context, index) {
@@ -129,7 +135,7 @@ class _InsideCatState extends State<InsideCat> with TickerProviderStateMixin{
             child: Lottie.asset(
               'assets/lottie/plant_loader.json',
               repeat: true,
-              frameRate: FrameRate(120),
+              frameRate: const FrameRate(120),
               controller: _animationController,
               width: 100,
               height: 100,

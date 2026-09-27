@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 import 'package:preppal/consts/texts.dart';
-import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
 import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/service/model/meals_by_id.dart';
@@ -25,13 +24,10 @@ class _HomeScreenState extends State<HomeScreen>
     with NavigatorMixin, TickerProviderStateMixin {
   late final PageController _pageController;
   late final AnimationController _animationController;
-  List<MealsCat> mlsCat = [];
-  List<MealsbyCat> mlsByCt = [];
-  List<MealsById> random = [];
   int _pageIndex = 1;
-  int _lastIndex = 6;
+  final int _lastIndex = 6;
   int? result;
-  bool _isScrolling = true;
+  final bool _isScrolling = true;
 
   @override
   void initState() {
@@ -39,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen>
     _pageController = PageController();
 
     _animationController = AnimationController(
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
       vsync: this,
     )..repeat();
     _startAutoScroll();
@@ -47,22 +43,18 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _callCubit() {
-    BlocProvider.of<PrepPalCubit>(context).getAllCatagories();
-    var myBox = Hive.box<MealsCat>('category');
-    var myBoxx = Hive.box<MealsbyCat>('SeaFood');
-    mlsCat = myBox.values.toList();
-    mlsByCt = myBoxx.values.toList();
+    context.read<PrepPalCubit>().getAllCatagories();
   }
 
   void _startAutoScroll() async {
     while (_isScrolling && mounted) {
-      await Future.delayed(Duration(seconds: 4));
+      await Future.delayed(const Duration(seconds: 4));
 
       if (!_pageController.hasClients) continue;
 
       _pageController.animateToPage(
         _pageIndex,
-        duration: Duration(seconds: 4),
+        duration: const Duration(seconds: 4),
         curve: Curves.easeOut,
       );
       _callCubit();
@@ -87,7 +79,9 @@ class _HomeScreenState extends State<HomeScreen>
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is CatLoaded) {
-            random = state.random;
+            final data= state.random[0];
+            final category=state.cat;
+            final byCategory=state.seaFood;
             return Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -99,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen>
                       SizedBox(
                         height: 200,
                         child: PageView(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           controller: _pageController,
                           // default starts at index 0
                           children: [
@@ -108,16 +102,16 @@ class _HomeScreenState extends State<HomeScreen>
                                 context.pushNamed(
                                   "detailed",
                                   extra: {
-                                    'imgLink': random[0].strMealThumb,
-                                    'mealId': random[0].idMeal,
-                                    'mealName': random[0].strMeal,
+                                    'imgLink': data.strMealThumb,
+                                    'mealId': data.idMeal,
+                                    'mealName': data.strMeal,
                                   },
                                 );
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(21),
                                 child: Image.network(
-                                  random[0].strMealThumb ?? '',
+                                  data.strMealThumb ?? '',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -135,13 +129,13 @@ class _HomeScreenState extends State<HomeScreen>
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          random[0].strMeal.toString(),
+                          data.strMeal.toString(),
                           style: GoogleFonts.poppins(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 1.2,
                             shadows: [
-                              Shadow(
+                              const Shadow(
                                 offset: Offset(1, 1),
                                 blurRadius: 3,
                                 color: Colors.green,
@@ -155,13 +149,13 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                     ],
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   Text(
                     AppTexts.explorer,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   SizedBox(
                     height: 120,
                     child: ListView.separated(
@@ -171,26 +165,26 @@ class _HomeScreenState extends State<HomeScreen>
                             onTap: () {
                               context.pushNamed(
                                 'inside',
-                                extra: {'category': mlsCat[index].strCategory},
+                                extra: {'category': category[index].strCategory},
                               );
                             },
                             child: CategoryIcon(
                               imgLink:
-                                  mlsCat[index].strCategoryThumb.toString(),
-                              txt: mlsCat[index].strCategory.toString(),
+                              category[index].strCategoryThumb.toString(),
+                              txt: category[index].strCategory.toString(),
                               scale: 3.4,
                             ),
                           ),
-                      separatorBuilder: (context, index) => SizedBox(width: 20),
-                      itemCount: mlsCat.length,
+                      separatorBuilder: (context, index) => const SizedBox(width: 20),
+                      itemCount: category.length,
                     ),
                   ),
                   Text(
                     AppTexts.trending,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   SizedBox(
                     height: 200,
                     child: ListView.separated(
@@ -201,20 +195,20 @@ class _HomeScreenState extends State<HomeScreen>
                               context.pushNamed(
                                 "detailed",
                                 extra: {
-                                  'imgLink': mlsByCt[index].strMealThumb,
-                                  'mealId': mlsByCt[index].idMeal,
-                                  'mealName': mlsByCt[index].strMeal,
+                                  'imgLink': byCategory[index].strMealThumb,
+                                  'mealId': byCategory[index].idMeal,
+                                  'mealName': byCategory[index].strMeal,
                                 },
                               );
                             },
                             child: CategoryIcon(
-                              imgLink: mlsByCt[index].strMealThumb.toString(),
-                              txt: mlsByCt[index].strMeal.toString(),
+                              imgLink: byCategory[index].strMealThumb.toString(),
+                              txt: byCategory[index].strMeal.toString(),
                               scale: 4,
                             ),
                           ),
-                      separatorBuilder: (context, index) => SizedBox(width: 20),
-                      itemCount: mlsByCt.length,
+                      separatorBuilder: (context, index) => const SizedBox(width: 20),
+                      itemCount: byCategory.length,
                     ),
                   ),
                 ],
@@ -225,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen>
             child: Lottie.asset(
               'assets/lottie/loading_food.json',
               repeat: true,
-              frameRate: FrameRate(120),
+              frameRate: const FrameRate(120),
               controller: _animationController,
               height: 100,
               width: 100,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class LanguageSelect extends StatefulWidget {
+  const LanguageSelect({super.key});
+
   @override
   _LanguageSelectState createState() => _LanguageSelectState();
 }

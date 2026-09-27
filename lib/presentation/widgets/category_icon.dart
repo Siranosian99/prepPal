@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:preppal/consts/texts.dart';
 
 class CategoryIcon extends StatelessWidget {
   double scale;
@@ -23,7 +22,7 @@ class CategoryIcon extends StatelessWidget {
                   width: size*2,
                   height: size*2,
                   color: Colors.grey[300],
-                  child: CircularProgressIndicator(),
+                  child: const CircularProgressIndicator(),
                 );
               },
               errorBuilder: (_, __, ___) =>

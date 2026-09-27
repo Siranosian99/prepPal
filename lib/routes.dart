@@ -27,7 +27,7 @@ final GoRouter router = GoRouter(
         GoRoute(
         path: '/',
         name: 'splash',
-        builder: (context, state) => SplashScreen(),
+        builder: (context, state) => const SplashScreen(),
       ),
         GoRoute(
           path: '/home',
@@ -38,7 +38,7 @@ final GoRouter router = GoRouter(
                   (context) => PrepPalCubit(
                     PrepPalRepository(apiService: ApiService())..CatCall(),
                   ),
-              child: HomeScreen(),
+              child: const HomeScreen(),
             );
           },
         ),
@@ -50,7 +50,7 @@ final GoRouter router = GoRouter(
               create:
                   (context) =>
                       PrepPalCubit(PrepPalRepository(apiService: ApiService())),
-              child: NutritionScreen(),
+              child: const NutritionScreen(),
             );
           },
         ),
@@ -75,14 +75,14 @@ final GoRouter router = GoRouter(
               create:
                   (context) =>
                       PrepPalCubit(PrepPalRepository(apiService: ApiService())),
-              child: FavouriteScreen(),
+              child: const FavouriteScreen(),
             );
           },
         ),
         GoRoute(
           path: '/settings',
           name: 'settings',
-          builder: (context, state) => PersonelScreen(),
+          builder: (context, state) => const PersonelScreen(),
         ),
         GoRoute(
           path: '/detailed',
@@ -104,7 +104,7 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/ai',
           name: 'ai',
-          builder: (context, state) => AiChatScreen(),
+          builder: (context, state) => const AiChatScreen(),
         ),
         // GoRoute(
         //   path: '/recipes',

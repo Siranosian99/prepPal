@@ -1,11 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
-import 'package:preppal/service/model/meals_by_cat.dart';
 import 'package:preppal/core/utils/language_select.dart';
 import 'package:preppal/core/utils/url_open.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/texts.dart';
 import '../../core/utils/format_convertor/date_time.dart';
@@ -24,6 +21,7 @@ class ContainerDetailed extends StatefulWidget {
   String? imgLink;
   String? mealName;
   final bool isLoading;
+  final Function(bool) onLoadingChange;
 
   ContainerDetailed({
     super.key,
@@ -37,6 +35,7 @@ class ContainerDetailed extends StatefulWidget {
     this.imgLink,
     this.mealName,
     required this.isLoading,
+    required this.onLoadingChange,
   });
 
   @override
@@ -53,20 +52,20 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
   final noImg =
       'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/2560px-No_image_3x4.svg.png';
   final box = Hive.box('language');
+
   @override
   void initState() {
     // clearLanguage();
     super.initState();
   }
+
   @override
   void dispose() {
     super.dispose();
     _dateController.dispose();
     _timeController.dispose();
   }
-  bool isLoadingSwap(bool isLoading){
-   return isLoading = !isLoading;
-  }
+
   void clearLanguage() async {
     await box.clear();
   }
@@ -91,7 +90,7 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
             children: [
               Text(
                 "Area:${widget.country}",
-                style: TextStyle(
+                style: const TextStyle(
                   decoration: TextDecoration.overline,
                   shadows: [
                     Shadow(
@@ -104,7 +103,7 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
               ),
               Text(
                 widget.tags ?? "Ooops",
-                style: TextStyle(
+                style: const TextStyle(
                   decoration: TextDecoration.overline,
                   shadows: [
                     Shadow(
@@ -115,32 +114,32 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
                   ],
                 ),
               ),
-              Divider(),
+              const Divider(),
               Text(
                 textAlign: TextAlign.start,
                 AppTexts.about,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 textAlign: TextAlign.start,
                 widget.about ?? 'Ooops',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
-              Divider(),
+              const Divider(),
               Text(
                 textAlign: TextAlign.start,
                 AppTexts.ingredients,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 textAlign: TextAlign.start,
                 widget.ingredinet ?? 'Ooops',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
-              Divider(),
-              LanguageSelect(),
+              const Divider(),
+              const LanguageSelect(),
               SingleChildScrollView(
                 child: Row(
                   children: [
@@ -148,13 +147,13 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
                       onPressed: () {
                         _date_time.displayDatePicker(context, _dateController);
                       },
-                      icon: FaIcon(FontAwesomeIcons.calendar),
+                      icon: const FaIcon(FontAwesomeIcons.calendar),
                     ),
                     IconButton(
                       onPressed: () {
                         _date_time.displayTimePicker(context, _timeController);
                       },
-                      icon: FaIcon(FontAwesomeIcons.timeline),
+                      icon: const FaIcon(FontAwesomeIcons.timeline),
                     ),
 
                     ElevatedButton(
@@ -171,12 +170,11 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
                       },
                       child: const Text("Set Timer"),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
 
                     ElevatedButton(
-                      onPressed: () async {
-                        isLoadingSwap(widget.isLoading);
-                        print("pressed first time ${widget.isLoading}");
+                      onPressed:widget.isLoading? null: () async {
+                        widget.onLoadingChange(true);
                         final lang = box.get('language');
                         final translatedAbout = await translateData(
                           widget.about ?? '',
@@ -214,20 +212,21 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
                           translatedIngredinet,
                           widget.link ?? '',
                         );
-                        isLoadingSwap(widget.isLoading);
-                        print("pressed second time ${widget.isLoading}");
+                        widget.onLoadingChange(false);
                       },
-                      child: const Text("Translate"),
+                      child: Text(
+                        widget.isLoading ? "Loading..." : "Translate",
+                      ),
                     ),
                   ],
                 ),
               ),
-              Divider(),
+              const Divider(),
               widget.link != null
                   ? Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Video:"),
+                      const Text("Video:"),
                       Expanded(
                         child: GestureDetector(
                           onTap: () async {
@@ -246,7 +245,7 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
                       ),
                     ],
                   )
-                  : Divider(),
+                  : const Divider(),
             ],
           ),
         ),

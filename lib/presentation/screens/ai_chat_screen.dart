@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:preppal/consts/texts.dart';
-import 'package:preppal/service/model/ai_recipes_model.dart';
 
 import '../../buisnes_logic/prep_pal_cubit.dart';
 
@@ -112,7 +110,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
                                             ) ??
                                             '',
                                       ),
-                                      TextSpan(text: '\n'),
+                                      const TextSpan(text: '\n'),
                                       TextSpan(
                                         text: 'Difficulty: ',
                                         style: TextStyle(
@@ -172,11 +170,11 @@ class _AiChatScreenState extends State<AiChatScreen> {
                             );
                           },
                           separatorBuilder: (context, index) {
-                            return SizedBox(height: 12);
+                            return const SizedBox(height: 12);
                           },
                           itemCount: state.aiRecipes.length,
                         )
-                        : const Center(child: Text('What can I cook today?')),
+                        :  Center(child: Text(AppTexts.whatCook)),
               ),
 
               if (isLoading)
@@ -204,7 +202,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.auto_awesome,
                             size: 18,
                             color: Colors.blue,
@@ -223,7 +221,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
                     ),
                   ),
                 ),
-              SizedBox(width: 10,height: 12,),
+              const SizedBox(width: 10,height: 12,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -253,8 +251,8 @@ class _AiChatScreenState extends State<AiChatScreen> {
                         },
                         icon:
                             isLoading
-                                ? Icon(Icons.stop_circle_outlined)
-                                : Icon(Icons.arrow_upward_rounded),
+                                ? const Icon(Icons.stop_circle_outlined)
+                                : const Icon(Icons.arrow_upward_rounded),
                       ),
                     ),
                     filled: true,
