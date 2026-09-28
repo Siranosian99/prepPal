@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -56,26 +58,53 @@ class PrepPalCubit extends Cubit<PrepPalState> {
       await randomBox.clear();
       await randomBox.addAll(random);
       emit(CatLoaded(cat: cat, random: random, seaFood: seaFood));
+
     } catch (e) {
-      emit(CatError(errorMessage: e.toString()));
+      if (localCategories.isNotEmpty ||
+          localRandom.isNotEmpty ||
+          localSeaFood.isNotEmpty) {
+        emit(
+          CatLoaded(
+            cat: localCategories,
+            random: localRandom,
+            seaFood: localSeaFood,
+          ),
+        );
+      }
     }
   }
 
   Future<void> getMealById(String id) async {
+    final insideMeal=Hive.box<MealsById>('byId');
+    final localMeal=insideMeal.values.toList();
+    if(localMeal.isNotEmpty){
+      emit(MealIdLoaded(meal: localMeal));
+    }
     try {
       meal = await repository.MealbyId(id) ?? [];
+      await insideMeal.clear();
+      await insideMeal.addAll(meal);
       emit(MealIdLoaded(meal: meal));
     } catch (e) {
-      emit(MealIdError(errorMessage: e.toString()));
+      emit(MealIdLoaded(meal: localMeal));
     }
   }
 
   Future<void> getInCatagory(String category) async {
+    final categoryBox = Hive.box<MealsbyCat>('inCat');
+    final localCategories = categoryBox.values.toList();
+
+    if(localCategories.isNotEmpty){
+      emit(InsideCatLoad(insideCat: localCategories));
+    }
     try {
       insideCat = await repository.InsideCat(category) ?? [];
+      await categoryBox.clear();
+      await categoryBox.addAll(insideCat);
       emit(InsideCatLoad(insideCat: insideCat));
     } catch (e) {
-      emit(InsideCatError(errorMessage: e.toString()));
+      emit(InsideCatLoad(insideCat: localCategories));
+      // emit(InsideCatError(errorMessage: e.toString()));
     }
   }
 
@@ -105,7 +134,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     favList = inbox.values.toList();
     emit(FavLoad(favList: favList));
   }
-
+//ai Function
   Future<void> AiRecipesGet(String query) async {
     try {
       emit(AiRecipesLoad(aiRecipes: aiRecipes, isLoading: true));
@@ -116,7 +145,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
       emit(AiRecipesError(message: e.toString()));
     }
   }
-
+// Nutrition Function
   Future<void> FoodFactGet(String query) async {
     products.clear();
     try {

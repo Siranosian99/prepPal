@@ -55,6 +55,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   fluttericon: ^2.0.0
   dio_retry_interceptor: ^0.0.1+1
+  flutter_dotenv: ^6.0.1
 
 flutter_native_splash:
   color: "#ffffff"           # Light mode background color
@@ -105,6 +106,7 @@ flutter:
     - assets/lottie/bird_loader.json
     - assets/lottie/walk_loader.json
     - assets/lottie/splash_screen/Gravity.json
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

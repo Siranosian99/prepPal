@@ -90,7 +90,13 @@ class _FavouriteScreenState extends State<FavouriteScreen>
                                     leading: ClipRRect(
                                       borderRadius:BorderRadius.circular(10),
                                       child: Image.network(
-                                        data.strMealThumb.toString(),
+                                        data.strMealThumb??'',
+                                        errorBuilder: (context, error, stackTrace) {
+                                          return const Icon(
+                                            Icons.image_not_supported,
+                                            size: 50,
+                                          );
+                                        },
                                       ),
                                     ),
                                     title: Text(data.strMeal.toString()),

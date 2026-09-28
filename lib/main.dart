@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:preppal/routes.dart';
 import 'package:preppal/service/data/api_service.dart';
@@ -16,6 +17,7 @@ import 'core/theme_provider/theme_data.dart';
 import 'core/theme_provider/theme_state.dart';
 
 void main() async {
+  await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
   NotificationMethod.init();
@@ -31,6 +33,7 @@ void main() async {
   await Hive.openBox<MealsbyCat>('SeaFood');
   await Hive.openBox<MealsbyCat>('inCat');
   await Hive.openBox<MealsById>('random');
+
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => ThemeProvider())],

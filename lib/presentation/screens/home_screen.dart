@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen>
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {
           if (state is CatLoaded) {
-            final data= state.random[0];
+            final data= state.random;
             final category=state.cat;
             final byCategory=state.seaFood;
             return Padding(
@@ -102,16 +102,16 @@ class _HomeScreenState extends State<HomeScreen>
                                 context.pushNamed(
                                   "detailed",
                                   extra: {
-                                    'imgLink': data.strMealThumb,
-                                    'mealId': data.idMeal,
-                                    'mealName': data.strMeal,
+                                    'imgLink': data[0].strMealThumb,
+                                    'mealId': data[0].idMeal,
+                                    'mealName': data[0].strMeal,
                                   },
                                 );
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(21),
                                 child: Image.network(
-                                  data.strMealThumb ?? '',
+                                  data[0].strMealThumb ?? '',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen>
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          data.strMeal.toString(),
+                          data[0].strMeal.toString(),
                           style: GoogleFonts.poppins(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,

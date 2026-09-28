@@ -79,6 +79,14 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                         width: double.infinity,
                         height: 250,
                         fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(
+                            child: Icon(
+                              Icons.image_not_supported,
+                              size: 250,
+                            ),
+                          );
+                        },
                       ),
                     ),
                     Positioned(
@@ -132,7 +140,7 @@ class _DetailedItemScreenState extends State<DetailedItemScreen>
                         "No ingredients available",
                     tags: data.strTags ?? "OOPS there is No Tags",
                     country: data.strArea ?? "OOPS",
-                    about: data.strInstructions.toString(),
+                    about: data.strInstructions?? '',
                     mealName: data.strMeal,
                     imgLink: data.strMealThumb,
                     isLoading: isLoading,

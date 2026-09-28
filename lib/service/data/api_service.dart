@@ -65,10 +65,10 @@ class ApiService {
       if (result.statusCode == 200) {
         List<dynamic> m = result.data['meals'];
         inMeals = m.map((e) => MealsbyCat.fromJson(e)).toList();
-        var mbox = Hive.box<MealsbyCat>('SeaFood');
-        await mbox.addAll(inMeals);
-        var inbox = Hive.box<MealsbyCat>('inCat');
-        await inbox.addAll(inMeals);
+        // var mbox = Hive.box<MealsbyCat>('SeaFood');
+        // await mbox.addAll(inMeals);
+        // var inbox = Hive.box<MealsbyCat>('inCat');
+        // await inbox.addAll(inMeals);
       }
     } on DioException catch (e) {
       print(e.error);
