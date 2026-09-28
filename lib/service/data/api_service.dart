@@ -14,13 +14,6 @@ import '../model/meals_by_id.dart';
 
 class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiConsts.mainUrl));
-  final Dio _dio2 = Dio(
-    BaseOptions(
-      baseUrl: ApiConsts.seconderyUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-    ),
-  );
   final Dio _dio3 = Dio(
       BaseOptions(
         baseUrl: ApiConsts.baseUrl,

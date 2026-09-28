@@ -5,7 +5,7 @@ import 'package:preppal/core/utils/language_select.dart';
 import 'package:preppal/core/utils/url_open.dart';
 
 import '../../consts/texts.dart';
-import '../../core/utils/format_convertor/date_time.dart';
+import '../../core/utils/date_time.dart';
 import '../../core/utils/notification.dart';
 import '../../core/utils/translate.dart';
 import '../../core/utils/translate_dialog.dart';
@@ -118,25 +118,37 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
               Text(
                 textAlign: TextAlign.start,
                 AppTexts.about,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 10),
               Text(
                 textAlign: TextAlign.start,
                 widget.about ?? 'Ooops',
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               const Divider(),
               Text(
                 textAlign: TextAlign.start,
                 AppTexts.ingredients,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 10),
               Text(
                 textAlign: TextAlign.start,
                 widget.ingredinet ?? 'Ooops',
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               const Divider(),
               const LanguageSelect(),
@@ -173,47 +185,57 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
                     const SizedBox(width: 10),
 
                     ElevatedButton(
-                      onPressed:widget.isLoading? null: () async {
-                        widget.onLoadingChange(true);
-                        final lang = box.get('language');
-                        final translatedAbout = await translateData(
-                          widget.about ?? '',
-                          lang,
-                        );
-                        final translatedCountry = await translateData(
-                          widget.country ?? '',
-                          lang,
-                        );
-                        final translatedIngredinet = await translateData(
-                          widget.ingredinet ?? '',
-                          lang,
-                        );
-                        final t1 = await translateData('About:', lang ?? 'en');
-                        final t2 = await translateData(
-                          'Ingredient and Measures:',
-                          lang ?? 'en',
-                        );
-                        final t3 = await translateData('Area:', lang ?? 'en');
-                        final t4 = await translateData(
-                          'Meal Name:',
-                          lang ?? 'en',
-                        );
-                        if (!context.mounted) return;
-                        translateDialog(
-                          context,
-                          t1,
-                          t2,
-                          t3,
-                          t4,
-                          widget.mealName ?? "No Meal",
-                          widget.imgLink ?? noImg,
-                          translatedAbout,
-                          translatedCountry,
-                          translatedIngredinet,
-                          widget.link ?? '',
-                        );
-                        widget.onLoadingChange(false);
-                      },
+                      onPressed:
+                          widget.isLoading
+                              ? null
+                              : () async {
+                                widget.onLoadingChange(true);
+                                final lang = box.get('language');
+                                final translatedAbout = await translateData(
+                                  widget.about ?? '',
+                                  lang,
+                                );
+                                final translatedCountry = await translateData(
+                                  widget.country ?? '',
+                                  lang,
+                                );
+                                final translatedIngredinet =
+                                    await translateData(
+                                      widget.ingredinet ?? '',
+                                      lang,
+                                    );
+                                final t1 = await translateData(
+                                  'About:',
+                                  lang ?? 'en',
+                                );
+                                final t2 = await translateData(
+                                  'Ingredient and Measures:',
+                                  lang ?? 'en',
+                                );
+                                final t3 = await translateData(
+                                  'Area:',
+                                  lang ?? 'en',
+                                );
+                                final t4 = await translateData(
+                                  'Meal Name:',
+                                  lang ?? 'en',
+                                );
+                                if (!context.mounted) return;
+                                translateDialog(
+                                  context,
+                                  t1,
+                                  t2,
+                                  t3,
+                                  t4,
+                                  widget.mealName ?? "No Meal",
+                                  widget.imgLink ?? noImg,
+                                  translatedAbout,
+                                  translatedCountry,
+                                  translatedIngredinet,
+                                  widget.link ?? '',
+                                );
+                                widget.onLoadingChange(false);
+                              },
                       child: Text(
                         widget.isLoading ? "Loading..." : "Translate",
                       ),
@@ -230,10 +252,10 @@ class _ContainerDetailedState extends State<ContainerDetailed> with urlLunch {
                       Expanded(
                         child: GestureDetector(
                           onTap: () async {
-                            await launchInBrowser(widget.link ?? 'Ooops');
+                            await launchInBrowser(widget.link ?? 'Oops');
                           },
                           child: Text(
-                            widget.link ?? "Ooops",
+                            widget.link ?? "Oops",
                             maxLines: 1,
                             style: const TextStyle(
                               color: Colors.blue,

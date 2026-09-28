@@ -23,13 +23,11 @@ class _FavouriteScreenState extends State<FavouriteScreen>
       duration: const Duration(seconds: 3),
       vsync: this,
     )..repeat();
-    _callCubit();
+    context.read<PrepPalCubit>().loadFavourites();
+
     super.initState();
   }
 
-  void _callCubit(){
-    context.read<PrepPalCubit>().loadFavourites();
-  }
   @override
   void dispose() {
     _animationController.dispose();

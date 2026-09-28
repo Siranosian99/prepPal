@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:preppal/buisnes_logic/prep_pal_cubit.dart';
 
+import '../../consts/texts.dart';
 import '../../service/model/food_fact_model.dart';
 
 class NutritionScreen extends StatefulWidget {
@@ -12,24 +13,25 @@ class NutritionScreen extends StatefulWidget {
 }
 
 class _NutritionScreenState extends State<NutritionScreen>
-    with TickerProviderStateMixin {
+
+    // with TickerProviderStateMixin
+{
   final TextEditingController _searchController = TextEditingController();
 
   late final AnimationController _animationController;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this,
-    )..repeat();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _animationController = AnimationController(
+  //     duration: const Duration(seconds: 3),
+  //     vsync: this,
+  //   )..repeat();
+  // }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    // _animationController.dispose();
     _searchController.dispose();
     super.dispose();
   }
@@ -48,7 +50,7 @@ class _NutritionScreenState extends State<NutritionScreen>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Nutrition'),
+        title:  Text(AppTexts.nutrition),
       ),
       body: BlocBuilder<PrepPalCubit, PrepPalState>(
         builder: (context, state) {

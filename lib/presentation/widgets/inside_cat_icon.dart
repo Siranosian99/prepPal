@@ -68,9 +68,7 @@ class InsideCatIcon extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                IconButton(onPressed: (){}, icon: const FaIcon(FontAwesomeIcons.heart), )
-              ],
+                ),],
             ),
           ),
         ],

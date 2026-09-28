@@ -13,50 +13,29 @@ class PersonelScreen extends StatefulWidget {
 }
 
 class _PersonelScreenState extends State<PersonelScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      appBar:AppBar(
-        title:Text(AppTexts.settings),
-        centerTitle:true,
-      ),
-      body:Column(
+      appBar: AppBar(title: Text(AppTexts.settings), centerTitle: true),
+      body: Column(
         children: [
-          // SizedBox(height: 25,),
-          // SettingsItems(txt: AppTexts.signIn, icon: Icons.login),
-          // Divider(
-          //   thickness: 1,
-          //   height: 10, // space above/below
-          // ),
-          // SettingsItems(txt: AppTexts.vegt, icon: Icons.nature),
-          // Divider(
-          //   thickness: 1,
-          //   height: 10, // space above/below
-          // ),
-          SettingsItems(onTap:(){
-            print(themeProvider.isDark);
-          },txt: AppTexts.report, icon:Icons.report),
+          SettingsItems(onTap: () {}, txt: AppTexts.report, icon: Icons.report),
           const Divider(
-
             thickness: 1,
-            height: 10, // space above/below
+            height: 10,
           ),
-          SettingsItems(txt: AppTexts.themes, icon:Icons.switch_left_rounded,onTap: (){
-          themeProvider.themeSwitch();
-          },),
-          // Switch(
-          //   value: themeProvider.isDark,
-          //   onChanged: (_) {
-          //     themeProvider.themeSwitch();
-          //   },
-          // ),
+          SettingsItems(
+            txt: AppTexts.themes,
+            icon: Icons.switch_left_rounded,
+            onTap: () {
+              themeProvider.themeSwitch();
+            },
+          ),
 
           const Divider(
             thickness: 1,
-            height: 10, // space above/below
+            height: 10, 
           ),
         ],
       ),
