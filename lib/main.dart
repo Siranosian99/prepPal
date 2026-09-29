@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:preppal/provider/theme_provider/theme_data.dart';
+import 'package:preppal/provider/theme_provider/theme_state.dart';
 import 'package:preppal/routes.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/model/meal_cat_model.dart';
@@ -13,8 +15,6 @@ import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'buisnes_logic/prep_pal_cubit.dart';
-import 'core/theme_provider/theme_data.dart';
-import 'core/theme_provider/theme_state.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -53,7 +53,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  //modelName = "inclusionai/ling-3.0-flash-sante:free";
+//# modelName = "nex-agi/nex-n2.5-mini:free";
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

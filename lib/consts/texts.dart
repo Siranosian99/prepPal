@@ -27,5 +27,6 @@ class AppTexts {
   static String txtHintAi="Tell me what ingredients you have...";
   static String whatCook="What can I cook today?";
   static String nutrition="Nutrition";
+  static String toolFunction="Tool Functions";
 
 }

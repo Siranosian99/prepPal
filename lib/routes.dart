@@ -9,6 +9,7 @@ import 'package:preppal/presentation/screens/home_screen.dart';
 import 'package:preppal/presentation/screens/inside_cat.dart';
 import 'package:preppal/presentation/screens/personel_screen.dart';
 import 'package:preppal/presentation/screens/splash_screen.dart';
+import 'package:preppal/presentation/screens/tool_function_screen.dart';
 import 'package:preppal/service/data/api_service.dart';
 import 'package:preppal/service/repository/repository.dart';
 import 'package:preppal/presentation/widgets/bottom_nav_bar.dart';
@@ -106,6 +107,12 @@ final GoRouter router = GoRouter(
           name: 'ai',
           builder: (context, state) => const AiChatScreen(),
         ),
+        GoRoute(
+          path: '/tool',
+          name: 'tool',
+          builder: (context, state) => const ToolScreen(),
+        ),
+
         // GoRoute(
         //   path: '/recipes',
         //   name: 'recipes',

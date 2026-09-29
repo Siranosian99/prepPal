@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
-import '../utils/notification.dart';
+import '../../core/utils/notification.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.light;
