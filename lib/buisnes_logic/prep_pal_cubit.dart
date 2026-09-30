@@ -58,7 +58,6 @@ class PrepPalCubit extends Cubit<PrepPalState> {
       await randomBox.clear();
       await randomBox.addAll(random);
       emit(CatLoaded(cat: cat, random: random, seaFood: seaFood));
-
     } catch (e) {
       if (localCategories.isNotEmpty ||
           localRandom.isNotEmpty ||
@@ -75,9 +74,9 @@ class PrepPalCubit extends Cubit<PrepPalState> {
   }
 
   Future<void> getMealById(String id) async {
-    final insideMeal=Hive.box<MealsById>('byId');
-    final localMeal=insideMeal.values.toList();
-    if(localMeal.isNotEmpty){
+    final insideMeal = Hive.box<MealsById>('byId');
+    final localMeal = insideMeal.values.toList();
+    if (localMeal.isNotEmpty) {
       emit(MealIdLoaded(meal: localMeal));
     }
     try {
@@ -94,7 +93,7 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     final categoryBox = Hive.box<MealsbyCat>('inCat');
     final localCategories = categoryBox.values.toList();
 
-    if(localCategories.isNotEmpty){
+    if (localCategories.isNotEmpty) {
       emit(InsideCatLoad(insideCat: localCategories));
     }
     try {
@@ -126,7 +125,47 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     var inbox = Hive.box<MealsById>('save');
     await inbox.deleteAt(index);
     favList = inbox.values.toList();
+    print("deleted successfully");
     emit(FavLoad(favList: favList));
+  }
+
+  Future<void> removeFavouriteList2(
+    int index,
+    BuildContext context,
+  ) async {
+    final bool? shouldDelete = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Delete"),
+          content: const Text("Are you sure you want to delete this item?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: const Text("No"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldDelete == true) {
+      var inbox = Hive.box<MealsById>('save');
+      await inbox.deleteAt(index);
+      favList = inbox.values.toList();
+      emit(FavLoad(favList: favList));
+      print("Deleted");
+    }
+
+
   }
 
   void loadFavourites() {
@@ -134,7 +173,8 @@ class PrepPalCubit extends Cubit<PrepPalState> {
     favList = inbox.values.toList();
     emit(FavLoad(favList: favList));
   }
-//ai Function
+
+  //ai Function
   Future<void> AiRecipesGet(String query) async {
     try {
       emit(AiRecipesLoad(aiRecipes: aiRecipes, isLoading: true));
@@ -145,7 +185,8 @@ class PrepPalCubit extends Cubit<PrepPalState> {
       emit(AiRecipesError(message: e.toString()));
     }
   }
-// Nutrition Function
+
+  // Nutrition Function
   Future<void> FoodFactGet(String query) async {
     products.clear();
     try {
